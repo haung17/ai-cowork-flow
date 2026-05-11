@@ -138,7 +138,7 @@ DashboardInteractions.buildContent = function() {
     </ul></div></details>
     <details><summary>QA｜持續測試、Bug 回報</summary>
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>提早測試</strong> — 功能一完成就測，不等全部完成 → bug 越早修越便宜</li>
+      <li style="font-size:var(--text-sm)"><strong>提早測試</strong> — CR 功能完成後，初步驗證是否符合客戶需求，測試完成提供客戶進行同步驗證 → 提早暴露落差</li>
       <li style="font-size:var(--text-sm)"><strong>建立 bug ticket</strong> — 附步驟、環境、截圖、預期/實際結果 → 工程師能快速重現</li>
       <li style="font-size:var(--text-sm)"><strong>回歸測試</strong> — 修 bug 後確認原本功能沒壞 → 避免修 A 壞 B</li>
       <li style="font-size:var(--text-sm)"><strong>探索式測試</strong> — 不只照測試案例，也嘗試異常流程 → 找出規格外問題</li>
@@ -180,6 +180,7 @@ DashboardInteractions.buildContent = function() {
       <li style="font-size:var(--text-sm)"><strong>修復驗證</strong> — 工程師修完後 retest → Retest result</li>
       <li style="font-size:var(--text-sm)"><strong>已知問題整理</strong> — 無法本期修的問題列出 → Known issues</li>
       <li style="font-size:var(--text-sm)"><strong>測試結案報告</strong> — 測了哪些、剩哪些、風險是什麼 → Test summary report</li>
+      <li style="font-size:var(--text-sm)"><strong>Issue regression 確認</strong> — 抽測之前曾發生過的問題，確保問題不會因更版錯誤而再發生 → Regression sampling</li>
     </ul></div></details>
     <details><summary>工程師｜Bug 修復、上線支援</summary>
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
