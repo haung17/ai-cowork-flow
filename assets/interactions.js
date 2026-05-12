@@ -269,19 +269,19 @@ DashboardInteractions.buildContent = function() {
     <p class="section-desc">整體接案流程與開發前、中、後的分工與 AI Cowork 介入點。</p>
     <figure class="flowchart-fig">
       <figcaption>整體接案流程</figcaption>
-      <img src="ChatGPT Image-v3.2-全架構.png" alt="v3.2 整體接案流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.3-全架構.png" alt="v3.3 整體接案流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
       <figcaption>開發前流程</figcaption>
-      <img src="ChatGPT Image-v3.2-開發前.png" alt="v3.2 開發前流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.3-開發前.png" alt="v3.3 開發前流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
       <figcaption>開發中流程</figcaption>
-      <img src="ChatGPT Image-v3.2-開發中.png" alt="v3.2 開發中流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.3-開發中.png" alt="v3.3 開發中流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
       <figcaption>開發後流程</figcaption>
-      <img src="ChatGPT Image-v3.2-開發後.png" alt="v3.2 開發後流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.3-開發後.png" alt="v3.3 開發後流程圖" loading="lazy">
     </figure>
   </section>`);
 
