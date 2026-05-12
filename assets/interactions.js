@@ -12,7 +12,7 @@ DashboardInteractions.init = function() {
 // 1. Build sidebar nav
 DashboardInteractions.buildNav = function() {
   const list = document.getElementById('nav-list');
-  AppData.chapters.forEach(ch => {
+  window.AppData.chapters.forEach(ch => {
     const li = document.createElement('li');
     li.className = 'nav-item';
     li.innerHTML = `<a href="#${ch.id}" data-id="${ch.id}">
@@ -25,17 +25,18 @@ DashboardInteractions.buildNav = function() {
 // 2. Build main content sections
 DashboardInteractions.buildContent = function() {
   const wrapper = document.querySelector('.content-wrapper');
+  const append = html => wrapper.insertAdjacentHTML('beforeend', html);
 
   // Summary
-  wrapper.innerHTML += `
+  append(`
   <section id="summary">
     <h1 class="section-title">PM / QA / 工程師 × AI Cowork 流程指南 v3.2</h1>
     <p class="section-desc">整理自實際討論：接案情境下，PM、QA、工程師如何分工，以及 Cowork 與 Claude Code 在開發前、中、後如何加速作業。</p>
     <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint)">整理日期：2026-05-12 ／ 來源：ChatGPT 對話紀錄</p>
-  </section>`;
+  </section>`);
 
   // Pain points
-  wrapper.innerHTML += `
+  append(`
   <section id="pain">
     <h2 class="section-title">問題背景</h2>
     <p class="section-desc">接案流程中最常見的痛點，也是 AI Cowork 要解決的核心問題。</p>
@@ -48,10 +49,10 @@ DashboardInteractions.buildContent = function() {
         <tr><td>尾聲壓力</td><td>bug、文件、回歸全部塞到驗收前爆發</td><td>品質不穩定、交付延期</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // Roles section
-  wrapper.innerHTML += `
+  append(`
   <section id="roles">
     <h2 class="section-title">角色職責</h2>
     <p class="section-desc">工程師視角：PM 降低需求不清的風險，QA 降低交付後才發現問題的風險。</p>
@@ -84,10 +85,10 @@ DashboardInteractions.buildContent = function() {
       </tbody>
     </table>
     </div></details>
-  </section>`;
+  </section>`);
 
   // Pre-dev section
-  wrapper.innerHTML += `
+  append(`
   <section id="pre-dev">
     <h2 class="section-title">開發前</h2>
     <p class="section-desc">把模糊需求整理成工程師能開工、QA 能測試、客戶能驗收的規格。</p>
@@ -123,10 +124,10 @@ DashboardInteractions.buildContent = function() {
       <li style="font-size:var(--text-sm)"><strong>工時估算</strong> — 各功能工時、整體 sprint 規劃</li>
       <li style="font-size:var(--text-sm)"><strong>環境建置</strong> — 開發、staging、CI/CD 環境設定</li>
     </ul></div></details>
-  </section>`;
+  </section>`);
 
   // Mid-dev section
-  wrapper.innerHTML += `
+  append(`
   <section id="mid-dev">
     <h2 class="section-title">開發中</h2>
     <p class="section-desc">進度追蹤、需求變更管控、持續測試、阻塞排除。</p>
@@ -161,10 +162,10 @@ DashboardInteractions.buildContent = function() {
       <li style="font-size:var(--text-sm)"><strong>Bug 修復</strong> — 依 severity 排序，Critical 優先處理</li>
       <li style="font-size:var(--text-sm)"><strong>配合 QA</strong> — 提供測試環境、API docs、mock 資料</li>
     </ul></div></details>
-  </section>`;
+  </section>`);
 
   // Post-dev section
-  wrapper.innerHTML += `
+  append(`
   <section id="post-dev">
     <h2 class="section-title">開發後</h2>
     <p class="section-desc">完整回歸、客戶 UAT、上線決策、文件交付、結案。</p>
@@ -201,26 +202,26 @@ DashboardInteractions.buildContent = function() {
       <li style="font-size:var(--text-sm)"><strong>系統監控</strong> — 上線後確認 log、效能、錯誤率</li>
       <li style="font-size:var(--text-sm)"><strong>Knowledge Transfer 7-1</strong> — Claude Code 協助產出 API doc、Schema、Coding style 等技術文件，工程師負責審核</li>
     </ul></div></details>
-  </section>`;
+  </section>`);
 
   // AI Cowork 定位
-  wrapper.innerHTML += `
+  append(`
   <section id="cowork-def">
     <h2 class="section-title">AI Cowork 定位</h2>
-    <p class="section-desc">Automation（腳本）、Cowork（PM/QA 助理）與 Claude Code（工程師端 AI 起草）的差異。</p>
+    <p class="section-desc">先定義四種責任層級：腳本負責穩定執行，Cowork 負責 PM/QA 協作整理，Claude Code 負責工程師端技術起草，人負責最後判斷。</p>
     <table>
-      <thead><tr><th>類型</th><th>核心</th><th>長處</th><th>弱點</th></tr></thead>
+      <thead><tr><th>類型</th><th>核心責任</th><th>適合放的位置</th><th>邊界</th></tr></thead>
       <tbody>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Automation</td><td>流程跑完</td><td>穩定、便宜、快</td><td>不會協作、不知脈絡</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Cowork</td><td>PM / QA 助理</td><td>需求整理、測試規劃、回饋分類、狀態同步</td><td>不能代替商務與品質決策</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Claude Code</td><td>工程師端 AI 起草</td><td>commit / PR / migration script / 技術文件草稿</td><td>上下文需明確，仍需要工程師 review</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Human Decision</td><td>判斷與負責</td><td>理解商業情境、承擔後果</td><td>時間有限、易遺漏細節</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-weight:600">Automation</td><td>固定流程執行</td><td>CI、測試、狀態擷取</td><td>例外時停止，交給人處理</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-weight:600">Cowork</td><td>PM / QA 協作助理</td><td>需求、測試、回饋、狀態</td><td>不能代替商務與品質決策</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-weight:600">Claude Code</td><td>工程師端技術助理</td><td>PR、Schema、script、技術文件</td><td>需要明確上下文與工程師 review</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-weight:600">Human Decision</td><td>判斷與負責</td><td>優先序、放行、簽核、承諾</td><td>不應被 AI 自動化取代</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // Claude Code vs Cowork
-  wrapper.innerHTML += `
+  append(`
   <section id="claude-vs-cowork">
     <h2 class="section-title">Claude Code vs Cowork</h2>
     <p class="section-desc">v3.2 將 AI 介入拆成兩種模式：PM/QA 的 Cowork，以及工程師端的 Claude Code。</p>
@@ -232,10 +233,10 @@ DashboardInteractions.buildContent = function() {
         <tr><td>Claude Code</td><td>工程師需要起草、檢查、產出技術交付物</td><td>PR 摘要、commit、API / DB Schema、migration script</td><td>工程師 review、測試、合併與部署</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // 三層策略
-  wrapper.innerHTML += `
+  append(`
   <section id="strategy">
     <h2 class="section-title">三層策略</h2>
     <p class="section-desc">根據工作類型決定給腳本、給 AI、還是留給人。</p>
@@ -243,26 +244,26 @@ DashboardInteractions.buildContent = function() {
       <thead><tr><th>層</th><th>類型</th><th>例子</th></tr></thead>
       <tbody>
         <tr>
-          <td><span class="type-chip" style="background:#F0FDF4;color:#16A34A;border:1px solid #86EFAC">第一層</span></td>
+          <td><span class="type-chip level-1">第一層</span></td>
           <td>可全自動（腳本）</td>
           <td>自動跑測試、自動抓 issue 狀態、自動彙整 commit、自動產 Release Note 初稿</td>
         </tr>
         <tr>
-          <td><span class="type-chip cowork">第二層</span></td>
+          <td><span class="type-chip level-2">第二層</span></td>
           <td>AI 起草，人審核</td>
           <td>Cowork：需求整理、User Story、QA 測試案例初稿、Bug ticket 格式化、規格差異比對、UAT 問題分流<br>Claude Code：PR 摘要、commit、測試碼、migration script、Release script</td>
         </tr>
         <tr>
-          <td><span class="type-chip" style="background:#FEF2F2;color:#DC2626;border:1px solid #FCA5A5">第三層</span></td>
+          <td><span class="type-chip level-3">第三層</span></td>
           <td>必須人工決策</td>
           <td>接受需求變更與否、功能優先序、是否可上線、客戶驗收簽核、高風險 bug 是否放行</td>
         </tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // 流程圖區塊
-  wrapper.innerHTML += `
+  append(`
   <section id="flowcharts">
     <h2 class="section-title">流程圖</h2>
     <p class="section-desc">整體接案流程與開發前、中、後的分工與 AI Cowork 介入點。</p>
@@ -282,10 +283,10 @@ DashboardInteractions.buildContent = function() {
       <figcaption>開發後流程</figcaption>
       <img src="ChatGPT Image-v3.2-開發後.png" alt="v3.2 開發後流程圖" loading="lazy">
     </figure>
-  </section>`;
+  </section>`);
 
   // auto-level (placeholder)
-  wrapper.innerHTML += `
+  append(`
   <section id="auto-level">
     <h2 class="section-title">自動化等級</h2>
     <p class="section-desc">各角色 × 各階段的 AI 介入程度分類。</p>
@@ -297,10 +298,10 @@ DashboardInteractions.buildContent = function() {
         <tr><td><span class="role-chip eng">工程師</span></td><td>Claude Code（API / DB Schema、CLAUDE.md）</td><td>Claude Code（PR 摘要、Code Review 輔助、Changelog）</td><td>Claude Code（migration script、Release script、技術文件）</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // PM detail
-  wrapper.innerHTML += `
+  append(`
   <section id="pm-detail">
     <h2 class="section-title">PM 詳細規劃</h2>
     <p class="section-desc">PM 在各開發階段的具體工作項目與 AI Cowork 介入點。</p>
@@ -312,10 +313,10 @@ DashboardInteractions.buildContent = function() {
         <tr><td>開發後</td><td>Release Note、結案清單</td><td>UAT 問題整理、部署指引、權限交接</td><td>部署方式分流、是否放行上線、客戶簽核</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // QA detail
-  wrapper.innerHTML += `
+  append(`
   <section id="qa-detail">
     <h2 class="section-title">QA 詳細規劃</h2>
     <p class="section-desc">QA 在各開發階段的具體工作項目與 AI Cowork 介入點。</p>
@@ -327,10 +328,10 @@ DashboardInteractions.buildContent = function() {
         <tr><td>開發後</td><td>—</td><td>UAT 缺陷分類、補強建議、測試報告</td><td>完整回歸、客戶 UAT 放行</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // MVP
-  wrapper.innerHTML += `
+  append(`
   <section id="mvp">
     <h2 class="section-title">MVP 規劃</h2>
     <p class="section-desc">第一階段可落地的 AI Cowork 功能，依優先序排列。</p>
@@ -345,10 +346,10 @@ DashboardInteractions.buildContent = function() {
         <tr><td style="font-family:var(--font-mono);color:var(--accent)">6</td><td>Release Note / 交接文件草稿</td><td><span class="role-chip pm">PM</span></td><td>加速交付與結案</td></tr>
       </tbody>
     </table>
-  </section>`;
+  </section>`);
 
   // 導入原則
-  wrapper.innerHTML += `
+  append(`
   <section id="principles">
     <h2 class="section-title">導入原則</h2>
     <p class="section-desc">讓 AI Cowork 真正好用，而不是亂跑的 agent。</p>
@@ -360,10 +361,10 @@ DashboardInteractions.buildContent = function() {
       <li><strong>高價值但容易耗時的，交給 AI Cowork</strong> — 需求整理、測試案例、bug ticket、規格比對</li>
       <li><strong>每個流程都要有人工 checkpoint</strong> — 這樣才是真正好用的 cowork</li>
     </ol>
-  </section>`;
+  </section>`);
 
   // 後續方向
-  wrapper.innerHTML += `
+  append(`
   <section id="next">
     <h2 class="section-title">後續方向</h2>
     <p class="section-desc">從本次討論延伸的後續計畫。</p>
@@ -378,7 +379,7 @@ DashboardInteractions.buildContent = function() {
       <li>設計 GitHub / Jira / Notion / Slack 串接方式</li>
       <li>整理成計畫書或提案書</li>
     </ol>
-  </section>`;
+  </section>`);
 
 };
 
@@ -425,7 +426,7 @@ DashboardInteractions.initSearch = function() {
   btn.addEventListener('click', open);
   overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
 
-  const index = AppData.chapters.map(ch => ({
+  const index = window.AppData.chapters.map(ch => ({
     id: ch.id, label: ch.icon, text: ch.title
   }));
 
@@ -466,3 +467,4 @@ DashboardInteractions.initSearch = function() {
 
 // 5. No-op: flowchart modal removed
 DashboardInteractions.initModal = function() {};
+

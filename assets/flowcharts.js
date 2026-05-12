@@ -7,12 +7,13 @@ const DECISION_R = 50;
 const UNIT = 14;
 
 FlowCharts.render = function(chartId, containerEl) {
-  const chart = AppData.flowcharts[chartId];
+  const chart = window.AppData.flowcharts[chartId];
   if (!chart) return;
 
   const maxY = Math.max(...chart.nodes.map(n => n.y)) + 12;
   const canvasH = maxY * UNIT + 40;
-  const canvasW = Math.max(containerEl.offsetWidth, 900);
+  const minCanvasW = chartId === 'main' ? 1200 : 900;
+  const canvasW = Math.max(containerEl.offsetWidth, minCanvasW);
 
   containerEl.style.position = 'relative';
   containerEl.style.height = canvasH + 'px';
