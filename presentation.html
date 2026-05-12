@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>接案流程 × AI Cowork 助理</title>
+  <title>接案流程 × AI Cowork 助理 v3.2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
@@ -19,9 +19,9 @@
     <section class="slide-cover" data-background-color="#0A2540">
       <div class="cover-content">
         <p class="cover-eyebrow">接案工作流程研究</p>
-        <h1 class="cover-title">接案流程 × AI Cowork 助理</h1>
-        <p class="cover-subtitle">PM / QA / 工程師 如何用 AI 加速接案工作流程</p>
-        <p class="cover-meta">2026-05-08</p>
+        <h1 class="cover-title">接案流程 × AI Cowork 助理 v3.2</h1>
+        <p class="cover-subtitle">PM / QA / 工程師 如何用 Cowork 與 Claude Code 加速接案工作流程</p>
+        <p class="cover-meta">2026-05-12</p>
       </div>
     </section>
 
@@ -53,8 +53,8 @@
     <!-- Slide 3: AI Cowork 定位 -->
     <section>
       <h2 class="slide-title">AI Cowork 的定位</h2>
-      <div class="two-col">
-        <div class="col-box col-left">
+      <div class="three-col">
+        <div class="strategy-col strategy-green">
           <p class="col-label">Automation（腳本）</p>
           <ul>
             <li>規則固定、輸入輸出明確</li>
@@ -63,17 +63,26 @@
             <li>適合：跑測試、抓 issue 狀態</li>
           </ul>
         </div>
-        <div class="col-box col-right">
-          <p class="col-label col-label-accent">AI Cowork（助理）</p>
+        <div class="strategy-col strategy-blue">
+          <p class="col-label col-label-accent">Cowork（PM / QA 助理）</p>
           <ul>
             <li>根據角色幫忙整理、起草、比對</li>
-            <li>知道 PM / QA / 工程師各需要什麼</li>
+            <li>知道 PM / QA 各需要什麼</li>
             <li>有例外可提醒人工確認</li>
-            <li>適合：摘要、草稿、分類、分析</li>
+            <li>適合：摘要、草稿、分類、狀態同步</li>
+          </ul>
+        </div>
+        <div class="strategy-col" style="border-color:var(--role-eng);background:var(--role-eng-bg)">
+          <p class="col-label" style="color:var(--role-eng)">Claude Code（工程師端）</p>
+          <ul>
+            <li>起草 PR、commit 與 changelog</li>
+            <li>起草 API / DB Schema</li>
+            <li>生成 migration / release script</li>
+            <li>需要工程師 review 與測試</li>
           </ul>
         </div>
       </div>
-      <p class="slide-note">AI 負責提高效率，人負責做決策與承擔品質。</p>
+      <p class="slide-note">Cowork 與 Claude Code 都是助理；決策、品質與部署責任仍由人承擔。</p>
     </section>
 
     <!-- Slide 4: Role matrix -->
@@ -82,30 +91,30 @@
       <div class="pres-phase-grid">
         <div class="pres-phase-col">
           <p class="pres-phase-title">開發前</p>
-          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">需求訪談、範圍確認</span></div>
-          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">驗收條件、時程規劃</span></div>
-          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">需求可測性、測試計畫</span></div>
-          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">測試案例、風險評估</span></div>
-          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">技術評估、工時估算</span></div>
-          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">環境建置、API contract</span></div>
+          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">需求訪談、SOW / 報價</span></div>
+          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">客戶確認 Gate、排程</span></div>
+          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">測試規劃初稿</span></div>
+          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">測試策略確認</span></div>
+          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">技術可行性、工時估算</span></div>
+          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">Claude Code：API / DB Schema、CLAUDE.md</span></div>
         </div>
         <div class="pres-phase-col">
           <p class="pres-phase-title">開發中</p>
-          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">進度追蹤、需求答疑</span></div>
-          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">變更管控、Demo 安排</span></div>
-          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">CR 內測、客戶同步驗證</span></div>
-          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">Bug 回報、回歸測試</span></div>
+          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">回饋分類、狀態更新</span></div>
+          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">Standup、Sprint Demo</span></div>
+          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">測試結果整理</span></div>
+          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">探索測試、Bug Triage</span></div>
           <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">功能實作、Code Review</span></div>
-          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">Bug 修復、配合 QA</span></div>
+          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">Claude Code：Review 輔助 + Changelog</span></div>
         </div>
         <div class="pres-phase-col">
           <p class="pres-phase-title">開發後</p>
-          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">UAT 安排、結案確認</span></div>
-          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">文件交付、客戶簽核</span></div>
-          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">完整回歸、放行評估</span></div>
-          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">Smoke test、Issue regression 抽測</span></div>
-          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">Bug 修復、上線部署</span></div>
-          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">監控確認、技術文件</span></div>
+          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">UAT、部署指引</span></div>
+          <div class="pres-phase-item"><span class="role-chip pm">PM</span><span class="pres-phase-label">權限交接、保固維護</span></div>
+          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">回歸測試放行</span></div>
+          <div class="pres-phase-item"><span class="role-chip qa">QA</span><span class="pres-phase-label">UAT 缺陷分類</span></div>
+          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">缺陷修正、部署支援</span></div>
+          <div class="pres-phase-item"><span class="role-chip eng">ENG</span><span class="pres-phase-label">Claude Code：script、技術文件</span></div>
         </div>
       </div>
     </section>
@@ -114,28 +123,28 @@
     <section class="flow-slide">
       <h2 class="slide-title">整體接案流程</h2>
       <p class="slide-subtitle">PM / QA / 工程師 三角色 × 三階段，標示人工 vs AI Cowork 介入點</p>
-      <img class="flow-slide-img" src="ChatGPT Image 2026年5月8日 下午05_21_25.png" alt="整體接案流程圖">
+      <img class="flow-slide-img" src="ChatGPT Image-v3.2-全架構.png" alt="v3.2 整體接案流程圖">
     </section>
 
     <!-- Slide 6: Pre-dev flowchart -->
     <section class="flow-slide">
       <h2 class="slide-title">開發前流程</h2>
       <p class="slide-subtitle">需求釐清 → 測試規劃 → 技術評估 → 排程</p>
-      <img class="flow-slide-img" src="ChatGPT Image 2026年5月8日 上午11_26_23.png" alt="開發前流程圖">
+      <img class="flow-slide-img" src="ChatGPT Image-v3.2-開發前.png" alt="v3.2 開發前流程圖">
     </section>
 
     <!-- Slide 7: Mid-dev flowchart -->
     <section class="flow-slide">
       <h2 class="slide-title">開發中流程</h2>
       <p class="slide-subtitle">實作 → 持續測試 → 進度協調 → 需求變更管控</p>
-      <img class="flow-slide-img" src="ChatGPT Image 2026年5月8日 上午11_26_30.png" alt="開發中流程圖">
+      <img class="flow-slide-img" src="ChatGPT Image-v3.2-開發中.png" alt="v3.2 開發中流程圖">
     </section>
 
     <!-- Slide 8: Post-dev flowchart -->
     <section class="flow-slide">
       <h2 class="slide-title">開發後流程</h2>
       <p class="slide-subtitle">完整回歸 → UAT → 上線決策 → 結案</p>
-      <img class="flow-slide-img" src="ChatGPT Image 2026年5月8日 上午11_26_33.png" alt="開發後流程圖">
+      <img class="flow-slide-img" src="ChatGPT Image-v3.2-開發後.png" alt="v3.2 開發後流程圖">
     </section>
 
     <!-- Slide 9: 三層策略 -->
@@ -154,10 +163,10 @@
         <div class="strategy-col strategy-blue">
           <p class="strategy-label">第二層：AI 起草，人審核</p>
           <ul>
-            <li>需求整理 / User Story</li>
-            <li>QA 測試案例初稿</li>
-            <li>規格差異比對</li>
-            <li>UAT 問題分流</li>
+            <li>Cowork：需求整理 / User Story</li>
+            <li>Cowork：QA 測試規劃 / UAT 分流</li>
+            <li>Claude Code：PR 摘要 / commit</li>
+            <li>Claude Code：測試碼 / migration script</li>
           </ul>
         </div>
         <div class="strategy-col strategy-red">
@@ -180,25 +189,25 @@
           <p class="pres-phase-title">開發前</p>
           <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">會議逐字稿整理</span></div>
           <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">User Story 草稿</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">驗收條件草稿</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">任務拆分草稿</span></div>
-          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">範圍決策、優先序、報價</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">SOW / 報價初稿</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">待確認事項整理</span></div>
+          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">客戶確認 Gate、優先序</span></div>
         </div>
         <div class="pres-phase-col">
           <p class="pres-phase-title">開發中</p>
           <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">每日進度摘要</span></div>
-          <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">阻塞任務提醒</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">規格差異比對</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">Demo 腳本起草</span></div>
-          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">變更範圍接受與否</span></div>
+          <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">Standup 準備</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">風險登錄更新</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">回饋分類、Demo 腳本</span></div>
+          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">Bug Triage、變更決策</span></div>
         </div>
         <div class="pres-phase-col">
           <p class="pres-phase-title">開發後</p>
           <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">Release Note 草稿</span></div>
           <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">結案清單產出</span></div>
           <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">UAT 問題整理</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">交接文件草稿</span></div>
-          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">放行上線、客戶簽核</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">部署指引、權限交接</span></div>
+          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">部署分流、客戶簽核</span></div>
         </div>
       </div>
     </section>
@@ -219,18 +228,17 @@
           <p class="pres-phase-title">開發中</p>
           <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">Smoke test 自動執行</span></div>
           <div class="pres-phase-item"><span class="pres-a">Auto</span><span class="pres-phase-label">Regression 自動執行</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">PR diff → 回歸建議</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">Bug ticket 草稿</span></div>
-          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">Bug severity、放行建議</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">測試結果整理</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">失敗摘要、Demo 對齊</span></div>
+          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">探索測試、severity</span></div>
         </div>
         <div class="pres-phase-col">
           <p class="pres-phase-title">開發後</p>
           <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">UAT 問題分類</span></div>
+          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">補強建議</span></div>
           <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">測試報告草稿</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">已知問題清單</span></div>
-          <div class="pres-phase-item"><span class="pres-c">C</span><span class="pres-phase-label">Issue regression 抽測清單</span></div>
           <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">完整回歸執行</span></div>
-          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">是否允許上線</span></div>
+          <div class="pres-phase-item"><span class="pres-h">人工</span><span class="pres-phase-label">客戶 UAT 放行</span></div>
         </div>
       </div>
     </section>
