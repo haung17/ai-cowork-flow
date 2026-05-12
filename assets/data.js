@@ -250,21 +250,18 @@ window.AppData.slides = [
   }
 ];
 
+window.AppData.contentVersion = 'v3.6';
+
 window.AppData.chapters = [
-  { id: 'summary',    title: '摘要',                 icon: '◎' },
-  { id: 'pain',       title: '問題背景',             icon: '⊘' },
-  { id: 'roles',      title: '角色職責',             icon: '◈' },
-  { id: 'pre-dev',    title: '開發前',               icon: '①' },
-  { id: 'mid-dev',    title: '開發中',               icon: '②' },
-  { id: 'post-dev',   title: '開發後',               icon: '③' },
-  { id: 'cowork-def', title: 'AI Cowork 定位',       icon: '◇' },
-  { id: 'claude-vs-cowork', title: 'Claude Code vs Cowork', icon: '◇' },
-  { id: 'strategy',   title: '三層策略',             icon: '▣' },
-  { id: 'flowcharts', title: '流程圖',               icon: '⊞' },
-  { id: 'auto-level', title: '自動化等級',           icon: '▤' },
-  { id: 'pm-detail',  title: 'PM 詳細規劃',          icon: '◉' },
-  { id: 'qa-detail',  title: 'QA 詳細規劃',          icon: '◉' },
-  { id: 'mvp',        title: 'MVP 規劃',             icon: '◆' },
-  { id: 'principles', title: '導入原則',             icon: '◐' },
-  { id: 'next',       title: '後續方向',             icon: '→'  },
+  { id: 'summary',          title: '核心定位',             icon: '◎' },
+  { id: 'flowcharts',       title: 'v3.6 流程圖',          icon: '⊞' },
+  { id: 'roles',            title: '角色與 AI 邊界',       icon: '◈' },
+  { id: 'pre-dev',          title: '開發前',               icon: '①' },
+  { id: 'mid-dev',          title: '開發中',               icon: '②' },
+  { id: 'post-dev',         title: '開發後',               icon: '③' },
+  { id: 'warranty',         title: '保固 / 維護期',        icon: '▤' },
+  { id: 'legend',           title: '圖例說明',             icon: '◇' },
+  { id: 'observations',     title: '優點與注意事項',       icon: '◐' },
+  { id: 'presentation-use', title: '簡報使用方式',         icon: '▣' },
+  { id: 'conclusion',       title: '一句話總結',           icon: '→'  },
 ];
