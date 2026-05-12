@@ -266,22 +266,22 @@ DashboardInteractions.buildContent = function() {
   append(`
   <section id="flowcharts">
     <h2 class="section-title">流程圖</h2>
-    <p class="section-desc">整體接案流程與開發前、中、後的分工與 AI Cowork 介入點。</p>
+    <p class="section-desc">整體接案流程與開發前、中、後的分工與 AI Cowork / Claude Code 介入點。</p>
     <figure class="flowchart-fig">
       <figcaption>整體接案流程</figcaption>
-      <img src="ChatGPT Image-v3.5-全架構.png" alt="v3.5 整體接案流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.6-全架構.png" alt="v3.6 整體接案流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發前流程</figcaption>
-      <img src="ChatGPT Image-v3.3-開發前.png" alt="v3.3 開發前流程圖" loading="lazy">
+      <figcaption>開發前流程：需求釐清、技術評估、SOW / 報價與排程</figcaption>
+      <img src="ChatGPT Image-v3.6-開發前.png" alt="v3.6 開發前流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發中流程</figcaption>
-      <img src="ChatGPT Image-v3.3-開發中.png" alt="v3.3 開發中流程圖" loading="lazy">
+      <figcaption>開發中流程：PR、CI、Code Review、QA 與問題分類</figcaption>
+      <img src="ChatGPT Image-v3.6-開發中.png" alt="v3.6 開發中流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發後流程</figcaption>
-      <img src="ChatGPT Image-v3.3-開發後.png" alt="v3.3 開發後流程圖" loading="lazy">
+      <figcaption>開發後流程：版本凍結、UAT、正式部署、文件交付與保固</figcaption>
+      <img src="ChatGPT Image-v3.6-開發後.png" alt="v3.6 開發後流程圖" loading="lazy">
     </figure>
   </section>`);
 
