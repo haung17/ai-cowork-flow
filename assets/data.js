@@ -1,11 +1,14 @@
 // assets/data.js
-window.AppData = {};
+window.AppData = window.AppData || {};
 
 // 角色常數
-const ROLE = { PM: 'pm', QA: 'qa', ENG: 'eng', SYSTEM: 'system' };
-const TYPE = { HUMAN: 'human', COWORK: 'cowork', CLAUDECODE: 'claudecode', DECISION: 'decision', SYSTEM: 'system' };
+window.ROLE = { PM: 'pm', QA: 'qa', ENG: 'eng', SYSTEM: 'system' };
+window.TYPE = { HUMAN: 'human', COWORK: 'cowork', CLAUDECODE: 'claudecode', DECISION: 'decision', SYSTEM: 'system' };
 
-AppData.flowcharts = {
+const ROLE = window.ROLE;
+const TYPE = window.TYPE;
+
+window.AppData.flowcharts = {
   main: {
     title: '接案軟體開發流程與 AI Cowork 介入點 v3.2',
     nodes: [
@@ -121,7 +124,7 @@ AppData.flowcharts = {
   }
 };
 
-AppData.slides = [
+window.AppData.slides = [
   {
     id: 'cover',
     type: 'cover',
@@ -247,7 +250,7 @@ AppData.slides = [
   }
 ];
 
-AppData.chapters = [
+window.AppData.chapters = [
   { id: 'summary',    title: '摘要',                 icon: '◎' },
   { id: 'pain',       title: '問題背景',             icon: '⊘' },
   { id: 'roles',      title: '角色職責',             icon: '◈' },

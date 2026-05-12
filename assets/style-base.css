@@ -15,6 +15,12 @@
   --type-cowork-border: 2px dashed currentColor;
   --type-decision-bg:   #FFFBEB;
   --type-decision-border: 2px solid #D97706;
+  --level-auto:         #16A34A;
+  --level-auto-bg:      #F0FDF4;
+  --level-auto-border:  #86EFAC;
+  --level-human:        #DC2626;
+  --level-human-bg:     #FEF2F2;
+  --level-human-border: #FCA5A5;
 
   /* Neutral */
   --bg:           #FFFFFF;
@@ -95,6 +101,9 @@
 .type-chip.cowork { background: var(--accent); color: #fff; }
 .type-chip.decision { background: var(--type-decision-bg); color: #D97706; border: 1px solid #FCD34D; }
 .type-chip.claudecode { background: var(--role-eng-bg); color: var(--role-eng); border: 1px solid var(--role-eng); }
+.type-chip.level-1 { background: var(--level-auto-bg); color: var(--level-auto); border: 1px solid var(--level-auto-border); }
+.type-chip.level-2 { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
+.type-chip.level-3 { background: var(--level-human-bg); color: var(--level-human); border: 1px solid var(--level-human-border); }
 
 /* Dark mode tokens */
 [data-theme="dark"] {
@@ -109,6 +118,12 @@
 
   --type-decision-bg:     #2D2208;
   --type-decision-border: 2px solid #B45309;
+  --level-auto:           #3FB950;
+  --level-auto-bg:        #0A2818;
+  --level-auto-border:    #3FB950;
+  --level-human:          #F87171;
+  --level-human-bg:       #2D0A0A;
+  --level-human-border:   #F87171;
 
   --bg:           #0D1117;
   --bg-subtle:    #161B22;
