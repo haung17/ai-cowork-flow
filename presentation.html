@@ -85,7 +85,38 @@
       <p class="slide-note">Cowork 與 Claude Code 都是助理；決策、品質與部署責任仍由人承擔。</p>
     </section>
 
-    <!-- Slide 4: Role matrix -->
+    <!-- Slide 4: Claude Code vs Cowork -->
+    <section>
+      <h2 class="slide-title">Claude Code vs Cowork</h2>
+      <p class="slide-subtitle">v3.2 將 AI 介入拆成兩種模式：PM/QA 的 Cowork，以及工程師端的 Claude Code。</p>
+      <table class="pres-table">
+        <thead>
+          <tr><th>模式</th><th>使用情境</th><th>典型輸出</th><th>人工 checkpoint</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Automation</td>
+            <td>規則固定、輸入輸出明確</td>
+            <td>測試結果、Issue 狀態、Release Note 初稿</td>
+            <td>例外狀況人工處理</td>
+          </tr>
+          <tr>
+            <td>Cowork</td>
+            <td>PM / QA 需要整理、分類、對齊狀態</td>
+            <td>User Story、測試規劃、回饋分類、Demo 腳本</td>
+            <td>PM / QA 審核後對客戶或團隊同步</td>
+          </tr>
+          <tr>
+            <td>Claude Code</td>
+            <td>工程師需要起草、檢查、產出技術交付物</td>
+            <td>PR 摘要、commit、API / DB Schema、migration script</td>
+            <td>工程師 review、測試、合併與部署</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Slide 5: Role matrix -->
     <section>
       <h2 class="slide-title">角色 × 階段總覽</h2>
       <div class="pres-phase-grid">
