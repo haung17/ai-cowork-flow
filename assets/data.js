@@ -10,7 +10,7 @@ const TYPE = window.TYPE;
 
 window.AppData.flowcharts = {
   main: {
-    title: '接案軟體開發流程與 AI Cowork 介入點 v3.2',
+    title: '接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.6',
     nodes: [
       { id:'A', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'客戶需求進來', bullets:[], x:45, y:2 },
       { id:'B', role:ROLE.PM, type:TYPE.HUMAN, title:'需求訪談與目標確認', bullets:['確認目的與範圍','釐清使用者角色','記錄商業規則'], x:45, y:11 },
@@ -55,7 +55,7 @@ window.AppData.flowcharts = {
   },
 
   preDev: {
-    title: '開發前：需求釐清、SOW、測試規劃與技術評估 v3.2',
+    title: '開發前：需求釐清、QA / 技術評估、SOW、客戶確認、排程 v3.6',
     nodes: [
       { id:'1', role:ROLE.PM, type:TYPE.HUMAN, title:'需求訪談與目標確認', bullets:['訪談目的','使用者角色','商業目標'], x:45, y:2 },
       { id:'2', role:ROLE.PM, type:TYPE.COWORK, title:'需求整理與管理', bullets:['會議紀錄','User Story','待確認事項'], x:45, y:11 },
@@ -78,7 +78,7 @@ window.AppData.flowcharts = {
   },
 
   midDev: {
-    title: '開發中：開發執行、測試摘要、Triage 與 Demo 準備 v3.2',
+    title: '開發中：開發、PR、CI、Code Review、測試環境、QA、問題分流 v3.6',
     nodes: [
       { id:'1', role:ROLE.ENG, type:TYPE.HUMAN, title:'開發實作', bullets:['功能開發','分支管理','單元測試'], x:45, y:2 },
       { id:'2', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Code Review 輔助 + Changelog', bullets:['Review checklist','PR 摘要','Changelog 草稿'], x:70, y:11 },
@@ -101,7 +101,7 @@ window.AppData.flowcharts = {
   },
 
   postDev: {
-    title: '開發後：UAT、部署分流、知識移轉與保固維護 v3.2',
+    title: '開發後：版本凍結、UAT、部署、文件交付、知識移轉、保固 v3.6',
     nodes: [
       { id:'1', role:ROLE.QA, type:TYPE.HUMAN, title:'回歸測試放行', bullets:['完整回歸','修復驗證','放行建議'], x:45, y:2 },
       { id:'2', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate 客戶 UAT 驗收', bullets:['驗收確認','回饋記錄','簽核判斷'], x:45, y:11 },
@@ -128,7 +128,7 @@ window.AppData.slides = [
   {
     id: 'cover',
     type: 'cover',
-    title: '接案流程 × AI Cowork 助理 v3.2',
+    title: '接案軟體開發交付治理流程 v3.6',
     subtitle: 'PM / QA / 工程師 如何用 AI Cowork 與 Claude Code 加速接案工作流程',
     meta: '2026-05-12'
   },
@@ -178,10 +178,10 @@ window.AppData.slides = [
       ['開發後', '部署指引、權限交接、保固維護', '回歸放行、UAT 缺陷分類', '缺陷修正、Claude Code 起草 migration / release script 與技術文件'],
     ]
   },
-  { id: 'flow-main',    type: 'flowchart', chartId: 'main',    title: '大流程圖：整體接案流程 v3.2' },
-  { id: 'flow-predev',  type: 'flowchart', chartId: 'preDev',  title: '開發前流程圖 v3.2' },
-  { id: 'flow-middev',  type: 'flowchart', chartId: 'midDev',  title: '開發中流程圖 v3.2' },
-  { id: 'flow-postdev', type: 'flowchart', chartId: 'postDev', title: '開發後流程圖 v3.2' },
+  { id: 'flow-main',    type: 'flowchart', chartId: 'main',    title: '大流程圖：整體接案流程 v3.6' },
+  { id: 'flow-predev',  type: 'flowchart', chartId: 'preDev',  title: '開發前流程圖 v3.6' },
+  { id: 'flow-middev',  type: 'flowchart', chartId: 'midDev',  title: '開發中流程圖 v3.6' },
+  { id: 'flow-postdev', type: 'flowchart', chartId: 'postDev', title: '開發後流程圖 v3.6' },
   {
     id: 'strategy',
     type: 'three-col',
