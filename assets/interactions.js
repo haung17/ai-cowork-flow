@@ -29,9 +29,9 @@ DashboardInteractions.buildContent = function() {
   // Summary
   wrapper.innerHTML += `
   <section id="summary">
-    <h1 class="section-title">PM / QA / 工程師 × AI Cowork 流程指南</h1>
-    <p class="section-desc">整理自實際討論：接案情境下，PM、QA、工程師如何分工，以及 AI Cowork 在開發前、中、後如何加速作業。</p>
-    <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint)">整理日期：2026-05-08 ／ 來源：ChatGPT 對話紀錄</p>
+    <h1 class="section-title">PM / QA / 工程師 × AI Cowork 流程指南 v3.2</h1>
+    <p class="section-desc">整理自實際討論：接案情境下，PM、QA、工程師如何分工，以及 Cowork 與 Claude Code 在開發前、中、後如何加速作業。</p>
+    <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint)">整理日期：2026-05-12 ／ 來源：ChatGPT 對話紀錄</p>
   </section>`;
 
   // Pain points
@@ -95,7 +95,9 @@ DashboardInteractions.buildContent = function() {
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
       <li style="font-size:var(--text-sm)"><strong>需求釐清</strong> — 確認功能目的、使用者、流程、商業規則 → 需求文件、User Story、流程圖</li>
       <li style="font-size:var(--text-sm)"><strong>範圍定義</strong> — 哪些本期要做、哪些不做、哪些是二期 → Scope list、Out of scope list</li>
+      <li style="font-size:var(--text-sm)"><strong>SOW / 報價初稿</strong> — 由 Cowork 先整理交付範圍、報價依據與待確認項目 → PM 審核後對客戶說明</li>
       <li style="font-size:var(--text-sm)"><strong>優先順序</strong> — 排出 Must / Should / Could → 開發順序、里程碑</li>
+      <li style="font-size:var(--text-sm)"><strong>客戶確認 Gate</strong> — SOW、報價、交付範圍確認後才進入測試規劃與技術拆分</li>
       <li style="font-size:var(--text-sm)"><strong>驗收條件</strong> — 每個功能怎樣才算完成 → Acceptance Criteria</li>
       <li style="font-size:var(--text-sm)"><strong>畫面與流程</strong> — Wireframe、Mockup、操作流程 → Figma、流程圖、API 流程</li>
       <li style="font-size:var(--text-sm)"><strong>時程規劃</strong> — 切階段、排開發、測試、UAT、上線 → 甘特圖、Sprint plan</li>
@@ -115,6 +117,8 @@ DashboardInteractions.buildContent = function() {
     <details><summary>工程師｜技術評估、工時估算</summary>
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
       <li style="font-size:var(--text-sm)"><strong>技術評估</strong> — 評估可行性、架構選型、第三方依賴確認</li>
+      <li style="font-size:var(--text-sm)"><strong>OpenAPI / DB Schema 草稿</strong> — Claude Code 起草 endpoint、payload、schema 與錯誤碼，工程師審核後對齊 PM/QA</li>
+      <li style="font-size:var(--text-sm)"><strong>CLAUDE.md 初始化</strong> — Claude Code 依專案規範建立 coding style、commit rule、測試規範</li>
       <li style="font-size:var(--text-sm)"><strong>API contract</strong> — 與 PM/QA 確認前後端 API 介面、資料格式</li>
       <li style="font-size:var(--text-sm)"><strong>工時估算</strong> — 各功能工時、整體 sprint 規劃</li>
       <li style="font-size:var(--text-sm)"><strong>環境建置</strong> — 開發、staging、CI/CD 環境設定</li>
@@ -132,13 +136,16 @@ DashboardInteractions.buildContent = function() {
       <li style="font-size:var(--text-sm)"><strong>控制變更</strong> — 臨時新增功能時，判斷加價 / 延後 / 替換，避免 scope creep</li>
       <li style="font-size:var(--text-sm)"><strong>更新規格</strong> — 需求有變就更新文件，不只口頭講 → 避免資訊落差</li>
       <li style="font-size:var(--text-sm)"><strong>追蹤進度</strong> — 看任務是否卡住、是否超時 → 提早暴露風險</li>
+      <li style="font-size:var(--text-sm)"><strong>回饋分類與狀態更新</strong> — Cowork 協助將客戶回饋分為 Bug / 新需求 / 操作問題，並同步狀態</li>
       <li style="font-size:var(--text-sm)"><strong>協調依賴</strong> — UI、API、第三方服務、客戶資料 → 避免工程師空等</li>
-      <li style="font-size:var(--text-sm)"><strong>Demo 安排</strong> — 分階段給客戶看，不要最後才驗收 → 降低尾聲大翻車</li>
+      <li style="font-size:var(--text-sm)"><strong>Bug Triage 三角共議</strong> — PM 定 priority、QA 定 severity、工程師估技術影響 → 決定本週/下週修</li>
+      <li style="font-size:var(--text-sm)"><strong>Sprint Demo 獨立區塊</strong> — Cowork 起草 Demo 腳本、Release Note 草稿與驗收清單 → 降低尾聲大翻車</li>
       <li style="font-size:var(--text-sm)"><strong>優先級調整</strong> — 時間不夠時決定哪些先做、哪些延後 → 保護核心交付功能</li>
     </ul></div></details>
     <details><summary>QA｜持續測試、Bug 回報</summary>
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
       <li style="font-size:var(--text-sm)"><strong>提早測試</strong> — CR 功能完成後，初步驗證是否符合客戶需求，測試完成提供客戶進行同步驗證 → 提早暴露落差</li>
+      <li style="font-size:var(--text-sm)"><strong>測試結果整理與失敗摘要</strong> — Cowork 彙整 CI / Staging 失敗、重現資訊與可能原因 → QA 進一步判斷</li>
       <li style="font-size:var(--text-sm)"><strong>建立 bug ticket</strong> — 附步驟、環境、截圖、預期/實際結果 → 工程師能快速重現</li>
       <li style="font-size:var(--text-sm)"><strong>回歸測試</strong> — 修 bug 後確認原本功能沒壞 → 避免修 A 壞 B</li>
       <li style="font-size:var(--text-sm)"><strong>探索式測試</strong> — 不只照測試案例，也嘗試異常流程 → 找出規格外問題</li>
@@ -150,7 +157,7 @@ DashboardInteractions.buildContent = function() {
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
       <li style="font-size:var(--text-sm)"><strong>功能實作</strong> — 分支開發、切分 task，保持 PR 粒度小</li>
       <li style="font-size:var(--text-sm)"><strong>Unit / 整合測試</strong> — 保持測試覆蓋率，先寫測試再實作</li>
-      <li style="font-size:var(--text-sm)"><strong>Code Review</strong> — PR review、合併到測試環境</li>
+      <li style="font-size:var(--text-sm)"><strong>Code Review</strong> — Claude Code 協助產出 review checklist、PR 摘要與 changelog，工程師負責審核與修正</li>
       <li style="font-size:var(--text-sm)"><strong>Bug 修復</strong> — 依 severity 排序，Critical 優先處理</li>
       <li style="font-size:var(--text-sm)"><strong>配合 QA</strong> — 提供測試環境、API docs、mock 資料</li>
     </ul></div></details>
@@ -166,9 +173,12 @@ DashboardInteractions.buildContent = function() {
       <li style="font-size:var(--text-sm)"><strong>驗收範圍確認</strong> — 確認本期交付哪些功能 → Release scope</li>
       <li style="font-size:var(--text-sm)"><strong>客戶 UAT 安排</strong> — 請客戶在測試環境驗收 → UAT checklist</li>
       <li style="font-size:var(--text-sm)"><strong>驗收問題控管</strong> — 區分 bug / 需求變更 / 新功能 → Issue classification</li>
+      <li style="font-size:var(--text-sm)"><strong>部署方式分流</strong> — 判斷我方部署或客戶自行部署；我方部署走 script，客戶部署走部署指引</li>
       <li style="font-size:var(--text-sm)"><strong>上線排程</strong> — 確認時間、停機窗口、備份策略 → Deployment plan</li>
+      <li style="font-size:var(--text-sm)"><strong>Knowledge Transfer 7-2</strong> — 權限、維護窗口、操作責任與交接清單由 PM 對齊客戶</li>
       <li style="font-size:var(--text-sm)"><strong>文件交付</strong> — 操作手冊、帳號、API 文件、維護說明 → Handover docs</li>
       <li style="font-size:var(--text-sm)"><strong>結案確認</strong> — 客戶簽核、付款節點、保固期 → Sign-off</li>
+      <li style="font-size:var(--text-sm)"><strong>保固 / 維護期 SLA</strong> — 明確 Bug 回報 SLA、Release Note 節奏與教育訓練安排</li>
       <li style="font-size:var(--text-sm)"><strong>二期需求整理</strong> — 把本次沒做或新增的需求整理成 backlog → Phase 2 backlog</li>
     </ul></div></details>
     <details><summary>QA｜完整回歸、放行評估</summary>
@@ -186,9 +196,10 @@ DashboardInteractions.buildContent = function() {
     <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
       <li style="font-size:var(--text-sm)"><strong>Bug 修復</strong> — 依優先序處理 Critical / Major bug，確保上線品質</li>
       <li style="font-size:var(--text-sm)"><strong>上線部署</strong> — 配合 PM/QA 執行上線流程、資料庫 migration</li>
+      <li style="font-size:var(--text-sm)"><strong>Release script</strong> — Claude Code 起草 migration script、release script 與 rollback note，工程師審核後執行</li>
       <li style="font-size:var(--text-sm)"><strong>Smoke 支援</strong> — 協助確認生產環境功能正常</li>
       <li style="font-size:var(--text-sm)"><strong>系統監控</strong> — 上線後確認 log、效能、錯誤率</li>
-      <li style="font-size:var(--text-sm)"><strong>技術文件</strong> — 補充 API docs、deployment notes、維護說明</li>
+      <li style="font-size:var(--text-sm)"><strong>Knowledge Transfer 7-1</strong> — Claude Code 協助產出 API doc、Schema、Coding style 等技術文件，工程師負責審核</li>
     </ul></div></details>
   </section>`;
 
@@ -196,13 +207,29 @@ DashboardInteractions.buildContent = function() {
   wrapper.innerHTML += `
   <section id="cowork-def">
     <h2 class="section-title">AI Cowork 定位</h2>
-    <p class="section-desc">Automation（腳本）與 AI Cowork（助理）的差異。</p>
+    <p class="section-desc">Automation（腳本）、Cowork（PM/QA 助理）與 Claude Code（工程師端 AI 起草）的差異。</p>
     <table>
       <thead><tr><th>類型</th><th>核心</th><th>長處</th><th>弱點</th></tr></thead>
       <tbody>
         <tr><td style="font-family:var(--font-mono);font-weight:600">Automation</td><td>流程跑完</td><td>穩定、便宜、快</td><td>不會協作、不知脈絡</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">AI Cowork</td><td>AI 當助理</td><td>整理、起草、追蹤、提醒</td><td>不能代替決策與責任承擔</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-weight:600">Cowork</td><td>PM / QA 助理</td><td>需求整理、測試規劃、回饋分類、狀態同步</td><td>不能代替商務與品質決策</td></tr>
+        <tr><td style="font-family:var(--font-mono);font-weight:600">Claude Code</td><td>工程師端 AI 起草</td><td>commit / PR / migration script / 技術文件草稿</td><td>上下文需明確，仍需要工程師 review</td></tr>
         <tr><td style="font-family:var(--font-mono);font-weight:600">Human Decision</td><td>判斷與負責</td><td>理解商業情境、承擔後果</td><td>時間有限、易遺漏細節</td></tr>
+      </tbody>
+    </table>
+  </section>`;
+
+  // Claude Code vs Cowork
+  wrapper.innerHTML += `
+  <section id="claude-vs-cowork">
+    <h2 class="section-title">Claude Code vs Cowork</h2>
+    <p class="section-desc">v3.2 將 AI 介入拆成兩種模式：PM/QA 的 Cowork，以及工程師端的 Claude Code。</p>
+    <table>
+      <thead><tr><th>模式</th><th>使用情境</th><th>典型輸出</th><th>人工 checkpoint</th></tr></thead>
+      <tbody>
+        <tr><td>Automation</td><td>規則固定、輸入輸出明確</td><td>測試結果、Issue 狀態、Release Note 初稿</td><td>例外狀況人工處理</td></tr>
+        <tr><td>Cowork</td><td>PM / QA 需要整理、分類、對齊狀態</td><td>User Story、測試規劃、回饋分類、Demo 腳本</td><td>PM / QA 審核後對客戶或團隊同步</td></tr>
+        <tr><td>Claude Code</td><td>工程師需要起草、檢查、產出技術交付物</td><td>PR 摘要、commit、API / DB Schema、migration script</td><td>工程師 review、測試、合併與部署</td></tr>
       </tbody>
     </table>
   </section>`;
@@ -223,7 +250,7 @@ DashboardInteractions.buildContent = function() {
         <tr>
           <td><span class="type-chip cowork">第二層</span></td>
           <td>AI 起草，人審核</td>
-          <td>需求整理、User Story、QA 測試案例初稿、Bug ticket 格式化、規格差異比對、UAT 問題分流</td>
+          <td>Cowork：需求整理、User Story、QA 測試案例初稿、Bug ticket 格式化、規格差異比對、UAT 問題分流<br>Claude Code：PR 摘要、commit、測試碼、migration script、Release script</td>
         </tr>
         <tr>
           <td><span class="type-chip" style="background:#FEF2F2;color:#DC2626;border:1px solid #FCA5A5">第三層</span></td>
@@ -241,19 +268,19 @@ DashboardInteractions.buildContent = function() {
     <p class="section-desc">整體接案流程與開發前、中、後的分工與 AI Cowork 介入點。</p>
     <figure class="flowchart-fig">
       <figcaption>整體接案流程</figcaption>
-      <img src="ChatGPT Image 2026年5月8日 下午05_21_25.png" alt="整體接案流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.2-全架構.png" alt="v3.2 整體接案流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
       <figcaption>開發前流程</figcaption>
-      <img src="ChatGPT Image 2026年5月8日 上午11_26_23.png" alt="開發前流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.2-開發前.png" alt="v3.2 開發前流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
       <figcaption>開發中流程</figcaption>
-      <img src="ChatGPT Image 2026年5月8日 上午11_26_30.png" alt="開發中流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.2-開發中.png" alt="v3.2 開發中流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
       <figcaption>開發後流程</figcaption>
-      <img src="ChatGPT Image 2026年5月8日 上午11_26_33.png" alt="開發後流程圖" loading="lazy">
+      <img src="ChatGPT Image-v3.2-開發後.png" alt="v3.2 開發後流程圖" loading="lazy">
     </figure>
   </section>`;
 
@@ -267,7 +294,7 @@ DashboardInteractions.buildContent = function() {
       <tbody>
         <tr><td><span class="role-chip pm">PM</span></td><td>AI 起草（需求整理、US、任務拆分）</td><td>全自動（進度摘要）+ AI 起草（規格比對）</td><td>全自動（Release Note）+ AI 起草（UAT 分類）</td></tr>
         <tr><td><span class="role-chip qa">QA</span></td><td>全自動（對照表）+ AI 起草（測試案例）</td><td>全自動（Regression）+ AI 起草（回歸建議）</td><td>AI 起草（測試報告、UAT 分類）</td></tr>
-        <tr><td><span class="role-chip eng">工程師</span></td><td>AI 起草（任務拆分草稿）</td><td>AI 起草（PR 摘要、測試 skeleton）</td><td>人工為主（Bug 修復、上線支援）</td></tr>
+        <tr><td><span class="role-chip eng">工程師</span></td><td>Claude Code（API / DB Schema、CLAUDE.md）</td><td>Claude Code（PR 摘要、Code Review 輔助、Changelog）</td><td>Claude Code（migration script、Release script、技術文件）</td></tr>
       </tbody>
     </table>
   </section>`;
@@ -280,9 +307,9 @@ DashboardInteractions.buildContent = function() {
     <table>
       <thead><tr><th>階段</th><th>可全自動</th><th>AI 起草人審核</th><th>必須人工</th></tr></thead>
       <tbody>
-        <tr><td>開發前</td><td>會議逐字稿整理</td><td>User Story / 驗收條件草稿 / 任務拆分</td><td>範圍決策、優先序、報價</td></tr>
-        <tr><td>開發中</td><td>每日進度摘要、阻塞任務提醒</td><td>規格差異比對、客戶回報分類、Demo 腳本</td><td>範圍變更接受與否、與客戶談加價</td></tr>
-        <tr><td>開發後</td><td>Release Note、結案清單</td><td>UAT 問題整理、交接文件草稿</td><td>是否放行上線、客戶簽核</td></tr>
+        <tr><td>開發前</td><td>會議逐字稿整理</td><td>User Story / SOW / 報價初稿</td><td>範圍決策、客戶確認 Gate、優先序</td></tr>
+        <tr><td>開發中</td><td>每日進度摘要、Standup 準備、風險登錄更新</td><td>回饋分類、狀態更新、Demo 腳本</td><td>Bug Triage 共議、範圍變更接受與否</td></tr>
+        <tr><td>開發後</td><td>Release Note、結案清單</td><td>UAT 問題整理、部署指引、權限交接</td><td>部署方式分流、是否放行上線、客戶簽核</td></tr>
       </tbody>
     </table>
   </section>`;
@@ -295,9 +322,9 @@ DashboardInteractions.buildContent = function() {
     <table>
       <thead><tr><th>階段</th><th>可全自動</th><th>AI 起草人審核</th><th>必須人工</th></tr></thead>
       <tbody>
-        <tr><td>開發前</td><td>需求 × 測試對照表</td><td>測試案例初稿、邊界案例、測試資料草稿</td><td>測試策略、高風險判定</td></tr>
-        <tr><td>開發中</td><td>Smoke / Regression 自動執行</td><td>回歸測試建議、Bug ticket 草稿、失敗原因初判</td><td>Bug severity、放行建議</td></tr>
-        <tr><td>開發後</td><td>—</td><td>UAT 問題分類、測試報告、已知問題清單</td><td>是否允許上線</td></tr>
+        <tr><td>開發前</td><td>需求 × 測試對照表</td><td>測試規劃初稿、邊界案例、測試資料草稿</td><td>測試策略、高風險判定</td></tr>
+        <tr><td>開發中</td><td>Smoke / Regression 自動執行</td><td>測試結果整理、失敗摘要、Bug ticket 草稿、Sprint Demo 對齊項目</td><td>探索測試、Bug severity、放行建議</td></tr>
+        <tr><td>開發後</td><td>—</td><td>UAT 缺陷分類、補強建議、測試報告</td><td>完整回歸、客戶 UAT 放行</td></tr>
       </tbody>
     </table>
   </section>`;
@@ -312,8 +339,8 @@ DashboardInteractions.buildContent = function() {
       <tbody>
         <tr><td style="font-family:var(--font-mono);color:var(--accent)">1</td><td>會議紀錄 → 需求摘要</td><td><span class="role-chip pm">PM</span></td><td>減少需求整理時間 50%+</td></tr>
         <tr><td style="font-family:var(--font-mono);color:var(--accent)">2</td><td>需求 → User Story / 驗收條件</td><td><span class="role-chip pm">PM</span></td><td>讓工程師與 QA 快速對齊</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">3</td><td>需求 → 測試案例初稿</td><td><span class="role-chip qa">QA</span></td><td>減少測試規劃時間</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">4</td><td>PR diff → 回歸測試建議</td><td><span class="role-chip qa">QA</span></td><td>降低漏測風險</td></tr>
+        <tr><td style="font-family:var(--font-mono);color:var(--accent)">3</td><td>需求 → 測試規劃初稿</td><td><span class="role-chip qa">QA</span></td><td>減少測試規劃時間</td></tr>
+        <tr><td style="font-family:var(--font-mono);color:var(--accent)">4</td><td>PR diff → Code Review 輔助 + 回歸測試建議</td><td><span class="role-chip eng">工程師</span> <span class="role-chip qa">QA</span></td><td>降低漏測與低品質 PR 風險</td></tr>
         <tr><td style="font-family:var(--font-mono);color:var(--accent)">5</td><td>UAT 回饋分類</td><td><span class="role-chip pm">PM</span> <span class="role-chip qa">QA</span></td><td>區分 bug / 新需求 / 操作問題</td></tr>
         <tr><td style="font-family:var(--font-mono);color:var(--accent)">6</td><td>Release Note / 交接文件草稿</td><td><span class="role-chip pm">PM</span></td><td>加速交付與結案</td></tr>
       </tbody>
@@ -328,6 +355,7 @@ DashboardInteractions.buildContent = function() {
     <ol style="padding-left:var(--sp-6);font-size:var(--text-sm);display:flex;flex-direction:column;gap:var(--sp-3)">
       <li><strong>AI 只做助理，不做最後決策</strong> — PM 的商業判斷、QA 的品質放行、工程師的技術責任，都不能外包</li>
       <li><strong>優先做「草稿、整理、比對、分類」</strong> — 最穩、最有價值的使用方式</li>
+      <li><strong>PM / QA 用 Cowork，工程師用 Claude Code</strong> — 兩者都能起草，但責任邊界與審核者不同</li>
       <li><strong>高頻、規則清楚的，交給腳本</strong> — 跑測試、抓 issue、彙整 commit</li>
       <li><strong>高價值但容易耗時的，交給 AI Cowork</strong> — 需求整理、測試案例、bug ticket、規格比對</li>
       <li><strong>每個流程都要有人工 checkpoint</strong> — 這樣才是真正好用的 cowork</li>

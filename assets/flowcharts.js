@@ -95,7 +95,7 @@ FlowCharts.render = function(chartId, containerEl) {
       header.appendChild(chip);
     }
     if (!isDecision) {
-      const typeMap = { human: '人工', cowork: 'Cowork' };
+      const typeMap = { human: '人工', cowork: 'Cowork', claudecode: 'Claude Code' };
       const tChip = document.createElement('span');
       tChip.className = `type-chip ${n.type}`;
       tChip.textContent = typeMap[n.type] || '';
@@ -129,7 +129,7 @@ FlowCharts.render = function(chartId, containerEl) {
 
 FlowCharts.openModal = function(node) {
   const roleMap = { pm: 'PM', qa: 'QA', eng: '工程師', system: 'System' };
-  const typeMap = { human: '人工決策', cowork: 'AI Cowork', decision: '判斷點', system: '系統狀態' };
+  const typeMap = { human: '人工決策', cowork: 'AI Cowork', claudecode: 'Claude Code', decision: '判斷點', system: '系統狀態' };
 
   const overlay = document.getElementById('fc-modal');
   const title   = document.getElementById('fc-modal-title');

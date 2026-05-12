@@ -93,7 +93,7 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: var(--sp-16) var(--sp-12);
-  max-width: 900px;
+  max-width: 1200px;
 }
 
 .content-wrapper > section {
@@ -206,6 +206,7 @@ details .details-content { padding: var(--sp-4); border-top: 1px solid var(--bor
 
 .fc-node.human  { border: 1px solid var(--border-strong); }
 .fc-node.cowork { border: 1.5px dashed var(--accent); }
+.fc-node.claudecode { border: 1.5px dashed var(--role-eng); background: var(--role-eng-bg); }
 .fc-node.decision {
   background: var(--type-decision-bg);
   border: 1px solid #FCD34D;

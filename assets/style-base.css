@@ -94,6 +94,7 @@
 .type-chip.human  { background: var(--bg-muted); color: var(--text-muted); border: 1px solid var(--border-strong); }
 .type-chip.cowork { background: var(--accent); color: #fff; }
 .type-chip.decision { background: var(--type-decision-bg); color: #D97706; border: 1px solid #FCD34D; }
+.type-chip.claudecode { background: var(--role-eng-bg); color: var(--role-eng); border: 1px solid var(--role-eng); }
 
 /* Dark mode tokens */
 [data-theme="dark"] {
