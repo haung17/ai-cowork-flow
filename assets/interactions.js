@@ -25,254 +25,34 @@ DashboardInteractions.buildNav = function() {
 // 2. Build main content sections
 DashboardInteractions.buildContent = function() {
   const wrapper = document.querySelector('.content-wrapper');
-  const append = html => wrapper.insertAdjacentHTML('beforeend', html);
+  const sections = [];
+  const append = html => sections.push(html);
 
-  // Summary
   append(`
   <section id="summary">
-    <h1 class="section-title">PM / QA / 工程師 × AI Cowork 流程指南 v3.2</h1>
-    <p class="section-desc">整理自實際討論：接案情境下，PM、QA、工程師如何分工，以及 Cowork 與 Claude Code 在開發前、中、後如何加速作業。</p>
-    <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint)">整理日期：2026-05-12 ／ 來源：ChatGPT 對話紀錄</p>
-  </section>`);
-
-  // Pain points
-  append(`
-  <section id="pain">
-    <h2 class="section-title">問題背景</h2>
-    <p class="section-desc">接案流程中最常見的痛點，也是 AI Cowork 要解決的核心問題。</p>
+    <h1 class="section-title">接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.6</h1>
+    <p class="section-desc">這份內容的定位不是一般開發流程圖，而是「AI 輔助下的接案軟體開發交付治理流程」。適用於政府教育部案、企業內部系統案、客製化系統案、網站或後台系統案。</p>
     <table>
-      <thead><tr><th>痛點</th><th>具體情況</th><th>影響</th></tr></thead>
+      <thead><tr><th>核心定位</th><th>說明</th></tr></thead>
       <tbody>
-        <tr><td>需求模糊</td><td>客戶說的和工程師做的有落差，規格不清就進開發</td><td>開發方向錯誤，回頭改成本高</td></tr>
-        <tr><td>資訊落差</td><td>PM、QA、工程師各看各的，沒有共同規格基準</td><td>測試不到位，驗收爭議多</td></tr>
-        <tr><td>變更失控</td><td>需求邊做邊改，沒有記錄，沒有影響分析</td><td>範圍蔓延、時程爆炸</td></tr>
-        <tr><td>尾聲壓力</td><td>bug、文件、回歸全部塞到驗收前爆發</td><td>品質不穩定、交付延期</td></tr>
+        <tr><td>三個責任角色</td><td>PM 負責需求、範圍、客戶溝通與簽核；QA 負責測試策略、品質驗證與驗收確認；工程師負責技術評估、開發、Review、部署與技術文件。</td></tr>
+        <tr><td>AI 不是責任主體</td><td>Claude Cowork 主要輔助 PM / QA 做整理、起草、比對、提醒；Claude Code 主要輔助工程師做開發、測試、PR、CI、技術文件與專案初始化。</td></tr>
+        <tr><td>治理重點</td><td>先完成 QA / 工程師評估，再對外確認 SOW / 報價；開發中分流 Bug、規格疑義與 Change Request；UAT 前先完成版本凍結、UAT 部署與內部 Smoke Test。</td></tr>
       </tbody>
     </table>
+    <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint);margin-bottom:0">版本：v3.6 ／ 整理日期：2026-05-12</p>
   </section>`);
 
-  // Roles section
-  append(`
-  <section id="roles">
-    <h2 class="section-title">角色職責</h2>
-    <p class="section-desc">工程師視角：PM 降低需求不清的風險，QA 降低交付後才發現問題的風險。</p>
-    <details open><summary>PM 的核心價值</summary>
-    <div class="details-content">
-    <p style="margin-bottom:var(--sp-3);font-size:var(--text-sm);color:var(--text-muted)">讓工程師知道「要做什麼、為什麼做、做到什麼程度算完成」。</p>
-    <table>
-      <thead><tr><th>工作項目</th><th>細分內容</th><th>工程師需要的產出</th></tr></thead>
-      <tbody>
-        <tr><td>需求釐清</td><td>確認功能目的、使用者、流程、商業規則</td><td>需求文件、User Story、流程圖</td></tr>
-        <tr><td>範圍定義</td><td>本期要做 / 不做 / 二期</td><td>Scope list、Out of scope list</td></tr>
-        <tr><td>驗收條件</td><td>每個功能怎樣才算完成</td><td>Acceptance Criteria</td></tr>
-        <tr><td>畫面與流程</td><td>Wireframe、Mockup、操作流程</td><td>Figma、流程圖、API 流程</td></tr>
-        <tr><td>時程規劃</td><td>切階段、排開發、測試、UAT、上線</td><td>甘特圖、Sprint plan</td></tr>
-        <tr><td>溝通窗口</td><td>整理客戶問題，保護工程師不被打斷</td><td>Q&A log、決策紀錄</td></tr>
-      </tbody>
-    </table>
-    </div></details>
-    <details><summary>QA 的核心價值</summary>
-    <div class="details-content">
-    <p style="margin-bottom:var(--sp-3);font-size:var(--text-sm);color:var(--text-muted)">確認「做出來的東西是否真的符合需求，且沒有破壞既有功能」。</p>
-    <table>
-      <thead><tr><th>工作項目</th><th>細分內容</th><th>工程師需要的產出</th></tr></thead>
-      <tbody>
-        <tr><td>讀需求</td><td>看 PM 的規格是否可測</td><td>可測性問題清單</td></tr>
-        <tr><td>找矛盾</td><td>檢查需求是否衝突、流程是否缺漏</td><td>規格問題回報</td></tr>
-        <tr><td>測試計畫</td><td>決定手測 vs 自動化範圍</td><td>Test Plan</td></tr>
-        <tr><td>測試案例</td><td>根據驗收條件設計</td><td>Test Cases</td></tr>
-        <tr><td>風險評估</td><td>找出高風險功能</td><td>高風險測試項目</td></tr>
-      </tbody>
-    </table>
-    </div></details>
-  </section>`);
-
-  // Pre-dev section
-  append(`
-  <section id="pre-dev">
-    <h2 class="section-title">開發前</h2>
-    <p class="section-desc">把模糊需求整理成工程師能開工、QA 能測試、客戶能驗收的規格。</p>
-    <details open><summary>PM｜需求訪談、範圍確認、時程</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>需求釐清</strong> — 確認功能目的、使用者、流程、商業規則 → 需求文件、User Story、流程圖</li>
-      <li style="font-size:var(--text-sm)"><strong>範圍定義</strong> — 哪些本期要做、哪些不做、哪些是二期 → Scope list、Out of scope list</li>
-      <li style="font-size:var(--text-sm)"><strong>SOW / 報價初稿</strong> — 由 Cowork 先整理交付範圍、報價依據與待確認項目 → PM 審核後對客戶說明</li>
-      <li style="font-size:var(--text-sm)"><strong>優先順序</strong> — 排出 Must / Should / Could → 開發順序、里程碑</li>
-      <li style="font-size:var(--text-sm)"><strong>客戶確認 Gate</strong> — SOW、報價、交付範圍確認後才進入測試規劃與技術拆分</li>
-      <li style="font-size:var(--text-sm)"><strong>驗收條件</strong> — 每個功能怎樣才算完成 → Acceptance Criteria</li>
-      <li style="font-size:var(--text-sm)"><strong>畫面與流程</strong> — Wireframe、Mockup、操作流程 → Figma、流程圖、API 流程</li>
-      <li style="font-size:var(--text-sm)"><strong>時程規劃</strong> — 切階段、排開發、測試、UAT、上線 → 甘特圖、Sprint plan</li>
-      <li style="font-size:var(--text-sm)"><strong>風險管理</strong> — 第三方 API、客戶資料、法規 → 風險清單、待確認問題</li>
-      <li style="font-size:var(--text-sm)"><strong>溝通窗口</strong> — 整理客戶問題，保護工程師不被打斷 → Q&A log、決策紀錄</li>
-    </ul></div></details>
-    <details><summary>QA｜需求可測性、測試策略</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>讀需求</strong> — 看 PM 的規格是否可測 → 可測性問題清單</li>
-      <li style="font-size:var(--text-sm)"><strong>找矛盾</strong> — 需求是否衝突、流程是否缺漏 → 規格問題回報</li>
-      <li style="font-size:var(--text-sm)"><strong>測試計畫</strong> — 決定手測 vs 自動化範圍 → Test Plan</li>
-      <li style="font-size:var(--text-sm)"><strong>測試案例</strong> — 根據驗收條件設計案例 → Test Cases</li>
-      <li style="font-size:var(--text-sm)"><strong>測試資料</strong> — 一般資料、錯誤資料、邊界資料 → 測試帳號、測試資料表</li>
-      <li style="font-size:var(--text-sm)"><strong>測試環境</strong> — 確認 staging / test DB / 測試 API → 測試環境清單</li>
-      <li style="font-size:var(--text-sm)"><strong>風險評估</strong> — 找出高風險功能（付款、權限、刪除）→ 高風險測試項目</li>
-    </ul></div></details>
-    <details><summary>工程師｜技術評估、工時估算</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>技術評估</strong> — 評估可行性、架構選型、第三方依賴確認</li>
-      <li style="font-size:var(--text-sm)"><strong>OpenAPI / DB Schema 草稿</strong> — Claude Code 起草 endpoint、payload、schema 與錯誤碼，工程師審核後對齊 PM/QA</li>
-      <li style="font-size:var(--text-sm)"><strong>CLAUDE.md 初始化</strong> — Claude Code 依專案規範建立 coding style、commit rule、測試規範</li>
-      <li style="font-size:var(--text-sm)"><strong>API contract</strong> — 與 PM/QA 確認前後端 API 介面、資料格式</li>
-      <li style="font-size:var(--text-sm)"><strong>工時估算</strong> — 各功能工時、整體 sprint 規劃</li>
-      <li style="font-size:var(--text-sm)"><strong>環境建置</strong> — 開發、staging、CI/CD 環境設定</li>
-    </ul></div></details>
-  </section>`);
-
-  // Mid-dev section
-  append(`
-  <section id="mid-dev">
-    <h2 class="section-title">開發中</h2>
-    <p class="section-desc">進度追蹤、需求變更管控、持續測試、阻塞排除。</p>
-    <details open><summary>PM｜進度追蹤、需求變更管控</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>需求答疑</strong> — 工程師遇到不清楚時負責問客戶或決策，避免猜需求</li>
-      <li style="font-size:var(--text-sm)"><strong>控制變更</strong> — 臨時新增功能時，判斷加價 / 延後 / 替換，避免 scope creep</li>
-      <li style="font-size:var(--text-sm)"><strong>更新規格</strong> — 需求有變就更新文件，不只口頭講 → 避免資訊落差</li>
-      <li style="font-size:var(--text-sm)"><strong>追蹤進度</strong> — 看任務是否卡住、是否超時 → 提早暴露風險</li>
-      <li style="font-size:var(--text-sm)"><strong>回饋分類與狀態更新</strong> — Cowork 協助將客戶回饋分為 Bug / 新需求 / 操作問題，並同步狀態</li>
-      <li style="font-size:var(--text-sm)"><strong>協調依賴</strong> — UI、API、第三方服務、客戶資料 → 避免工程師空等</li>
-      <li style="font-size:var(--text-sm)"><strong>Bug Triage 三角共議</strong> — PM 定 priority、QA 定 severity、工程師估技術影響 → 決定本週/下週修</li>
-      <li style="font-size:var(--text-sm)"><strong>Sprint Demo 獨立區塊</strong> — Cowork 起草 Demo 腳本、Release Note 草稿與驗收清單 → 降低尾聲大翻車</li>
-      <li style="font-size:var(--text-sm)"><strong>優先級調整</strong> — 時間不夠時決定哪些先做、哪些延後 → 保護核心交付功能</li>
-    </ul></div></details>
-    <details><summary>QA｜持續測試、Bug 回報</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>提早測試</strong> — CR 功能完成後，初步驗證是否符合客戶需求，測試完成提供客戶進行同步驗證 → 提早暴露落差</li>
-      <li style="font-size:var(--text-sm)"><strong>測試結果整理與失敗摘要</strong> — Cowork 彙整 CI / Staging 失敗、重現資訊與可能原因 → QA 進一步判斷</li>
-      <li style="font-size:var(--text-sm)"><strong>建立 bug ticket</strong> — 附步驟、環境、截圖、預期/實際結果 → 工程師能快速重現</li>
-      <li style="font-size:var(--text-sm)"><strong>回歸測試</strong> — 修 bug 後確認原本功能沒壞 → 避免修 A 壞 B</li>
-      <li style="font-size:var(--text-sm)"><strong>探索式測試</strong> — 不只照測試案例，也嘗試異常流程 → 找出規格外問題</li>
-      <li style="font-size:var(--text-sm)"><strong>API 測試</strong> — 測 API response、錯誤碼、權限 → 後端問題更早發現</li>
-      <li style="font-size:var(--text-sm)"><strong>UI 測試</strong> — 確認畫面、RWD、按鈕、表單驗證 → 降低客戶驗收問題</li>
-      <li style="font-size:var(--text-sm)"><strong>案例更新</strong> — 規格改了，測試案例也要同步更新 → 避免測舊需求</li>
-    </ul></div></details>
-    <details><summary>工程師｜功能實作、Code Review</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>功能實作</strong> — 分支開發、切分 task，保持 PR 粒度小</li>
-      <li style="font-size:var(--text-sm)"><strong>Unit / 整合測試</strong> — 保持測試覆蓋率，先寫測試再實作</li>
-      <li style="font-size:var(--text-sm)"><strong>Code Review</strong> — Claude Code 協助產出 review checklist、PR 摘要與 changelog，工程師負責審核與修正</li>
-      <li style="font-size:var(--text-sm)"><strong>Bug 修復</strong> — 依 severity 排序，Critical 優先處理</li>
-      <li style="font-size:var(--text-sm)"><strong>配合 QA</strong> — 提供測試環境、API docs、mock 資料</li>
-    </ul></div></details>
-  </section>`);
-
-  // Post-dev section
-  append(`
-  <section id="post-dev">
-    <h2 class="section-title">開發後</h2>
-    <p class="section-desc">完整回歸、客戶 UAT、上線決策、文件交付、結案。</p>
-    <details open><summary>PM｜UAT 安排、結案、文件</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>驗收範圍確認</strong> — 確認本期交付哪些功能 → Release scope</li>
-      <li style="font-size:var(--text-sm)"><strong>客戶 UAT 安排</strong> — 請客戶在測試環境驗收 → UAT checklist</li>
-      <li style="font-size:var(--text-sm)"><strong>驗收問題控管</strong> — 區分 bug / 需求變更 / 新功能 → Issue classification</li>
-      <li style="font-size:var(--text-sm)"><strong>部署方式分流</strong> — 判斷我方部署或客戶自行部署；我方部署走 script，客戶部署走部署指引</li>
-      <li style="font-size:var(--text-sm)"><strong>上線排程</strong> — 確認時間、停機窗口、備份策略 → Deployment plan</li>
-      <li style="font-size:var(--text-sm)"><strong>Knowledge Transfer 7-2</strong> — 權限、維護窗口、操作責任與交接清單由 PM 對齊客戶</li>
-      <li style="font-size:var(--text-sm)"><strong>文件交付</strong> — 操作手冊、帳號、API 文件、維護說明 → Handover docs</li>
-      <li style="font-size:var(--text-sm)"><strong>結案確認</strong> — 客戶簽核、付款節點、保固期 → Sign-off</li>
-      <li style="font-size:var(--text-sm)"><strong>保固 / 維護期 SLA</strong> — 明確 Bug 回報 SLA、Release Note 節奏與教育訓練安排</li>
-      <li style="font-size:var(--text-sm)"><strong>二期需求整理</strong> — 把本次沒做或新增的需求整理成 backlog → Phase 2 backlog</li>
-    </ul></div></details>
-    <details><summary>QA｜完整回歸、放行評估</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>完整回歸</strong> — 核心流程全部重測 → Regression report</li>
-      <li style="font-size:var(--text-sm)"><strong>Smoke test</strong> — 上線前快速確認主流程可用 → Smoke checklist</li>
-      <li style="font-size:var(--text-sm)"><strong>驗收測試</strong> — 根據 PM 的驗收條件逐項確認 → UAT support</li>
-      <li style="font-size:var(--text-sm)"><strong>Bug 分級</strong> — Critical / Major / Minor → Bug priority list</li>
-      <li style="font-size:var(--text-sm)"><strong>修復驗證</strong> — 工程師修完後 retest → Retest result</li>
-      <li style="font-size:var(--text-sm)"><strong>已知問題整理</strong> — 無法本期修的問題列出 → Known issues</li>
-      <li style="font-size:var(--text-sm)"><strong>測試結案報告</strong> — 測了哪些、剩哪些、風險是什麼 → Test summary report</li>
-      <li style="font-size:var(--text-sm)"><strong>Issue regression 確認</strong> — 抽測之前曾發生過的問題，確保問題不會因更版錯誤而再發生 → Regression sampling</li>
-    </ul></div></details>
-    <details><summary>工程師｜Bug 修復、上線支援</summary>
-    <div class="details-content"><ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li style="font-size:var(--text-sm)"><strong>Bug 修復</strong> — 依優先序處理 Critical / Major bug，確保上線品質</li>
-      <li style="font-size:var(--text-sm)"><strong>上線部署</strong> — 配合 PM/QA 執行上線流程、資料庫 migration</li>
-      <li style="font-size:var(--text-sm)"><strong>Release script</strong> — Claude Code 起草 migration script、release script 與 rollback note，工程師審核後執行</li>
-      <li style="font-size:var(--text-sm)"><strong>Smoke 支援</strong> — 協助確認生產環境功能正常</li>
-      <li style="font-size:var(--text-sm)"><strong>系統監控</strong> — 上線後確認 log、效能、錯誤率</li>
-      <li style="font-size:var(--text-sm)"><strong>Knowledge Transfer 7-1</strong> — Claude Code 協助產出 API doc、Schema、Coding style 等技術文件，工程師負責審核</li>
-    </ul></div></details>
-  </section>`);
-
-  // AI Cowork 定位
-  append(`
-  <section id="cowork-def">
-    <h2 class="section-title">AI Cowork 定位</h2>
-    <p class="section-desc">先定義四種責任層級：腳本負責穩定執行，Cowork 負責 PM/QA 協作整理，Claude Code 負責工程師端技術起草，人負責最後判斷。</p>
-    <table>
-      <thead><tr><th>類型</th><th>核心責任</th><th>適合放的位置</th><th>邊界</th></tr></thead>
-      <tbody>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Automation</td><td>固定流程執行</td><td>CI、測試、狀態擷取</td><td>例外時停止，交給人處理</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Cowork</td><td>PM / QA 協作助理</td><td>需求、測試、回饋、狀態</td><td>不能代替商務與品質決策</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Claude Code</td><td>工程師端技術助理</td><td>PR、Schema、script、技術文件</td><td>需要明確上下文與工程師 review</td></tr>
-        <tr><td style="font-family:var(--font-mono);font-weight:600">Human Decision</td><td>判斷與負責</td><td>優先序、放行、簽核、承諾</td><td>不應被 AI 自動化取代</td></tr>
-      </tbody>
-    </table>
-  </section>`);
-
-  // Claude Code vs Cowork
-  append(`
-  <section id="claude-vs-cowork">
-    <h2 class="section-title">Claude Code vs Cowork</h2>
-    <p class="section-desc">v3.2 將 AI 介入拆成兩種模式：PM/QA 的 Cowork，以及工程師端的 Claude Code。</p>
-    <table>
-      <thead><tr><th>模式</th><th>使用情境</th><th>典型輸出</th><th>人工 checkpoint</th></tr></thead>
-      <tbody>
-        <tr><td>Automation</td><td>規則固定、輸入輸出明確</td><td>測試結果、Issue 狀態、Release Note 初稿</td><td>例外狀況人工處理</td></tr>
-        <tr><td>Cowork</td><td>PM / QA 需要整理、分類、對齊狀態</td><td>User Story、測試規劃、回饋分類、Demo 腳本</td><td>PM / QA 審核後對客戶或團隊同步</td></tr>
-        <tr><td>Claude Code</td><td>工程師需要起草、檢查、產出技術交付物</td><td>PR 摘要、commit、API / DB Schema、migration script</td><td>工程師 review、測試、合併與部署</td></tr>
-      </tbody>
-    </table>
-  </section>`);
-
-  // 三層策略
-  append(`
-  <section id="strategy">
-    <h2 class="section-title">三層策略</h2>
-    <p class="section-desc">根據工作類型決定給腳本、給 AI、還是留給人。</p>
-    <table>
-      <thead><tr><th>層</th><th>類型</th><th>例子</th></tr></thead>
-      <tbody>
-        <tr>
-          <td><span class="type-chip level-1">第一層</span></td>
-          <td>可全自動（腳本）</td>
-          <td>自動跑測試、自動抓 issue 狀態、自動彙整 commit、自動產 Release Note 初稿</td>
-        </tr>
-        <tr>
-          <td><span class="type-chip level-2">第二層</span></td>
-          <td>AI 起草，人審核</td>
-          <td>Cowork：需求整理、User Story、QA 測試案例初稿、Bug ticket 格式化、規格差異比對、UAT 問題分流<br>Claude Code：PR 摘要、commit、測試碼、migration script、Release script</td>
-        </tr>
-        <tr>
-          <td><span class="type-chip level-3">第三層</span></td>
-          <td>必須人工決策</td>
-          <td>接受需求變更與否、功能優先序、是否可上線、客戶驗收簽核、高風險 bug 是否放行</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>`);
-
-  // 流程圖區塊
   append(`
   <section id="flowcharts">
-    <h2 class="section-title">流程圖</h2>
-    <p class="section-desc">整體接案流程與開發前、中、後的分工與 AI Cowork / Claude Code 介入點。</p>
+    <h2 class="section-title">v3.6 流程圖</h2>
+    <p class="section-desc">全架構圖適合當總覽；三張小圖適合分頁講解開發前、開發中、開發後的細節。</p>
     <figure class="flowchart-fig">
-      <figcaption>整體接案流程</figcaption>
-      <img src="ChatGPT Image-v3.6-全架構.png" alt="v3.6 整體接案流程圖" loading="lazy">
+      <figcaption>全架構總覽：接案軟體開發交付治理流程與 AI 介入點</figcaption>
+      <img src="ChatGPT Image-v3.6-全架構.png" alt="v3.6 全架構流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發前流程：需求釐清、技術評估、SOW / 報價與排程</figcaption>
+      <figcaption>開發前流程：需求釐清、QA / 工程師評估、SOW / 報價與排程</figcaption>
       <img src="ChatGPT Image-v3.6-開發前.png" alt="v3.6 開發前流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
@@ -285,102 +65,179 @@ DashboardInteractions.buildContent = function() {
     </figure>
   </section>`);
 
-  // auto-level (placeholder)
   append(`
-  <section id="auto-level">
-    <h2 class="section-title">自動化等級</h2>
-    <p class="section-desc">各角色 × 各階段的 AI 介入程度分類。</p>
+  <section id="roles">
+    <h2 class="section-title">角色與 AI 邊界</h2>
+    <p class="section-desc">AI 的價值是加速整理、起草、比對與修正，但範圍、品質、技術與交付責任仍由人承擔。</p>
     <table>
-      <thead><tr><th>角色</th><th>開發前</th><th>開發中</th><th>開發後</th></tr></thead>
+      <thead><tr><th>角色 / 工具</th><th>主要人工責任</th><th>AI 可輔助項目</th><th>責任邊界</th></tr></thead>
       <tbody>
-        <tr><td><span class="role-chip pm">PM</span></td><td>AI 起草（需求整理、US、任務拆分）</td><td>全自動（進度摘要）+ AI 起草（規格比對）</td><td>全自動（Release Note）+ AI 起草（UAT 分類）</td></tr>
-        <tr><td><span class="role-chip qa">QA</span></td><td>全自動（對照表）+ AI 起草（測試案例）</td><td>全自動（Regression）+ AI 起草（回歸建議）</td><td>AI 起草（測試報告、UAT 分類）</td></tr>
-        <tr><td><span class="role-chip eng">工程師</span></td><td>Claude Code（API / DB Schema、CLAUDE.md）</td><td>Claude Code（PR 摘要、Code Review 輔助、Changelog）</td><td>Claude Code（migration script、Release script、技術文件）</td></tr>
+        <tr><td><span class="role-chip pm">PM</span></td><td>需求訪談、範圍切分、客戶溝通、排程里程碑、簽核協調</td><td>會議紀錄整理、需求清單、SOW 初稿、報價項目、Release Note、結案摘要</td><td>AI 不能替 PM 承諾報價、範圍、交期與簽核。</td></tr>
+        <tr><td><span class="role-chip qa">QA</span></td><td>測試策略、測試執行、缺陷記錄、驗收確認、上線驗證</td><td>測試案例初稿、異常情境、邊界值清單、Bug 描述、測試報告、風險清單</td><td>AI 不能取代 QA 對品質風險與驗收結果的判斷。</td></tr>
+        <tr><td><span class="role-chip eng">工程師</span></td><td>技術評估、開發實作、Code Review、部署、回滾準備</td><td>功能開發、單元測試、Bug 修正、PR 說明、技術文件、API 文件、CLAUDE.md 初始化</td><td>Claude Code 可以產生程式碼與文件，但工程師必須 review、測試與確認。</td></tr>
+        <tr><td><span class="type-chip cowork">Cowork</span></td><td>不是責任角色</td><td>PM / QA 的文件與分析助手，節省整理、起草、比對與提醒時間</td><td>不直接對客戶承諾，也不做品質放行。</td></tr>
+        <tr><td><span class="type-chip claudecode">Claude Code</span></td><td>不是責任角色</td><td>工程師的開發與技術文件助手，加速開發、測試、修正與文件維護</td><td>不承擔正式部署、架構決策與合併責任。</td></tr>
       </tbody>
     </table>
   </section>`);
 
-  // PM detail
   append(`
-  <section id="pm-detail">
-    <h2 class="section-title">PM 詳細規劃</h2>
-    <p class="section-desc">PM 在各開發階段的具體工作項目與 AI Cowork 介入點。</p>
+  <section id="pre-dev">
+    <h2 class="section-title">一、開發前：需求釐清到排程</h2>
+    <p class="section-desc">目標是先把需求、測試風險、技術可行性、工時估算整理清楚，再對外確認 SOW / 報價 / 交期。</p>
     <table>
-      <thead><tr><th>階段</th><th>可全自動</th><th>AI 起草人審核</th><th>必須人工</th></tr></thead>
+      <thead><tr><th>#</th><th>節點</th><th>模式</th><th>工作內容</th></tr></thead>
       <tbody>
-        <tr><td>開發前</td><td>會議逐字稿整理</td><td>User Story / SOW / 報價初稿</td><td>範圍決策、客戶確認 Gate、優先序</td></tr>
-        <tr><td>開發中</td><td>每日進度摘要、Standup 準備、風險登錄更新</td><td>回饋分類、狀態更新、Demo 腳本</td><td>Bug Triage 共議、範圍變更接受與否</td></tr>
-        <tr><td>開發後</td><td>Release Note、結案清單</td><td>UAT 問題整理、部署指引、權限交接</td><td>部署方式分流、是否放行上線、客戶簽核</td></tr>
+        <tr><td>1</td><td>PM 人工：需求訪談</td><td>人工為主</td><td>專案目標、使用對象、主要功能、預算 / 交期。AI 可整理紀錄，但不能取代 PM 與客戶溝通。</td></tr>
+        <tr><td>2</td><td>PM Cowork：會議紀錄與需求整理</td><td>AI 初稿 + PM 確認</td><td>需求清單、User Story、驗收條件初稿、未確認事項。</td></tr>
+        <tr><td>3</td><td>QA Cowork：測試案例 / 測試策略初稿</td><td>AI 初稿 + QA 確認</td><td>正常流程、異常情境、邊界 / 權限、測試資料需求。</td></tr>
+        <tr><td>4</td><td>工程師 Claude Code：技術評估與任務拆分</td><td>AI 輔助 + 工程師確認</td><td>技術可行性、API / DB 影響、工時估算初稿、技術任務草稿。</td></tr>
+        <tr><td>5</td><td>PM Cowork：SOW / 報價初稿</td><td>AI 初稿 + PM 確認</td><td>工作說明、報價項目、風險 / 依賴、交付假設。這一步必須在 QA 與工程師評估後。</td></tr>
+        <tr><td>6</td><td>PM 人工：內部確認與優先序</td><td>人工</td><td>範圍切分、功能優先序、風險判斷、驗收方向。</td></tr>
+        <tr><td>7</td><td>客戶 Gate：SOW / 報價 / 交期</td><td>客戶確認</td><td>範圍簽核、報價確認、交期確認。</td></tr>
+        <tr><td>8</td><td>PM 人工：排程與里程碑</td><td>人工</td><td>任務指派、里程碑、交付節點、溝通節奏。</td></tr>
+        <tr><td>9</td><td>工程師 Claude Code：初始化專案 CLAUDE.md</td><td>AI 輔助 + 工程師確認</td><td>專案脈絡、技術規範、架構決策記錄、Coding Style、常用指令。</td></tr>
+        <tr><td>10</td><td>工程師人工：技術確認</td><td>人工</td><td>架構確認、風險確認、依賴確認、估算校正。若估算差異太大，回到 SOW / 報價修正。</td></tr>
+      </tbody>
+    </table>
+    <details open><summary>開發前回饋流程</summary><div class="details-content"><p style="font-size:var(--text-sm);color:var(--text-muted)">若工程師估算差異過大、QA 發現測試範圍比預期大、需求範圍需要調整，或 API / DB 影響比預期複雜，流程應回到「修正 SOW / 報價 → 客戶重新確認」。</p></div></details>
+  </section>`);
+
+  append(`
+  <section id="mid-dev">
+    <h2 class="section-title">二、開發中：執行、測試與協調</h2>
+    <p class="section-desc">目標是透過 PR、CI、Code Review、QA 驗證與問題分類，讓開發持續迭代，同時避免 Bug、規格疑義、新增需求混在一起。</p>
+    <table>
+      <thead><tr><th>#</th><th>節點</th><th>模式</th><th>工作內容</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>工程師 Claude Code：開發實作</td><td>AI 輔助 + 工程師確認</td><td>功能開發、單元測試、自我檢查、文件 / 註解更新。</td></tr>
+        <tr><td>2</td><td>工程師人工：建立 PR</td><td>人工為主</td><td>建立 PR、補充變更說明、指定 reviewer、檢查差異內容。</td></tr>
+        <tr><td>3</td><td>CI 自動驗證</td><td>全自動化</td><td>Build / Compile、Lint / Code Style、Unit Test、Security Scan。</td></tr>
+        <tr><td>4</td><td>CI 是否通過？</td><td>條件判斷</td><td>未通過回工程師修正；通過後才進入人工 Code Review。</td></tr>
+        <tr><td>5</td><td>工程師人工：Code Review / Merge</td><td>人工</td><td>人工 Review、回應意見、必要時同儕 Review、合併受保護分支。</td></tr>
+        <tr><td>6</td><td>工程師人工 / 自動化：部署測試環境</td><td>半自動化或自動化</td><td>測試版部署、版號管理、測試環境同步、待測功能清單。</td></tr>
+        <tr><td>7</td><td>QA 人工：QA 驗證</td><td>人工為主</td><td>功能測試、探索測試、回歸驗證、驗收條件確認。</td></tr>
+        <tr><td>8</td><td>PM / QA Cowork：問題彙整與影響判斷</td><td>AI 整理 + 人工判斷</td><td>缺陷 / 問題彙整、優先級建議、影響分析、下一步建議。</td></tr>
+        <tr><td>9</td><td>問題類型？</td><td>條件判斷</td><td>分為 Bug / 未達驗收條件、需求不清 / 規格疑義、新增需求 / 範疇變更、通過 / 符合驗收條件。</td></tr>
+      </tbody>
+    </table>
+    <table>
+      <thead><tr><th>分類</th><th>流向</th><th>處理原則</th></tr></thead>
+      <tbody>
+        <tr><td>A. Bug / 未達驗收條件</td><td>回到工程師修正，再跑 PR / CI / QA</td><td>屬原承諾範圍內修正，通常不需客戶重新簽核。</td></tr>
+        <tr><td>B. 需求不清 / 規格疑義</td><td>回到 PM 釐清需求</td><td>必要時找客戶確認，但不一定需要更新 SOW。</td></tr>
+        <tr><td>C. 新增需求 / 範疇變更</td><td>進入客戶 Gate</td><td>更新 backlog、調整報價 / 排程，必要時修正 SOW / 報價。</td></tr>
+        <tr><td>D. 通過 / 符合驗收條件</td><td>進入階段 Demo / UAT 準備</td><td>可安排內部 Demo、階段成果確認，並進入開發後流程。</td></tr>
+      </tbody>
+    </table>
+    <p class="section-desc">建議每 1-2 週進行 Sprint Demo 或依里程碑展示成果，及早發現需求偏差，降低最後驗收時一次爆出大量問題的風險。</p>
+  </section>`);
+
+  append(`
+  <section id="post-dev">
+    <h2 class="section-title">三、開發後：驗收到結案</h2>
+    <p class="section-desc">重點是版本凍結、UAT 環境部署、QA Smoke Test、客戶 UAT、正式部署、文件交付、知識轉移與保固交接。</p>
+    <table>
+      <thead><tr><th>#</th><th>節點</th><th>模式</th><th>工作內容</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>工程師人工：版本凍結</td><td>人工</td><td>確認驗收版本、鎖定功能範圍、建立版號、凍結變更。</td></tr>
+        <tr><td>2</td><td>工程師人工：部署 UAT 環境</td><td>人工 / 半自動化</td><td>UAT 版本部署、環境設定、測試資料準備、回滾點保留。</td></tr>
+        <tr><td>3</td><td>QA 人工：Smoke Test / 環境檢查</td><td>人工為主</td><td>基本流程檢查、環境可用性、備份 / 回復確認、風險檢查。</td></tr>
+        <tr><td>4</td><td>客戶 Gate：UAT 驗收</td><td>客戶確認</td><td>操作驗收、問題回報、驗收建議、階段結論。</td></tr>
+        <tr><td>5</td><td>UAT 是否通過？</td><td>條件判斷</td><td>未通過則修正 / 重新部署 UAT；通過則進入正式簽收 / 上線同意。</td></tr>
+        <tr><td>6</td><td>工程師 Claude Code：修正 / 重新部署 UAT</td><td>AI 輔助 + 工程師確認</td><td>修正程式、更新版本、重新部署，並回到 QA Smoke Test。</td></tr>
+        <tr><td>7</td><td>客戶 Gate：正式簽收 / 上線同意</td><td>客戶確認</td><td>正式簽收、上線同意、保固起算確認。</td></tr>
+        <tr><td>8</td><td>工程師人工：正式部署 / 回滾準備</td><td>人工 / 半自動化</td><td>Production 部署、DB / migration、版本標籤、回滾準備。</td></tr>
+        <tr><td>9</td><td>QA 人工：上線後 Smoke Test / 基本監控</td><td>人工為主</td><td>關鍵流程檢查、服務可用性、已知問題確認、初始監控。</td></tr>
+        <tr><td>10</td><td>PM Cowork：Release Note 與交付文件初稿</td><td>AI 初稿 + PM 確認</td><td>Release Note、操作手冊初稿、結案摘要、交付清單。</td></tr>
+        <tr><td>11</td><td>工程師 Claude Code：技術文件與部署說明</td><td>AI 輔助 + 工程師確認</td><td>架構文件、API 文件、環境設定說明、migration script。</td></tr>
+        <tr><td>12</td><td>PM 人工：Knowledge Transfer / 保固交接</td><td>人工</td><td>維運交接、帳號 / 權限、聯絡窗口、保固範圍。</td></tr>
       </tbody>
     </table>
   </section>`);
 
-  // QA detail
   append(`
-  <section id="qa-detail">
-    <h2 class="section-title">QA 詳細規劃</h2>
-    <p class="section-desc">QA 在各開發階段的具體工作項目與 AI Cowork 介入點。</p>
+  <section id="warranty">
+    <h2 class="section-title">保固 / 維護期補充流程</h2>
+    <p class="section-desc">保固期不是無限制免費修改，要明確區分原承諾範圍內的缺陷修復、新增需求、操作問題、環境問題、資料問題與二期擴充。</p>
     <table>
-      <thead><tr><th>階段</th><th>可全自動</th><th>AI 起草人審核</th><th>必須人工</th></tr></thead>
+      <thead><tr><th>項目</th><th>內容</th><th>說明</th></tr></thead>
       <tbody>
-        <tr><td>開發前</td><td>需求 × 測試對照表</td><td>測試規劃初稿、邊界案例、測試資料草稿</td><td>測試策略、高風險判定</td></tr>
-        <tr><td>開發中</td><td>Smoke / Regression 自動執行</td><td>測試結果整理、失敗摘要、Bug ticket 草稿、Sprint Demo 對齊項目</td><td>探索測試、Bug severity、放行建議</td></tr>
-        <tr><td>開發後</td><td>—</td><td>UAT 缺陷分類、補強建議、測試報告</td><td>完整回歸、客戶 UAT 放行</td></tr>
+        <tr><td>Bug 回報管道</td><td>客戶 / 使用者回報、內部缺陷單系統</td><td>要有統一入口，避免 LINE、Email、電話、口頭訊息混雜造成追蹤混亂。</td></tr>
+        <tr><td>回應 SLA</td><td>依等級設定即時 / 標準 / 延遲回應</td><td>系統無法使用、核心功能錯誤、一般操作問題、改善建議應有不同時效。</td></tr>
+        <tr><td>修復流程</td><td>分級處理，修復 → 測試 → 驗證 → 部署</td><td>保固期修 Bug 仍要走基本測試與驗證，不能工程師修完就直接上線。</td></tr>
+        <tr><td>保固到期結算</td><td>確認範圍與次數，結案與歸檔作業</td><td>PM 要確認已處理問題、非保固問題、是否需要維護合約或進入二期擴充。</td></tr>
       </tbody>
     </table>
   </section>`);
 
-  // MVP
   append(`
-  <section id="mvp">
-    <h2 class="section-title">MVP 規劃</h2>
-    <p class="section-desc">第一階段可落地的 AI Cowork 功能，依優先序排列。</p>
+  <section id="legend">
+    <h2 class="section-title">圖例說明</h2>
     <table>
-      <thead><tr><th>#</th><th>功能</th><th>主要使用者</th><th>核心價值</th></tr></thead>
+      <thead><tr><th>圖例</th><th>意義</th></tr></thead>
       <tbody>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">1</td><td>會議紀錄 → 需求摘要</td><td><span class="role-chip pm">PM</span></td><td>減少需求整理時間 50%+</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">2</td><td>需求 → User Story / 驗收條件</td><td><span class="role-chip pm">PM</span></td><td>讓工程師與 QA 快速對齊</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">3</td><td>需求 → 測試規劃初稿</td><td><span class="role-chip qa">QA</span></td><td>減少測試規劃時間</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">4</td><td>PR diff → Code Review 輔助 + 回歸測試建議</td><td><span class="role-chip eng">工程師</span> <span class="role-chip qa">QA</span></td><td>降低漏測與低品質 PR 風險</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">5</td><td>UAT 回饋分類</td><td><span class="role-chip pm">PM</span> <span class="role-chip qa">QA</span></td><td>區分 bug / 新需求 / 操作問題</td></tr>
-        <tr><td style="font-family:var(--font-mono);color:var(--accent)">6</td><td>Release Note / 交接文件草稿</td><td><span class="role-chip pm">PM</span></td><td>加速交付與結案</td></tr>
+        <tr><td><span class="role-chip pm">PM</span></td><td>藍色，代表決策、溝通、排程、簽核。</td></tr>
+        <tr><td><span class="role-chip qa">QA</span></td><td>綠色，代表測試、驗證、品質。</td></tr>
+        <tr><td><span class="role-chip eng">工程師</span></td><td>橘色，代表實作、部署、技術支援。</td></tr>
+        <tr><td><span class="type-chip cowork">Cowork</span></td><td>紫色，代表整理、起草、比對、提醒。</td></tr>
+        <tr><td><span class="type-chip claudecode">Claude Code</span></td><td>深藍色，代表程式開發、測試、文件自動化。</td></tr>
+        <tr><td>紅色星號</td><td>客戶 Gate，代表需要客戶確認或簽核。</td></tr>
+        <tr><td>實線 / 紅色虛線 / 菱形</td><td>實線是正常順序流程；紅色虛線是回饋、修正、重新確認；菱形是條件判斷。</td></tr>
       </tbody>
     </table>
   </section>`);
 
-  // 導入原則
   append(`
-  <section id="principles">
-    <h2 class="section-title">導入原則</h2>
-    <p class="section-desc">讓 AI Cowork 真正好用，而不是亂跑的 agent。</p>
-    <ol style="padding-left:var(--sp-6);font-size:var(--text-sm);display:flex;flex-direction:column;gap:var(--sp-3)">
-      <li><strong>AI 只做助理，不做最後決策</strong> — PM 的商業判斷、QA 的品質放行、工程師的技術責任，都不能外包</li>
-      <li><strong>優先做「草稿、整理、比對、分類」</strong> — 最穩、最有價值的使用方式</li>
-      <li><strong>PM / QA 用 Cowork，工程師用 Claude Code</strong> — 兩者都能起草，但責任邊界與審核者不同</li>
-      <li><strong>高頻、規則清楚的，交給腳本</strong> — 跑測試、抓 issue、彙整 commit</li>
-      <li><strong>高價值但容易耗時的，交給 AI Cowork</strong> — 需求整理、測試案例、bug ticket、規格比對</li>
-      <li><strong>每個流程都要有人工 checkpoint</strong> — 這樣才是真正好用的 cowork</li>
-    </ol>
+  <section id="observations">
+    <h2 class="section-title">目前優點與注意事項</h2>
+    <details open><summary>目前流程圖的優點</summary>
+      <div class="details-content">
+        <ol style="padding-left:var(--sp-6);font-size:var(--text-sm);display:flex;flex-direction:column;gap:var(--sp-2)">
+          <li>三階段架構清楚：開發前、開發中、開發後符合一般接案公司交付流程。</li>
+          <li>客戶 Gate 收斂到 SOW / 報價 / 交期、Change Request、UAT、正式簽收等關鍵點。</li>
+          <li>開發前順序已修正：先做 QA / 工程師評估，再產生 SOW 與報價。</li>
+          <li>開發中順序更合理：開發 → PR → CI → Code Review → 測試環境 → QA。</li>
+          <li>問題分類適合接案業，能避免新增需求被當 Bug 免費修。</li>
+          <li>開發後補上版本凍結、UAT 環境部署、Smoke Test 與保固交接。</li>
+          <li>AI 責任邊界明確，最終責任仍由 PM / QA / 工程師承擔。</li>
+        </ol>
+      </div>
+    </details>
+    <details><summary>全架構圖使用注意事項</summary>
+      <div class="details-content">
+        <ol style="padding-left:var(--sp-6);font-size:var(--text-sm);display:flex;flex-direction:column;gap:var(--sp-2)">
+          <li>全架構圖資訊量大，適合總覽，不適合投影時逐字講全部內容。</li>
+          <li>目前節點已經很多，不建議再增加資安審查、付款節點、合約條款或政府案文件等細節。</li>
+          <li>開發前「工程師人工：技術確認」可保留作為正式開發前最後確認點。</li>
+          <li>全架構圖與小圖編號可略有差異，重點是邏輯一致。</li>
+          <li>這張圖定位為總覽，不是唯一 SOP；實際執行仍應拆成表格或清單。</li>
+        </ol>
+      </div>
+    </details>
   </section>`);
 
-  // 後續方向
   append(`
-  <section id="next">
-    <h2 class="section-title">後續方向</h2>
-    <p class="section-desc">從本次討論延伸的後續計畫。</p>
-    <ol style="padding-left:var(--sp-6);font-size:var(--text-sm);display:flex;flex-direction:column;gap:var(--sp-2)">
-      <li>把本內容整理成正式簡報大綱（已做：presentation.html）</li>
-      <li>設計 PM Cowork 功能規格表</li>
-      <li>設計 QA Cowork 功能規格表</li>
-      <li>設計系統架構圖</li>
-      <li>設計 MVP 開發時程</li>
-      <li>設計資料流：輸入 → AI 處理 → 人工確認 → 輸出</li>
-      <li>設計 prompt template 與 workflow</li>
-      <li>設計 GitHub / Jira / Notion / Slack 串接方式</li>
-      <li>整理成計畫書或提案書</li>
-    </ol>
+  <section id="presentation-use">
+    <h2 class="section-title">建議簡報使用方式</h2>
+    <table>
+      <thead><tr><th>投影片</th><th>用途</th><th>講法</th></tr></thead>
+      <tbody>
+        <tr><td>第 1 張：全架構圖</td><td>先讓大家看到完整流程</td><td>這是接案軟體開發的完整治理流程，分成開發前、開發中、開發後三段，並標示 PM、QA、工程師，以及 Claude Cowork / Claude Code 的介入位置。</td></tr>
+        <tr><td>第 2 張：開發前小圖</td><td>說明需求、評估、SOW / 報價、客戶確認、排程</td><td>開發前不是急著報價，而是先讓 QA 和工程師確認測試與技術成本，避免後續估算翻車。</td></tr>
+        <tr><td>第 3 張：開發中小圖</td><td>說明 PR、CI、Code Review、QA、問題分類、Change Request</td><td>開發中的核心是把 Bug、規格疑義、新增需求分開處理，避免範疇變更被當成免費修改。</td></tr>
+        <tr><td>第 4 張：開發後小圖</td><td>說明版本凍結、UAT、正式部署、文件交付、保固交接</td><td>開發後不是直接部署，而是先凍結版本、部署 UAT、完成內部 Smoke Test，再讓客戶驗收。</td></tr>
+      </tbody>
+    </table>
   </section>`);
 
+  append(`
+  <section id="conclusion">
+    <h2 class="section-title">一句話總結</h2>
+    <p class="section-desc" style="font-size:var(--text-lg);color:var(--text)">這套流程的核心不是要讓 AI 取代 PM、QA、工程師，而是用 Claude Cowork 加速整理、起草與分析，用 Claude Code 加速開發、測試與文件，但所有範圍、品質、技術與交付責任，仍由 PM、QA、工程師人工確認與承擔。</p>
+  </section>`);
+
+  wrapper.innerHTML = sections.join('');
 };
 
 // 3. Scroll spy
