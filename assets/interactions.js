@@ -37,7 +37,7 @@ DashboardInteractions.buildContent = function() {
       <tbody>
         <tr><td>三個責任角色</td><td>PM 負責需求、範圍、客戶溝通與簽核；QA 負責測試策略、品質驗證與驗收確認；工程師負責技術評估、開發、Review、部署與技術文件。</td></tr>
         <tr><td>AI 不是責任主體</td><td>Claude Cowork 主要輔助 PM / QA 做整理、起草、比對、提醒；Claude Code 主要輔助工程師做開發、測試、PR、CI、技術文件與專案初始化。</td></tr>
-        <tr><td>治理重點</td><td>先完成 QA / 工程師評估，再對外確認 SOW / 報價；開發中分流 Bug、規格疑義與 Change Request；UAT 前先完成版本凍結、UAT 部署與內部 Smoke Test。</td></tr>
+        <tr><td>治理重點</td><td>先完成 QA / 工程師評估，再對外確認 SOW / 報價；開發中分流 Bug、規格疑義與 Change Request；UAT 前先完成版本凍結、UAT 環境部署與內部 Smoke Test。</td></tr>
       </tbody>
     </table>
     <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint);margin-bottom:0">版本：v3.6 ／ 整理日期：2026-05-12</p>
@@ -52,15 +52,15 @@ DashboardInteractions.buildContent = function() {
       <img src="ChatGPT Image-v3.6-全架構.png" alt="v3.6 全架構流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發前流程：需求釐清、QA / 工程師評估、SOW / 報價與排程</figcaption>
+      <figcaption>開發前流程：需求釐清、技術評估、SOW / 報價、測試規劃與排程</figcaption>
       <img src="ChatGPT Image-v3.6-開發前.png" alt="v3.6 開發前流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發中流程：PR、CI、Code Review、QA 與問題分類</figcaption>
+      <figcaption>開發中流程：PR、CI、Code Review、QA、問題分類與變更控管</figcaption>
       <img src="ChatGPT Image-v3.6-開發中.png" alt="v3.6 開發中流程圖" loading="lazy">
     </figure>
     <figure class="flowchart-fig">
-      <figcaption>開發後流程：版本凍結、UAT、正式部署、文件交付與保固</figcaption>
+      <figcaption>開發後流程：版本凍結、UAT 環境、Smoke Test、UAT、正式部署、文件交付與保固</figcaption>
       <img src="ChatGPT Image-v3.6-開發後.png" alt="v3.6 開發後流程圖" loading="lazy">
     </figure>
   </section>`);
@@ -100,6 +100,7 @@ DashboardInteractions.buildContent = function() {
         <tr><td>10</td><td>工程師人工：技術確認</td><td>人工</td><td>架構確認、風險確認、依賴確認、估算校正。若估算差異太大，回到 SOW / 報價修正。</td></tr>
       </tbody>
     </table>
+    <p class="section-desc">註：開發前小圖為了可讀性壓縮成 9 個節點；全架構圖與本表仍保留第 10 點「工程師人工：技術確認」，作為正式開發前最後確認。</p>
     <details open><summary>開發前回饋流程</summary><div class="details-content"><p style="font-size:var(--text-sm);color:var(--text-muted)">若工程師估算差異過大、QA 發現測試範圍比預期大、需求範圍需要調整，或 API / DB 影響比預期複雜，流程應回到「修正 SOW / 報價 → 客戶重新確認」。</p></div></details>
   </section>`);
 
@@ -163,10 +164,11 @@ DashboardInteractions.buildContent = function() {
     <table>
       <thead><tr><th>項目</th><th>內容</th><th>說明</th></tr></thead>
       <tbody>
-        <tr><td>Bug 回報管道</td><td>客戶 / 使用者回報、內部缺陷單系統</td><td>要有統一入口，避免 LINE、Email、電話、口頭訊息混雜造成追蹤混亂。</td></tr>
-        <tr><td>回應 SLA</td><td>依等級設定即時 / 標準 / 延遲回應</td><td>系統無法使用、核心功能錯誤、一般操作問題、改善建議應有不同時效。</td></tr>
-        <tr><td>修復流程</td><td>分級處理，修復 → 測試 → 驗證 → 部署</td><td>保固期修 Bug 仍要走基本測試與驗證，不能工程師修完就直接上線。</td></tr>
-        <tr><td>保固到期結算</td><td>確認範圍與次數，結案與歸檔作業</td><td>PM 要確認已處理問題、非保固問題、是否需要維護合約或進入二期擴充。</td></tr>
+        <tr><td>問題分類</td><td>原始範圍缺陷 / 新增需求 / 操作問題 / 環境問題 / 資料問題 / 二期擴充</td><td>只要對照原 SOW 驗收條件後，確認是在範圍內但未達標，才屬保固內缺陷；其他類型需另行確認責任或費用。</td></tr>
+        <tr><td>Bug 回報管道</td><td>客戶 / 使用者回報、內部缺陷單系統</td><td>要有統一入口，避免 LINE、Email、電話、口頭訊息混雜造成追蹤混亂；建議使用 Issue Tracker 或固定表單。</td></tr>
+        <tr><td>回應 SLA</td><td>P1 緊急、P2 高、P3 中、P4 低</td><td>P1 系統無法使用需優先處理；P2 核心功能嚴重受影響；P3 一般功能異常；P4 介面瑕疵或改善建議。</td></tr>
+        <tr><td>修復流程</td><td>客戶回報 → PM 確認 / 分類 → 工程師修正 → QA 驗證 → 部署 → 回報客戶結案</td><td>保固期修 Bug 仍要走基本測試與驗證，至少包含 QA Smoke Test 與該功能回歸，不能工程師修完就直接上線。</td></tr>
+        <tr><td>保固到期結算</td><td>確認已處理問題、未處理問題、責任歸屬、維護合約、二期擴充與歸檔</td><td>PM 要彙整保固期問題清單、非保固問題、客戶接受事項，並歸檔 SOW、UAT 結果、簽收文件與保固紀錄。</td></tr>
       </tbody>
     </table>
   </section>`);
@@ -224,9 +226,9 @@ DashboardInteractions.buildContent = function() {
       <thead><tr><th>投影片</th><th>用途</th><th>講法</th></tr></thead>
       <tbody>
         <tr><td>第 1 張：全架構圖</td><td>先讓大家看到完整流程</td><td>這是接案軟體開發的完整治理流程，分成開發前、開發中、開發後三段，並標示 PM、QA、工程師，以及 Claude Cowork / Claude Code 的介入位置。</td></tr>
-        <tr><td>第 2 張：開發前小圖</td><td>說明需求、評估、SOW / 報價、客戶確認、排程</td><td>開發前不是急著報價，而是先讓 QA 和工程師確認測試與技術成本，避免後續估算翻車。</td></tr>
+        <tr><td>第 2 張：開發前小圖</td><td>說明需求、測試規劃 / 技術評估、SOW / 報價、客戶確認、排程</td><td>開發前不是急著報價，而是先讓 QA 和工程師確認測試與技術成本，避免後續估算翻車。</td></tr>
         <tr><td>第 3 張：開發中小圖</td><td>說明 PR、CI、Code Review、QA、問題分類、Change Request</td><td>開發中的核心是把 Bug、規格疑義、新增需求分開處理，避免範疇變更被當成免費修改。</td></tr>
-        <tr><td>第 4 張：開發後小圖</td><td>說明版本凍結、UAT、正式部署、文件交付、保固交接</td><td>開發後不是直接部署，而是先凍結版本、部署 UAT、完成內部 Smoke Test，再讓客戶驗收。</td></tr>
+        <tr><td>第 4 張：開發後小圖</td><td>說明版本凍結、UAT 環境、Smoke Test、UAT、正式部署、文件交付、保固交接</td><td>開發後不是直接部署，而是先凍結版本、部署 UAT 環境、完成內部 Smoke Test，再讓客戶驗收。</td></tr>
       </tbody>
     </table>
   </section>`);
