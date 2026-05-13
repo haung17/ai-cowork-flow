@@ -219,7 +219,7 @@
 
 /* Cowork badge */
 .pres-c {
-  background: #0A6CFF;
+  background: #7C3AED;
   color: #fff;
   font-size: 9px;
   padding: 1px 5px;
@@ -361,7 +361,8 @@
 [data-theme="dark"] .pres-flowchart { border-color: #30363D; background: #161B22; }
 [data-theme="dark"] .pres-flowchart .fc-node { background: #21262D; }
 [data-theme="dark"] .pres-flowchart .fc-node.human { border-color: #484F58; }
-[data-theme="dark"] .pres-flowchart .fc-node.cowork { border-color: #58A6FF; }
+[data-theme="dark"] .pres-flowchart .fc-node.cowork { background: var(--type-cowork-bg); border-color: var(--type-cowork); }
+[data-theme="dark"] .pres-flowchart .fc-node.claudecode { background: var(--type-claudecode-bg); border-color: var(--type-claudecode); }
 [data-theme="dark"] .pres-flowchart .fc-node.system { background: #161B22; border-color: #30363D; }
 [data-theme="dark"] .pres-flowchart .fc-node.decision { background: #2D2208; border-color: #B45309; }
 [data-theme="dark"] .pres-flowchart .fc-node-title { color: #E6EDF3; }
@@ -417,7 +418,7 @@
 }
 .pres-flow-card.role-pm  { border-left-color: #0A6CFF; }
 .pres-flow-card.role-qa  { border-left-color: #16A34A; }
-.pres-flow-card.role-eng { border-left-color: #7C3AED; }
+.pres-flow-card.role-eng { border-left-color: #D97706; }
 .pres-flow-card-head {
   display: flex;
   align-items: center;
@@ -451,3 +452,5 @@
 [data-theme="dark"] .pres-flow-card-head b { color: #E6EDF3; }
 [data-theme="dark"] .pres-flow-card-title { color: #E6EDF3; }
 [data-theme="dark"] .pres-flow-card ul li { color: #C9D1D9; }
+[data-theme="dark"] .pres-c { background: #BC8CFF; color: #0D1117; }
+[data-theme="dark"] .pres-flow-card.role-eng { border-left-color: #F59E0B; }

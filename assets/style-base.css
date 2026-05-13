@@ -5,10 +5,14 @@
   --role-pm-bg:   #EFF6FF;
   --role-qa:      #16A34A;
   --role-qa-bg:   #F0FDF4;
-  --role-eng:     #7C3AED;
-  --role-eng-bg:  #F5F3FF;
+  --role-eng:     #D97706;
+  --role-eng-bg:  #FFF7ED;
   --role-sys:     #52525B;
   --role-sys-bg:  #F4F4F5;
+  --type-cowork:  #7C3AED;
+  --type-cowork-bg: #F5F3FF;
+  --type-claudecode: #0A2540;
+  --type-claudecode-bg: #EFF6FF;
 
   /* Type */
   --type-human-border:  2px solid currentColor;
@@ -98,9 +102,9 @@
   font-weight: 500;
 }
 .type-chip.human  { background: var(--bg-muted); color: var(--text-muted); border: 1px solid var(--border-strong); }
-.type-chip.cowork { background: var(--accent); color: #fff; }
+.type-chip.cowork { background: var(--type-cowork); color: #fff; }
 .type-chip.decision { background: var(--type-decision-bg); color: #D97706; border: 1px solid #FCD34D; }
-.type-chip.claudecode { background: var(--role-eng-bg); color: var(--role-eng); border: 1px solid var(--role-eng); }
+.type-chip.claudecode { background: var(--type-claudecode-bg); color: var(--type-claudecode); border: 1px solid var(--type-claudecode); }
 .type-chip.level-1 { background: var(--level-auto-bg); color: var(--level-auto); border: 1px solid var(--level-auto-border); }
 .type-chip.level-2 { background: var(--accent); color: #fff; border: 1px solid var(--accent); }
 .type-chip.level-3 { background: var(--level-human-bg); color: var(--level-human); border: 1px solid var(--level-human-border); }
@@ -111,10 +115,14 @@
   --role-pm-bg:   #0D1F3C;
   --role-qa:      #3FB950;
   --role-qa-bg:   #0A2818;
-  --role-eng:     #BC8CFF;
-  --role-eng-bg:  #1E0D3C;
+  --role-eng:     #F59E0B;
+  --role-eng-bg:  #2D2208;
   --role-sys:     #8B949E;
   --role-sys-bg:  #21262D;
+  --type-cowork:  #BC8CFF;
+  --type-cowork-bg: #1E0D3C;
+  --type-claudecode: #58A6FF;
+  --type-claudecode-bg: #0D1F3C;
 
   --type-decision-bg:     #2D2208;
   --type-decision-border: 2px solid #B45309;
