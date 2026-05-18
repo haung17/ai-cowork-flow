@@ -1,0 +1,14 @@
+{
+  "name": "ai-cowork-flow",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test tests/e2e/full-journey.spec.js",
+    "test:headed": "playwright test --headed",
+    "serve": "python -m http.server 8080"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.44.0"
+  }
+}

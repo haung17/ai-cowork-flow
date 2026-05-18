@@ -179,4 +179,5 @@ window.AppData.chapters = [
   { id: 'observations',     title: '優點與注意事項',       icon: '◐' },
   { id: 'presentation-use', title: '簡報使用方式',         icon: '▣' },
   { id: 'conclusion',       title: '一句話總結',           icon: '→'  },
+  { id: 'resources',        title: '資源對照',             icon: '⊟', external: true, href: 'resources.html' },
 ];
