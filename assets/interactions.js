@@ -15,9 +15,15 @@ DashboardInteractions.buildNav = function() {
   window.AppData.chapters.forEach(ch => {
     const li = document.createElement('li');
     li.className = 'nav-item';
-    li.innerHTML = `<a href="#${ch.id}" data-id="${ch.id}">
-      <span class="nav-icon">${ch.icon}</span>${ch.title}
-    </a>`;
+    if (ch.external) {
+      li.innerHTML = `<a href="${ch.href}" target="_blank" data-id="${ch.id}" aria-label="${ch.title}（開新分頁）">
+        <span class="nav-icon">${ch.icon}</span>${ch.title} ↗
+      </a>`;
+    } else {
+      li.innerHTML = `<a href="#${ch.id}" data-id="${ch.id}">
+        <span class="nav-icon">${ch.icon}</span>${ch.title}
+      </a>`;
+    }
     list.appendChild(li);
   });
 };
@@ -261,6 +267,7 @@ DashboardInteractions.initScrollSpy = function() {
   sections.forEach(s => observer.observe(s));
 
   navLinks.forEach(a => {
+    if (a.target === '_blank') return; // external links: let browser open new tab normally
     a.addEventListener('click', e => {
       e.preventDefault();
       document.getElementById(a.dataset.id)?.scrollIntoView({ behavior: 'smooth' });
@@ -286,7 +293,7 @@ DashboardInteractions.initSearch = function() {
   overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
 
   const index = window.AppData.chapters.map(ch => ({
-    id: ch.id, label: ch.icon, text: ch.title
+    id: ch.id, label: ch.icon, text: ch.title, href: ch.href
   }));
 
   let selected = -1;
@@ -308,7 +315,11 @@ DashboardInteractions.initSearch = function() {
       div.innerHTML = `<span class="search-result-label">${item.label}</span>
                        <span class="search-result-text">${item.text}</span>`;
       div.addEventListener('click', () => {
-        document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+        if (item.href) {
+          window.open(item.href, '_blank');
+        } else {
+          document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' });
+        }
         close();
       });
       results.appendChild(div);

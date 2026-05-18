@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>接案流程資源對照表</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style-base.css">
+  <link rel="stylesheet" href="assets/style-resources.css">
+</head>
+<body>
+  <!-- Search overlay -->
+  <div id="search-overlay" class="search-overlay hidden">
+    <div class="search-box">
+      <input id="search-input" type="text" placeholder="搜尋資源..." autocomplete="off">
+      <div id="search-results" class="search-results"></div>
+    </div>
+  </div>
+
+  <div class="app-layout">
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-logo">資源對照</span>
+        <div style="display:flex;gap:4px;align-items:center;">
+          <button id="theme-toggle" class="theme-toggle" aria-label="切換為深色主題">Dark</button>
+          <button id="search-btn" class="search-trigger" title="Ctrl+K" aria-label="搜尋">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.35-4.35"/>
+            </svg>
+          </button>
+          <a href="dashboard.html" class="back-link" title="返回 Dashboard" aria-label="返回 Dashboard">←</a>
+        </div>
+      </div>
+      <ul class="nav-list" id="nav-list">
+        <!-- JS 動態填入 -->
+      </ul>
+    </nav>
+
+    <main id="main-content" class="main-content">
+      <div id="catalog-content" class="content-wrapper"></div>
+      <div id="catalog-error" class="catalog-error hidden" role="alert">
+        <p>無法載入 <code>resources-catalog.md</code>。請用 HTTP server 開啟，不能直接雙擊 HTML 檔案。</p>
+        <pre>python -m http.server 8080</pre>
+        <p>然後開啟 <code>http://localhost:8080/resources.html</code></p>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="assets/resources-loader.js"></script>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('cowork-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', saved);
+      var btn = document.getElementById('theme-toggle');
+      btn.textContent = saved === 'dark' ? 'Light' : 'Dark';
+      btn.setAttribute('aria-label', saved === 'dark' ? '切換為淺色主題' : '切換為深色主題');
+    })();
+
+    document.getElementById('theme-toggle').addEventListener('click', function() {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('cowork-theme', next);
+      this.textContent = next === 'dark' ? 'Light' : 'Dark';
+      this.setAttribute('aria-label', next === 'dark' ? '切換為淺色主題' : '切換為深色主題');
+    });
+
+    ResourcesLoader.init();
+  </script>
+</body>
+</html>
