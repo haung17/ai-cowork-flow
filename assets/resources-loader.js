@@ -41,6 +41,7 @@ ResourcesLoader.renderCatalog = function(md) {
     wrapper.appendChild(table);
   });
 
+  ResourcesLoader.rewriteNodeRefs(content);
   ResourcesLoader.buildNav();
   ResourcesLoader.initScrollSpy();
 };
@@ -131,6 +132,46 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   if (e.key === 'ArrowUp')   s.selected = Math.max(s.selected - 1, 0);
   if (e.key === 'Enter' && s.selected >= 0) { var sel = items[s.selected]; if (sel) sel.click(); }
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
+};
+
+ResourcesLoader.rewriteNodeRefs = function(root) {
+  var pattern = /\b(preDev|midDev|postDev):(\d+)\b/g;
+  function walkText(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      var text = node.textContent;
+      pattern.lastIndex = 0;
+      if (!pattern.test(text)) return;
+      pattern.lastIndex = 0;
+      var frag = document.createDocumentFragment();
+      var last = 0;
+      var m;
+      while ((m = pattern.exec(text)) !== null) {
+        if (m.index > last) {
+          frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        }
+        var a = document.createElement('a');
+        a.href = 'dashboard.html#' + m[1] + '-' + m[2];
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.textContent = m[0];
+        a.title = '跳到 dashboard ' + m[0];
+        frag.appendChild(a);
+        last = m.index + m[0].length;
+      }
+      if (last < text.length) {
+        frag.appendChild(document.createTextNode(text.slice(last)));
+      }
+      node.parentNode.replaceChild(frag, node);
+    } else if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      node.tagName !== 'A' &&
+      node.tagName !== 'CODE' &&
+      node.tagName !== 'PRE'
+    ) {
+      Array.from(node.childNodes).forEach(walkText);
+    }
+  }
+  walkText(root);
 };
 
 ResourcesLoader.initSearchPanel = function() {

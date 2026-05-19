@@ -78,6 +78,7 @@ FlowCharts.render = function(chartId, containerEl) {
     const isDecision = n.type === 'decision';
 
     const card = document.createElement('div');
+    card.id = chartId + '-' + n.id;
     card.className = `fc-node ${n.type}`;
     card.style.left = (pos.bx) + 'px';
     card.style.top  = pos.ty + 'px';
