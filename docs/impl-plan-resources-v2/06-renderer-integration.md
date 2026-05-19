@@ -4,7 +4,7 @@
 
 ## 目標
 
-1. `resources-loader.js` 完整重構：`fetchAll` → `renderCatalog` → `enrichDom` → `rewriteNodeRefs` → `tagTier3` → `renderTypeChips` → `buildNav` → `initScrollSpy`
+1. `resources-loader.js` 完整重構：`fetchAll` → `renderCatalog` → `enrichDom` → `rewriteNodeRefs` → `tagTier3` → `renderTypeChips` → `buildNav` → `initScrollSpy`；`marked.use()` 移至模組初始化（非 renderCatalog 內）；補 `performance.now()` 計測 marked.parse（step-03 review 建議）
 2. `enrichDom(catalogHtml, state)` — 每個 `h3[id]` 後插入 status badge + verification checklist（從 `_state` 取值）
 3. `renderTypeChips(root)` — 速查表 Primary type / Support 欄位由文字改成 chip span
 4. `style-resources.css` 補：status badge 顏色、verification list 樣式、type chip 顏色

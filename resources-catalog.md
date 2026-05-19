@@ -48,6 +48,13 @@
 
 **Tier 1 ｜ type: COWORK**
 
+**Input：** 錄音檔或逐字稿、與會者名單、會議目的與議程
+**Output：** 摘要 + 決策清單 + 待辦清單（負責人 + 期限）+ 待釐清問題
+**Human Gate：** PM 在交付前確認：負責人姓名正確、期限可行、敏感資訊已脫敏
+**Artifact：** Markdown（.md）
+**Risk：** AI 可能漏記輕聲討論、混淆相似人名；摘要過短導致決策資訊遺失
+**Next Node：** preDev:2（需求整理 Gate）/ midDev:2（Sprint standup）/ postDev:6（UAT 記錄）
+
 - **對應節點**：preDev:2（需求整理）/ midDev 的 standup、sprint review / postDev 的 UAT、KT 會議
 - **餵什麼**
   - 錄音檔或逐字稿
@@ -91,6 +98,13 @@
 ### 2. 工作計劃書
 
 **Tier 1 ｜ type: COWORK**
+
+**Input：** SOW 目標範疇、報價金額範圍、專案期限、客戶特殊要求
+**Output：** 完整工作計劃書草稿（背景、範疇、WBS 摘要、里程碑、溝通機制、驗收條件）
+**Human Gate：** PM Gate：範疇是否與 SOW 一致；工時估算是否含 buffer（≥10%）；客戶里程碑名稱確認
+**Artifact：** Markdown（.md）→ 轉 PDF 交付
+**Risk：** AI 可能自行擴大範疇（scope creep）；工時估算過於樂觀；術語與 SOW 不一致
+**Next Node：** preDev:7（PM Cowork SOW 初稿）→ Gate preDev:9（SOW Gate 對客戶）
 
 - **對應節點**：preDev:7（PM Cowork SOW / 報價初稿）
 - **餵什麼**
@@ -152,6 +166,13 @@
 
 **Tier 1 ｜ type: COWORK**
 
+**Input：** 工作計劃書、WBS 摘要、客戶背景、說明重點（3-5 條）
+**Output：** 單一 HTML 簡報（含 CSS）、可在瀏覽器展示的全頁輪播
+**Human Gate：** PM 確認：流程順序對應客戶溝通邏輯；圖示 / 截圖來源合法；無機密資訊
+**Artifact：** HTML（單一 .html 檔，內嵌 CSS）
+**Risk：** HTML 依賴外部 CDN 字型 / 圖示 → 內網展示可能壞；AI 可能產出過度複雜的 CSS 無法手動調整
+**Next Node：** Gate preDev:9（SOW Gate，對客戶說明用）
+
 - **對應節點**：preDev:7（SOW 初稿）完成後 → Gate preDev:9（SOW Gate，對客戶用）
 - **餵什麼**
   - 工作計劃書或 SOW（或條列重點）
@@ -206,6 +227,13 @@
 ### 4. WBS（Work Breakdown Structure）
 
 **Tier 1 ｜ type: CLAUDECODE**
+
+**Input：** SOW 工作項目清單、技術架構草稿、角色分配表
+**Output：** 3 層 WBS（Phase → Feature → Task）+ 每個 Task 工時估算 + 負責角色
+**Human Gate：** 工程師確認工時合理；PM 確認與 SOW 對齊（無超出 / 遺漏）
+**Artifact：** Markdown（樹狀結構 .md）→ 可轉 CSV 匯入 ASANA
+**Risk：** Claude Code 可能把技術子任務拆太細（超出 SOW）；工時估算忽略測試 / review 時間
+**Next Node：** preDev:6（Claude Code 任務拆分）→ preDev:10（PM 排程）
 
 - **對應節點**：preDev:6（Claude Code 任務拆分與技術草稿）
 - **餵什麼**
@@ -262,6 +290,13 @@
 ### 5. 專案組織架構規劃
 
 **Tier 2 ｜ Primary type: COWORK ｜ Support: HUMAN**
+
+**Input：** SOW 角色定義、客戶窗口姓名、內部團隊成員名單
+**Output：** 組織架構圖草稿（角色 → 人員 → 責任範疇 → 溝通線）
+**Human Gate：** PM 確認每個角色已指定真實人員；客戶端窗口已確認並同意；DRI（直接負責人）欄位不可空白
+**Artifact：** Markdown（表格格式）→ 可轉 PNG/SVG 進簡報
+**Risk：** AI 可能填入假設性人員；職責邊界不清造成後期責任推諉
+**Next Node：** preDev:5（工程師技術評估）→ preDev:8（PM 內部確認）
 
 - **對應節點**：preDev:5（工程師人工技術評估）完成後 → preDev:8（PM 人工內部確認）
 - **餵什麼**
@@ -322,6 +357,13 @@
 
 **Tier 2 ｜ Primary type: CLAUDECODE ｜ Support: COWORK**
 
+**Input：** 設計稿截圖或 Figma 連結、功能規格文字說明、技術限制（框架、尺寸）
+**Output：** GPT 產出 UI 截圖 → Claude Code 轉 static HTML prototype
+**Human Gate：** 工程師確認 HTML 可進入 repo（無需大量重構）；PM 確認 UX 流程符合需求
+**Artifact：** HTML（static prototype，不含後端邏輯）
+**Risk：** GPT 圖與 Claude Code HTML 有視覺落差；prototype 被誤認為正式版 → 需明確標示「僅供 demo」
+**Next Node：** preDev:6（Claude Code 任務拆分）— 與 WBS 平行執行
+
 - **對應節點**：preDev:6（Claude Code 任務拆分）區，與 WBS 平行執行
 - **作業路徑**
   1. **GPT 產圖片**：給出功能描述 + 風格 → 得 UI 截圖 / 線框圖
@@ -377,6 +419,13 @@
 ### 7. 開發 Sprint 規劃
 
 **Tier 2 ｜ type: COWORK**
+
+**Input：** WBS Task 清單、Sprint 週期設定（1/2 週）、團隊 velocity（story points/sprint）
+**Output：** Sprint 0-N 任務分配表（含 task / owner / story points / dependencies）
+**Human Gate：** PM 拍板：Sprint N 範圍；velocity 是否合理；客戶驗收順序是否優先
+**Artifact：** Markdown（表格）→ 可轉 CSV 匯入 ASANA
+**Risk：** AI 排程忽略 team calendar（假期、待崗）；dependencies 推算錯誤導致後 Sprint 卡住
+**Next Node：** preDev:10（PM 人工排程與里程碑）→ midDev 每個 Sprint 滾動更新
 
 - **對應節點**：preDev:10（PM 人工排程與里程碑）→ midDev 每個 Sprint 滾動更新
 - **餵什麼**
@@ -436,6 +485,13 @@
 
 **Tier 3 ｜ type: SYSTEM**
 
+**Input：** WBS Task 清單 / Sprint 規劃表、成員 email（ASANA account）、截止日期
+**Output：** 符合 ASANA CSV import 格式的任務清單（Task Name / Assignee / Due Date / Section）
+**Human Gate：** PM 匯入前確認：assignee email 對應正確、日期格式正確（YYYY-MM-DD）、無重複 task
+**Artifact：** CSV（.csv，ASANA import template 格式）
+**Risk：** email 欄位錯誤導致任務未指派；日期格式不合 ASANA 規格導致匯入失敗；重複匯入產生重複 task
+**Next Node：** preDev:10 之後跨整個專案（preDev → midDev → postDev）
+
 - **對應節點**：preDev:10 排程完成後建立，跨整個專案 preDev → midDev → postDev
 - **Tier 3 意義**：AI 產出任務清單或 CSV，由人觸發匯入；或接 API/MCP 讓 AI 直接建立任務
 
@@ -475,6 +531,13 @@ Name, Assignee, Due Date, Start Date, Type, Description, Priority
 ### 9. 里程碑提醒
 
 **Tier 3 ｜ type: SYSTEM**
+
+**Input：** 工作計劃書里程碑清單、各里程碑日期、時區（Asia/Taipei）
+**Output：** .ics 行事曆檔（符合 RFC 5545，可匯入 Google Calendar）
+**Human Gate：** PM 匯入前確認：日期與工作計劃書一致；時區正確；里程碑名稱清楚（客戶可識別）
+**Artifact：** ICS（.ics，RFC 5545）
+**Risk：** AI 產出時區 UTC 未轉換；DTSTART / DTEND 格式錯誤導致匯入失敗；與 ASANA 里程碑名稱不一致
+**Next Node：** preDev:10（PM 排程設定）→ 持續觸發至 postDev:12（KT / 保固交接）
 
 - **對應節點**：preDev:10（PM 排程）設定 → 持續觸發至 postDev:12（KT/保固交接）
 - **Tier 3 意義**：AI 產 `.ics` / 提醒清單，由人匯入 / 設定；或接排程系統自動推送
