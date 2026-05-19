@@ -1,38 +1,48 @@
 // assets/resources-loader.js
 window.ResourcesLoader = {};
+ResourcesLoader._state = {};
 
 ResourcesLoader.init = function() {
-  ResourcesLoader.loadCatalog();
+  ResourcesLoader.fetchAll();
   ResourcesLoader.initSearchPanel();
 };
 
-ResourcesLoader.loadCatalog = async function() {
+ResourcesLoader.fetchAll = async function() {
+  var mdPromise = fetch('resources-catalog.md').then(function(r) {
+    if (!r.ok) throw new Error('md HTTP ' + r.status);
+    return r.text();
+  });
+  var statePromise = fetch('resources-state.json').then(function(r) {
+    if (!r.ok) return {};
+    return r.json();
+  }).catch(function() { return {}; });
+
   try {
-    var res = await fetch('resources-catalog.md');
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    var md = await res.text();
-
-    marked.use({ mangle: false, headerIds: true, gfm: true });
-    var html = marked.parse(md);
-
-    var content = document.getElementById('catalog-content');
-    content.innerHTML = html;
-
-    // Wrap tables for horizontal scroll on narrow screens
-    content.querySelectorAll('table').forEach(function(table) {
-      var wrapper = document.createElement('div');
-      wrapper.className = 'table-wrapper';
-      table.parentNode.insertBefore(wrapper, table);
-      wrapper.appendChild(table);
-    });
-
-    ResourcesLoader.buildNav();
-    ResourcesLoader.initScrollSpy();
-
+    var results = await Promise.all([mdPromise, statePromise]);
+    ResourcesLoader._state = results[1];
+    ResourcesLoader.renderCatalog(results[0]);
   } catch (err) {
     document.getElementById('catalog-error').classList.remove('hidden');
-    console.error('[ResourcesLoader] fetch failed:', err);
+    console.error('[ResourcesLoader] fetchAll failed:', err);
   }
+};
+
+ResourcesLoader.renderCatalog = function(md) {
+  marked.use({ mangle: false, headerIds: true, gfm: true });
+  var html = marked.parse(md);
+
+  var content = document.getElementById('catalog-content');
+  content.innerHTML = html;
+
+  content.querySelectorAll('table').forEach(function(table) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'table-wrapper';
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+
+  ResourcesLoader.buildNav();
+  ResourcesLoader.initScrollSpy();
 };
 
 ResourcesLoader.buildNav = function() {
@@ -84,67 +94,59 @@ ResourcesLoader.initScrollSpy = function() {
   });
 };
 
+ResourcesLoader._searchState = { selected: -1 };
+
+ResourcesLoader._handleSearchInput = function(input, results, close) {
+  var q = input.value.trim().toLowerCase();
+  results.innerHTML = '';
+  ResourcesLoader._searchState.selected = -1;
+  if (!q) return;
+  var headings = Array.from(
+    document.querySelectorAll('#catalog-content h2, #catalog-content h3')
+  ).map(function(h) {
+    return { id: h.id, text: h.textContent.trim(), level: h.tagName };
+  });
+  headings.filter(function(item) {
+    return item.text.toLowerCase().includes(q);
+  }).slice(0, 8).forEach(function(item, i) {
+    var div = document.createElement('div');
+    div.className = 'search-result-item';
+    div.dataset.idx = i;
+    div.innerHTML =
+      '<span class="search-result-label">' + (item.level === 'H2' ? '§' : '—') + '</span>' +
+      '<span class="search-result-text">' + item.text + '</span>';
+    div.addEventListener('click', function() {
+      var el = document.getElementById(item.id);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      close();
+    });
+    results.appendChild(div);
+  });
+};
+
+ResourcesLoader._handleSearchKeydown = function(e, results) {
+  var items = results.querySelectorAll('.search-result-item');
+  var s = ResourcesLoader._searchState;
+  if (e.key === 'ArrowDown') s.selected = Math.min(s.selected + 1, items.length - 1);
+  if (e.key === 'ArrowUp')   s.selected = Math.max(s.selected - 1, 0);
+  if (e.key === 'Enter' && s.selected >= 0) { var sel = items[s.selected]; if (sel) sel.click(); }
+  items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
+};
+
 ResourcesLoader.initSearchPanel = function() {
   var overlay = document.getElementById('search-overlay');
   var input   = document.getElementById('search-input');
   var results = document.getElementById('search-results');
   var btn     = document.getElementById('search-btn');
   if (!overlay || !input) return;
-
   var open  = function() { overlay.classList.remove('hidden'); input.focus(); input.value = ''; results.innerHTML = ''; };
   var close = function() { overlay.classList.add('hidden'); };
-
   document.addEventListener('keydown', function(e) {
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); open(); }
     if (e.key === 'Escape') close();
   });
   if (btn) btn.addEventListener('click', open);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
-
-  var selected = -1;
-
-  input.addEventListener('input', function() {
-    var q = input.value.trim().toLowerCase();
-    results.innerHTML = '';
-    selected = -1;
-    if (!q) return;
-
-    var headings = Array.from(
-      document.querySelectorAll('#catalog-content h2, #catalog-content h3')
-    ).map(function(h) {
-      return { id: h.id, text: h.textContent.trim(), level: h.tagName };
-    });
-
-    var matches = headings.filter(function(item) {
-      return item.text.toLowerCase().includes(q);
-    });
-
-    matches.slice(0, 8).forEach(function(item, i) {
-      var div = document.createElement('div');
-      div.className = 'search-result-item';
-      div.dataset.idx = i;
-      div.innerHTML =
-        '<span class="search-result-label">' + (item.level === 'H2' ? '§' : '—') + '</span>' +
-        '<span class="search-result-text">' + item.text + '</span>';
-      div.addEventListener('click', function() {
-        var el = document.getElementById(item.id);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-        close();
-      });
-      results.appendChild(div);
-    });
-  });
-
-  input.addEventListener('keydown', function(e) {
-    var items = results.querySelectorAll('.search-result-item');
-    if (e.key === 'ArrowDown') selected = Math.min(selected + 1, items.length - 1);
-    if (e.key === 'ArrowUp')   selected = Math.max(selected - 1, 0);
-    if (e.key === 'Enter' && selected >= 0) {
-      var sel = items[selected];
-      if (sel) sel.click();
-    }
-    items.forEach(function(el, i) {
-      el.classList.toggle('selected', i === selected);
-    });
-  });
+  input.addEventListener('input', function() { ResourcesLoader._handleSearchInput(input, results, close); });
+  input.addEventListener('keydown', function(e) { ResourcesLoader._handleSearchKeydown(e, results); });
 };

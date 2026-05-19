@@ -26,17 +26,17 @@
 
 ## 一頁速查表
 
-| # | 資源 | Tier | type | 對應 dashboard 節點 | 一句話 |
-|---|------|------|------|---------------------|--------|
-| 1 | 會議記錄 | 1 | COWORK | preDev:2 / midDev standup / postDev UAT | 丟逐字稿，得摘要＋待辦 |
-| 2 | 工作計劃書 | 1 | COWORK | preDev:7 | 丟目標範疇，得完整計劃書草稿 |
-| 3 | 簡報（HTML） | 1 | COWORK | preDev:7 後 → Gate preDev:9 | 用 HTML 取代 PPT，Claude 較易產 |
-| 4 | WBS | 1 | CLAUDECODE | preDev:6 | 丟 SOW，拆出樹狀任務＋工時估算 |
-| 5 | 專案組織架構規劃 | 2 | HUMAN+COWORK | preDev:5 → preDev:8 | AI 產草稿，人確認人員與職責 |
-| 6 | Prototype / UI 截圖分析 | 2 | COWORK+CLAUDECODE | preDev:6 區 | GPT 產圖 → Claude Code 轉 HTML |
-| 7 | 開發 Sprint 規劃 | 2 | COWORK | preDev:10 → midDev 滾動 | AI 排優先序，人拍板速度與緩衝 |
-| 8 | ASANA 任務管理 | 3 | SYSTEM | preDev:10 之後跨階段 | AI 產任務清單或 CSV，人匯入 |
-| 9 | 里程碑提醒 | 3 | SYSTEM | preDev:10 → postDev:12 | AI 產 ICS / 設定提醒，人觸發 |
+| # | id | 資源 | Tier | Primary type | Support | 對應節點 | Artifact | Status |
+|---|-----|------|------|--------------|---------|----------|----------|--------|
+| 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | Verified |
+| 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | Verified |
+| 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | Verified |
+| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | Verified |
+| 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | Needs Human Gate |
+| 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | Needs Human Gate |
+| 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | Needs Human Gate |
+| 8 | asana | ASANA 任務管理 | 3 | SYSTEM | — | preDev:10 跨階段 | CSV | System Candidate |
+| 9 | milestone-reminder | 里程碑提醒 | 3 | SYSTEM | — | preDev:10 → postDev:12 | ICS | System Candidate |
 
 ---
 
@@ -261,7 +261,7 @@
 
 ### 5. 專案組織架構規劃
 
-**Tier 2 ｜ type: HUMAN + COWORK**
+**Tier 2 ｜ Primary type: COWORK ｜ Support: HUMAN**
 
 - **對應節點**：preDev:5（工程師人工技術評估）完成後 → preDev:8（PM 人工內部確認）
 - **餵什麼**
@@ -320,7 +320,7 @@
 
 ### 6. Prototype 設計 / UI 截圖分析
 
-**Tier 2 ｜ type: COWORK + CLAUDECODE**
+**Tier 2 ｜ Primary type: CLAUDECODE ｜ Support: COWORK**
 
 - **對應節點**：preDev:6（Claude Code 任務拆分）區，與 WBS 平行執行
 - **作業路徑**
