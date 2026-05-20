@@ -45,9 +45,13 @@
     <main id="main-content" class="main-content">
       <div id="catalog-content" class="content-wrapper"></div>
       <div id="catalog-error" class="catalog-error hidden" role="alert">
-        <p>無法載入 <code>resources-catalog.md</code>。請用 HTTP server 開啟，不能直接雙擊 HTML 檔案。</p>
+        <p>無法載入 <code>resources-catalog.md</code>。可能原因：</p>
+        <ul>
+          <li>GitHub Pages 快取尚未更新（等待 1-2 分鐘後重新整理）</li>
+          <li>瀏覽器阻擋 fetch（確認非 file:// 協定）</li>
+          <li>本機開發：需用 HTTP server，不能直接雙擊 HTML</li>
+        </ul>
         <pre>python -m http.server 8080</pre>
-        <p>然後開啟 <code>http://localhost:8080/resources.html</code></p>
       </div>
     </main>
   </div>
