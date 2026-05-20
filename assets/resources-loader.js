@@ -1,6 +1,9 @@
 // assets/resources-loader.js
 window.ResourcesLoader = {};
 ResourcesLoader._state = {};
+ResourcesLoader._parseTime = 0;
+
+marked.use({ mangle: false, headerIds: true, gfm: true });
 
 ResourcesLoader.init = function() {
   ResourcesLoader.fetchAll();
@@ -28,8 +31,9 @@ ResourcesLoader.fetchAll = async function() {
 };
 
 ResourcesLoader.renderCatalog = function(md) {
-  marked.use({ mangle: false, headerIds: true, gfm: true });
+  var t0 = performance.now();
   var html = marked.parse(md);
+  ResourcesLoader._parseTime = performance.now() - t0;
 
   var content = document.getElementById('catalog-content');
   content.innerHTML = html;
@@ -43,6 +47,8 @@ ResourcesLoader.renderCatalog = function(md) {
 
   ResourcesLoader.rewriteNodeRefs(content);
   ResourcesLoader.tagTier3(content);
+  ResourcesLoader.enrichDom(content, ResourcesLoader._state);
+  ResourcesLoader.renderTypeChips(content);
   ResourcesLoader.buildNav();
   ResourcesLoader.initScrollSpy();
 };
@@ -133,6 +139,73 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   if (e.key === 'ArrowUp')   s.selected = Math.max(s.selected - 1, 0);
   if (e.key === 'Enter' && s.selected >= 0) { var sel = items[s.selected]; if (sel) sel.click(); }
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
+};
+
+// Ordered to match catalog numbering 1..9 in resources-catalog.md — must stay in sync
+ResourcesLoader._RESOURCE_IDS = [
+  'meeting-notes', 'work-plan', 'presentation', 'wbs', 'org-chart',
+  'prototype', 'sprint-plan', 'asana', 'milestone-reminder'
+];
+
+ResourcesLoader.enrichDom = function(root, state) {
+  var h3s = Array.from(root.querySelectorAll('h3'));
+  var resourceH3s = h3s.filter(function(h) { return /^\d+\. /.test(h.textContent.trim()); });
+  resourceH3s.forEach(function(h3, i) {
+    var resourceId = ResourcesLoader._RESOURCE_IDS[i];
+    if (!resourceId) return;
+    h3.dataset.resourceId = resourceId;
+    var entry = state[resourceId];
+    if (!entry || !entry.status) return;
+    var badge = document.createElement('span');
+    badge.className = 'status-badge status-' + entry.status.toLowerCase().replace(/\s+/g, '-');
+    badge.textContent = entry.status;
+    h3.insertAdjacentElement('afterend', badge);
+    if (entry.verification && entry.verification.length) {
+      var ul = document.createElement('ul');
+      ul.className = 'verification-list';
+      entry.verification.forEach(function(item) {
+        var li = document.createElement('li');
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.disabled = true;
+        li.appendChild(cb);
+        li.appendChild(document.createTextNode(item));
+        ul.appendChild(li);
+      });
+      badge.insertAdjacentElement('afterend', ul);
+      ResourcesLoader.rewriteNodeRefs(ul);
+    }
+  });
+};
+
+ResourcesLoader.renderTypeChips = function(root) {
+  var typeMap = { COWORK: 'cowork', CLAUDECODE: 'claudecode', SYSTEM: 'system', HUMAN: 'human' };
+  var tables = Array.from(root.querySelectorAll('table'));
+  var table = tables.find(function(t) {
+    var ths = Array.from(t.querySelectorAll('th'));
+    return ths.some(function(th) { return th.textContent.trim() === 'Primary type'; });
+  });
+  if (!table) return;
+  var headers = Array.from(table.querySelectorAll('th')).map(function(th) {
+    return th.textContent.trim();
+  });
+  var primaryIdx = headers.indexOf('Primary type');
+  var supportIdx = headers.indexOf('Support');
+  if (primaryIdx === -1) return;
+  table.querySelectorAll('tbody tr').forEach(function(tr) {
+    var cells = tr.querySelectorAll('td');
+    [primaryIdx, supportIdx].forEach(function(idx) {
+      var cell = cells[idx];
+      if (!cell) return;
+      var val = cell.textContent.trim();
+      if (!typeMap[val]) return;
+      var span = document.createElement('span');
+      span.className = 'chip type-' + typeMap[val];
+      span.textContent = val;
+      cell.textContent = '';
+      cell.appendChild(span);
+    });
+  });
 };
 
 ResourcesLoader.tagTier3 = function(root) {
