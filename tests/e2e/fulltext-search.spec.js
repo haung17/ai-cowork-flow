@@ -11,6 +11,7 @@ async function openSearch(page) {
 test('fulltext-search: "SOW" query returns paragraph-level results', async ({ page }) => {
   await openSearch(page);
   await page.fill('#search-input', 'SOW');
+  await page.waitForSelector('.search-result-item', { timeout: 2000 });
   const count = await page.locator('.search-result-item').count();
   expect(count).toBeGreaterThan(0);
 });
@@ -18,6 +19,7 @@ test('fulltext-search: "SOW" query returns paragraph-level results', async ({ pa
 test('fulltext-search: "SOW" result snippet contains matching text', async ({ page }) => {
   await openSearch(page);
   await page.fill('#search-input', 'SOW');
+  await page.waitForSelector('.search-result-item', { timeout: 2000 });
   const firstText = await page.locator('.search-result-item').first().locator('.search-result-text').textContent();
   expect(firstText.toLowerCase()).toContain('sow');
 });
@@ -25,6 +27,7 @@ test('fulltext-search: "SOW" result snippet contains matching text', async ({ pa
 test('fulltext-search: "禁止 AI" query returns table-cell-level results', async ({ page }) => {
   await openSearch(page);
   await page.fill('#search-input', '禁止 AI');
+  await page.waitForSelector('.search-result-item', { timeout: 2000 });
   const count = await page.locator('.search-result-item').count();
   expect(count).toBeGreaterThan(0);
 });
