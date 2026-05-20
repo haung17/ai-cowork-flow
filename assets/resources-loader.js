@@ -144,17 +144,24 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
 };
 
-// Ordered to match catalog numbering 1..9 in resources-catalog.md — must stay in sync
-ResourcesLoader._RESOURCE_IDS = [
-  'meeting-notes', 'work-plan', 'presentation', 'wbs', 'org-chart',
-  'prototype', 'sprint-plan', 'asana', 'milestone-reminder'
-];
+ResourcesLoader._RESOURCE_MAP = {
+  '會議記錄': 'meeting-notes',
+  '工作計劃書': 'work-plan',
+  '簡報（HTML 取代 PPT）': 'presentation',
+  'WBS（Work Breakdown Structure）': 'wbs',
+  '專案組織架構規劃': 'org-chart',
+  'Prototype 設計 / UI 截圖分析': 'prototype',
+  '開發 Sprint 規劃': 'sprint-plan',
+  'ASANA 任務管理': 'asana',
+  '里程碑提醒': 'milestone-reminder'
+};
 
 ResourcesLoader.enrichDom = function(root, state) {
   var h3s = Array.from(root.querySelectorAll('h3'));
   var resourceH3s = h3s.filter(function(h) { return /^\d+\. /.test(h.textContent.trim()); });
-  resourceH3s.forEach(function(h3, i) {
-    var resourceId = ResourcesLoader._RESOURCE_IDS[i];
+  resourceH3s.forEach(function(h3) {
+    var name = h3.textContent.trim().replace(/^\d+\.\s+/, '');
+    var resourceId = ResourcesLoader._RESOURCE_MAP[name];
     if (!resourceId) return;
     h3.dataset.resourceId = resourceId;
     var entry = state[resourceId];
