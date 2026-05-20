@@ -47,6 +47,7 @@ ResourcesLoader.renderCatalog = function(md) {
 
   ResourcesLoader.rewriteNodeRefs(content);
   ResourcesLoader.tagTier3(content);
+  ResourcesLoader.tagTier4(content);
   ResourcesLoader.enrichDom(content, ResourcesLoader._state);
   ResourcesLoader.renderTypeChips(content);
   ResourcesLoader.buildNav();
@@ -208,20 +209,28 @@ ResourcesLoader.renderTypeChips = function(root) {
   });
 };
 
-ResourcesLoader.tagTier3 = function(root) {
+ResourcesLoader._tagTierBlock = function(root, label, className) {
   var h2s = Array.from(root.querySelectorAll('h2'));
-  var tier3h2 = h2s.find(function(h) { return h.textContent.trim().startsWith('Tier 3'); });
-  if (!tier3h2) return;
+  var targetH2 = h2s.find(function(h) { return h.textContent.trim().startsWith(label); });
+  if (!targetH2) return;
   var block = document.createElement('div');
-  block.className = 'tier3-block';
-  var next = tier3h2.nextSibling;
+  block.className = className;
+  var next = targetH2.nextSibling;
   while (next) {
     var following = next.nextSibling;
     if (next.nodeType === Node.ELEMENT_NODE && next.tagName === 'H2') break;
     block.appendChild(next);
     next = following;
   }
-  tier3h2.parentNode.insertBefore(block, tier3h2.nextSibling);
+  targetH2.parentNode.insertBefore(block, targetH2.nextSibling);
+};
+
+ResourcesLoader.tagTier3 = function(root) {
+  ResourcesLoader._tagTierBlock(root, 'Tier 3', 'tier3-block');
+};
+
+ResourcesLoader.tagTier4 = function(root) {
+  ResourcesLoader._tagTierBlock(root, 'Tier 4', 'tier4-block');
 };
 
 ResourcesLoader.rewriteNodeRefs = function(root) {
