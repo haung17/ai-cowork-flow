@@ -113,18 +113,20 @@ window.AppData.flowcharts = {
       { id:'3', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：Smoke Test / 環境檢查', bullets:['基本流程','環境可用性','風險檢查'], x:20, y:20 },
       { id:'4', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：UAT 驗收', bullets:['操作驗收','問題回報','階段結論'], x:45, y:29 },
       { id:'5', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'UAT 是否通過？', bullets:['未通過回修','通過後簽收'], x:45, y:38 },
+      { id:'postdev-engineer-impact', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：影響分析與修正規劃', bullets:['UAT 失敗根因分析','修正範圍評估','修正計劃'], x:20, y:43 },
       { id:'6', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：修正 / 重新部署 UAT', bullets:['修正程式','更新版本','重新部署'], x:20, y:47 },
       { id:'7', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：正式簽收 / 上線同意', bullets:['正式簽收','上線同意','保固起算'], x:45, y:56 },
+      { id:'postdev-engineer-codereview', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：Code Review / 上線前確認', bullets:['正式部署前 review','回滾確認','變更驗證'], x:70, y:60 },
       { id:'8', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：正式部署 / 回滾準備', bullets:['Production 部署','migration','rollback'], x:70, y:65 },
       { id:'9', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：上線後 Smoke Test', bullets:['關鍵流程','服務可用性','初始監控'], x:20, y:65 },
-      { id:'10', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：交付文件初稿', bullets:['Release Note','操作手冊','交付清單'], x:45, y:74 },
+      { id:'10', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：交付文件初稿', bullets:['Release Note','操作手冊','交付清單'], roles:[ROLE.PM, ROLE.ENG], x:45, y:74 },
       { id:'11', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：技術文件與部署說明', bullets:['架構文件','API 文件','環境設定'], x:70, y:83 },
       { id:'12', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：Knowledge Transfer / 保固交接', bullets:['聯絡窗口','保固範圍','SLA'], x:45, y:92 },
     ],
     edges: [
       {from:'1',to:'2'},{from:'2',to:'3'},{from:'3',to:'4'},{from:'4',to:'5'},
-      {from:'5',to:'6',label:'未通過'},{from:'6',to:'3'},
-      {from:'5',to:'7',label:'通過'},{from:'7',to:'8'},{from:'8',to:'9'},
+      {from:'5',to:'postdev-engineer-impact',label:'未通過'},{from:'postdev-engineer-impact',to:'6'},{from:'6',to:'3'},
+      {from:'5',to:'7',label:'通過'},{from:'7',to:'postdev-engineer-codereview'},{from:'postdev-engineer-codereview',to:'8'},{from:'8',to:'9'},
       {from:'9',to:'10'},{from:'10',to:'11'},{from:'11',to:'12'},
     ]
   }

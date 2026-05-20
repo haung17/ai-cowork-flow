@@ -9,7 +9,7 @@ test('deep-link: flowchart nodes have id attributes', async ({ page }) => {
   const midDev = await page.locator('[id^="midDev-"]').count();
   expect(midDev).toBe(10);
   const postDev = await page.locator('[id^="postDev-"]').count();
-  expect(postDev).toBe(12);
+  expect(postDev).toBe(14);
 });
 
 test('deep-link: hash navigation scrolls to node and adds flash', async ({ page }) => {
