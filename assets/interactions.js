@@ -151,15 +151,17 @@ DashboardInteractions.buildContent = function() {
         <tr><td>7</td><td>QA 人工：QA 驗證</td><td>人工為主</td><td>功能測試、探索測試、回歸驗證、驗收條件確認。</td></tr>
         <tr><td>8</td><td>PM / QA Cowork：問題彙整與影響判斷</td><td>AI 整理 + 人工判斷</td><td>缺陷 / 問題彙整、優先級建議、影響分析、下一步建議。</td></tr>
         <tr><td>9</td><td>問題類型？</td><td>條件判斷</td><td>分為 Bug / 未達驗收條件、需求不清 / 規格疑義、新增需求 / 範疇變更、通過 / 符合驗收條件。</td></tr>
+        <tr><td>PM 釐清</td><td>PM：規格釋疑 + 客戶確認</td><td>PM 人工</td><td>需求釐清、客戶確認、更新 User Story；釐清後視情況需更新實作或直接進 QA 重驗。</td></tr>
+        <tr><td>11</td><td>PM / QA：UAT 準備</td><td>人工</td><td>版本候選確認、UAT 環境申請、驗收計劃；接著進入開發後流程。</td></tr>
       </tbody>
     </table>
     <table>
       <thead><tr><th>分類</th><th>流向</th><th>處理原則</th></tr></thead>
       <tbody>
         <tr><td>A. Bug / 未達驗收條件</td><td>回到工程師修正，再跑 PR / CI / QA</td><td>屬原承諾範圍內修正，通常不需客戶重新簽核。</td></tr>
-        <tr><td>B. 需求不清 / 規格疑義</td><td>回到 PM 釐清需求</td><td>必要時找客戶確認，但不一定需要更新 SOW。</td></tr>
+        <tr><td>B. 需求不清 / 規格疑義</td><td>PM 規格釋疑節點→ 需更新實作（回 node 1）或無需實作變更（回 QA 重驗）</td><td>必要時找客戶確認，不允許 AI 直接修正；由 PM 主導釐清後決定路徑。</td></tr>
         <tr><td>C. 新增需求 / 範疇變更</td><td>進入客戶 Gate</td><td>更新 backlog、調整報價 / 排程，必要時修正 SOW / 報價。</td></tr>
-        <tr><td>D. 通過 / 符合驗收條件</td><td>進入階段 Demo / UAT 準備</td><td>可安排內部 Demo、階段成果確認，並進入開發後流程。</td></tr>
+        <tr><td>D. 通過 / 符合驗收條件</td><td>PM / QA UAT 準備 → 進入開發後流程</td><td>可安排內部 Demo、階段成果確認，並進入開發後流程。</td></tr>
       </tbody>
     </table>
     <p class="section-desc">建議每 1-2 週進行 Sprint Demo 或依里程碑展示成果，及早發現需求偏差，降低最後驗收時一次爆出大量問題的風險。</p>
