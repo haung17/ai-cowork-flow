@@ -107,28 +107,54 @@ ResourcesLoader.initScrollSpy = function() {
 
 ResourcesLoader._searchState = { selected: -1 };
 
+ResourcesLoader._nearestHeading = function(el) {
+  var cur = el.previousElementSibling;
+  while (cur) {
+    if (cur.tagName === 'H3' || cur.tagName === 'H2') return cur;
+    cur = cur.previousElementSibling;
+  }
+  return el.closest('section') ? el.closest('section').querySelector('h2,h3') : null;
+};
+
 ResourcesLoader._handleSearchInput = function(input, results, close) {
   var q = input.value.trim().toLowerCase();
   results.innerHTML = '';
   ResourcesLoader._searchState.selected = -1;
   if (!q) return;
-  var headings = Array.from(
-    document.querySelectorAll('#catalog-content h2, #catalog-content h3')
-  ).map(function(h) {
-    return { id: h.id, text: h.textContent.trim(), level: h.tagName };
+  var matches = [];
+  // headings
+  Array.from(document.querySelectorAll('#catalog-content h2, #catalog-content h3')).forEach(function(h) {
+    if (h.textContent.trim().toLowerCase().includes(q)) {
+      matches.push({ anchor: h, text: h.textContent.trim(), label: h.tagName === 'H2' ? '§' : '—' });
+    }
   });
-  headings.filter(function(item) {
-    return item.text.toLowerCase().includes(q);
+  // paragraphs and table cells
+  Array.from(document.querySelectorAll('#catalog-content p, #catalog-content td')).forEach(function(el) {
+    var text = el.textContent.trim();
+    if (!text.toLowerCase().includes(q)) return;
+    var heading = ResourcesLoader._nearestHeading(el);
+    if (!heading) return;
+    // truncate snippet around match
+    var idx = text.toLowerCase().indexOf(q), start = Math.max(0, idx - 20);
+    var snippet = (start > 0 ? '…' : '') + text.slice(start, idx + q.length + 30).replace(/\s+/g, ' ');
+    matches.push({ anchor: heading, text: snippet, label: '¶' });
+  });
+  // deduplicate by anchor id + snippet, cap at 8
+  var seen = {};
+  matches.filter(function(m) {
+    var key = (m.anchor && m.anchor.id) + '|' + m.text.slice(0, 30);
+    if (seen[key]) return false;
+    seen[key] = true;
+    return true;
   }).slice(0, 8).forEach(function(item, i) {
     var div = document.createElement('div');
     div.className = 'search-result-item';
     div.dataset.idx = i;
     div.innerHTML =
-      '<span class="search-result-label">' + (item.level === 'H2' ? '§' : '—') + '</span>' +
+      '<span class="search-result-label">' + item.label + '</span>' +
       '<span class="search-result-text">' + item.text + '</span>';
     div.addEventListener('click', function() {
-      var el = document.getElementById(item.id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (item.anchor) item.anchor.scrollIntoView({ behavior: 'smooth' });
       close();
     });
     results.appendChild(div);
@@ -144,17 +170,24 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
 };
 
-// Ordered to match catalog numbering 1..9 in resources-catalog.md — must stay in sync
-ResourcesLoader._RESOURCE_IDS = [
-  'meeting-notes', 'work-plan', 'presentation', 'wbs', 'org-chart',
-  'prototype', 'sprint-plan', 'asana', 'milestone-reminder'
-];
+ResourcesLoader._RESOURCE_MAP = {
+  '會議記錄': 'meeting-notes',
+  '工作計劃書': 'work-plan',
+  '簡報（HTML 取代 PPT）': 'presentation',
+  'WBS（Work Breakdown Structure）': 'wbs',
+  '專案組織架構規劃': 'org-chart',
+  'Prototype 設計 / UI 截圖分析': 'prototype',
+  '開發 Sprint 規劃': 'sprint-plan',
+  'ASANA 任務管理': 'asana',
+  '里程碑提醒': 'milestone-reminder'
+};
 
 ResourcesLoader.enrichDom = function(root, state) {
   var h3s = Array.from(root.querySelectorAll('h3'));
   var resourceH3s = h3s.filter(function(h) { return /^\d+\. /.test(h.textContent.trim()); });
-  resourceH3s.forEach(function(h3, i) {
-    var resourceId = ResourcesLoader._RESOURCE_IDS[i];
+  resourceH3s.forEach(function(h3) {
+    var name = h3.textContent.trim().replace(/^\d+\.\s+/, '');
+    var resourceId = ResourcesLoader._RESOURCE_MAP[name];
     if (!resourceId) return;
     h3.dataset.resourceId = resourceId;
     var entry = state[resourceId];
