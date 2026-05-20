@@ -107,6 +107,11 @@ ResourcesLoader.initScrollSpy = function() {
 
 ResourcesLoader._searchState = { selected: -1 };
 
+ResourcesLoader._debounce = function(fn, ms) {
+  var t;
+  return function() { var a = arguments, c = this; clearTimeout(t); t = setTimeout(function() { fn.apply(c, a); }, ms); };
+};
+
 ResourcesLoader._nearestHeading = function(el) {
   var cur = el.previousElementSibling;
   while (cur) {
@@ -356,6 +361,7 @@ ResourcesLoader.initSearchPanel = function() {
   });
   if (btn) btn.addEventListener('click', open);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
-  input.addEventListener('input', function() { ResourcesLoader._handleSearchInput(input, results, close); });
+  // Anonymous wrapper: keeps _handleSearchInput as late-bound lookup so tests can stub the property.
+  input.addEventListener('input', ResourcesLoader._debounce(function() { ResourcesLoader._handleSearchInput(input, results, close); }, 250));
   input.addEventListener('keydown', function(e) { ResourcesLoader._handleSearchKeydown(e, results); });
 };

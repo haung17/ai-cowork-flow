@@ -75,6 +75,16 @@
       this.textContent = next === 'dark' ? 'Light' : 'Dark';
       this.setAttribute('aria-label', next === 'dark' ? '切換為淺色主題' : '切換為深色主題');
     });
+    window.addEventListener('storage', function(e) {
+      if (e.key === 'cowork-theme' && e.newValue) {
+        document.documentElement.setAttribute('data-theme', e.newValue);
+        var btn = document.getElementById('theme-toggle');
+        if (btn) {
+          btn.textContent = e.newValue === 'dark' ? 'Light' : 'Dark';
+          btn.setAttribute('aria-label', e.newValue === 'dark' ? '切換為淺色主題' : '切換為深色主題');
+        }
+      }
+    });
 
     ResourcesLoader.init();
   </script>
