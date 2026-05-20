@@ -42,6 +42,7 @@ ResourcesLoader.renderCatalog = function(md) {
   });
 
   ResourcesLoader.rewriteNodeRefs(content);
+  ResourcesLoader.tagTier3(content);
   ResourcesLoader.buildNav();
   ResourcesLoader.initScrollSpy();
 };
@@ -132,6 +133,22 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   if (e.key === 'ArrowUp')   s.selected = Math.max(s.selected - 1, 0);
   if (e.key === 'Enter' && s.selected >= 0) { var sel = items[s.selected]; if (sel) sel.click(); }
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
+};
+
+ResourcesLoader.tagTier3 = function(root) {
+  var h2s = Array.from(root.querySelectorAll('h2'));
+  var tier3h2 = h2s.find(function(h) { return h.textContent.trim().startsWith('Tier 3'); });
+  if (!tier3h2) return;
+  var block = document.createElement('div');
+  block.className = 'tier3-block';
+  var next = tier3h2.nextSibling;
+  while (next) {
+    var following = next.nextSibling;
+    if (next.nodeType === Node.ELEMENT_NODE && next.tagName === 'H2') break;
+    block.appendChild(next);
+    next = following;
+  }
+  tier3h2.parentNode.insertBefore(block, tier3h2.nextSibling);
 };
 
 ResourcesLoader.rewriteNodeRefs = function(root) {

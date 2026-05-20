@@ -577,16 +577,20 @@ Name, Assignee, Due Date, Start Date, Type, Description, Priority
 
 ## Tier 3 系統整合總覽
 
-> 以下只列可行路徑與門檻，不做推薦。
+> ⚠ **本區域所列項目皆不建議優先實作**
+> - 僅作為未來可能整合的路徑紀錄
+> - 每個方案都有額外帳號 / OAuth / Bot / n8n 維護成本
+> - MVP 階段請維持 Tier 1 / Tier 2 的 markdown / CSV / ICS 產出
+> - 列入此區不等於已選型；正式採用前需獨立 RFC
 
 ```
-ASANA 任務管理：
+⚠ ASANA 任務管理：
   A. 手動    → 零設定，最慢
   B. CSV 匯入 → AI 產 CSV，一次匯入
   C. MCP 直連 → 需 ASANA 付費版
   D. REST API → 需 OAuth 認證
 
-里程碑提醒：
+⚠ 里程碑提醒：
   A. ASANA 內建 → 依賴 ASANA 任務已建立
   B. ICS 匯入   → AI 產 .ics，人工一次匯入 Google Calendar
   C. Slack/Line  → 免費但需建 bot
