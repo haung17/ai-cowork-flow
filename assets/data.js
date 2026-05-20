@@ -63,16 +63,20 @@ window.AppData.flowcharts = {
       { id:'6', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：任務拆分與技術草稿', bullets:['技術任務','OpenAPI 草稿','DB Schema'], x:70, y:29 },
       { id:'7', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：SOW / 報價初稿', bullets:['Scope list','報價項目','交付假設'], x:45, y:38 },
       { id:'8', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：內部確認與優先序', bullets:['範圍切分','風險判斷','驗收方向'], x:45, y:47 },
+      { id:'predev-engineer-presurvey', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：投標前技術探勘', bullets:['技術可行性確認','估算校正','技術風險識別'], x:70, y:47 },
       { id:'9', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：SOW / 報價 / 交期', bullets:['範圍簽核','報價確認','交期確認'], x:45, y:56 },
       { id:'10', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：排程與里程碑', bullets:['Sprint plan','任務分派','里程碑'], x:45, y:65 },
-      { id:'11', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：技術確認', bullets:['架構確認','依賴確認','估算校正'], x:45, y:74 },
+      { id:'11', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：交付期技術規劃（CR 評估）', bullets:['架構確認','依賴確認','CR 影響評估'], x:45, y:74 },
+      { id:'12', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：Kickoff / Sprint 起跑', bullets:['開發分支建立','任務分派','溝通節奏'], x:45, y:83 },
     ],
     edges: [
       {from:'1',to:'2'},{from:'2',to:'3'},{from:'3',to:'4'},
       {from:'2',to:'5'},{from:'5',to:'6'},
-      {from:'4',to:'7'},{from:'6',to:'7'},{from:'7',to:'8'},{from:'8',to:'9'},
+      {from:'4',to:'7'},{from:'6',to:'7'},{from:'7',to:'8'},
+      {from:'8',to:'predev-engineer-presurvey'},
+      {from:'predev-engineer-presurvey',to:'9'},
       {from:'9',to:'10'},{from:'10',to:'11'},
-      {from:'11',to:'7',label:'估算差異 → 修正 SOW / 報價'},
+      {from:'11',to:'12',label:'交付期規劃完成'},
     ]
   },
 

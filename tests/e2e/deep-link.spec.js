@@ -5,7 +5,7 @@ test('deep-link: flowchart nodes have id attributes', async ({ page }) => {
   await page.goto('/dashboard.html');
   await page.waitForSelector('.fc-node', { timeout: 8000 });
   const preDev = await page.locator('[id^="preDev-"]').count();
-  expect(preDev).toBe(11);
+  expect(preDev).toBe(13);
   const midDev = await page.locator('[id^="midDev-"]').count();
   expect(midDev).toBe(10);
   const postDev = await page.locator('[id^="postDev-"]').count();

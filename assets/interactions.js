@@ -12,7 +12,7 @@ DashboardInteractions.init = function() {
 
 DashboardInteractions.initHashScroll = function() {
   var hash = location.hash;
-  var m = hash.match(/^#(preDev|midDev|postDev)-([0-9]+)$/);
+  var m = hash.match(/^#(preDev|midDev|postDev)-([\w-]+)$/);
   if (!m) return;
   var chapterId = m[1];
   var nodeId = m[1] + '-' + m[2];
@@ -119,17 +119,19 @@ DashboardInteractions.buildContent = function() {
         <tr><td>1</td><td>PM 人工：需求訪談</td><td>人工為主</td><td>專案目標、使用對象、主要功能、預算 / 交期。AI 可整理紀錄，但不能取代 PM 與客戶溝通。</td></tr>
         <tr><td>2</td><td>PM Cowork：會議紀錄與需求整理</td><td>AI 初稿 + PM 確認</td><td>需求清單、User Story、驗收條件初稿、未確認事項。</td></tr>
         <tr><td>3</td><td>QA Cowork：測試案例 / 測試策略初稿</td><td>AI 初稿 + QA 確認</td><td>正常流程、異常情境、邊界 / 權限、測試資料需求。</td></tr>
-        <tr><td>4</td><td>工程師 Claude Code：技術評估與任務拆分</td><td>AI 輔助 + 工程師確認</td><td>技術可行性、API / DB 影響、工時估算初稿、技術任務草稿。</td></tr>
-        <tr><td>5</td><td>PM Cowork：SOW / 報價初稿</td><td>AI 初稿 + PM 確認</td><td>工作說明、報價項目、風險 / 依賴、交付假設。這一步必須在 QA 與工程師評估後。</td></tr>
-        <tr><td>6</td><td>PM 人工：內部確認與優先序</td><td>人工</td><td>範圍切分、功能優先序、風險判斷、驗收方向。</td></tr>
-        <tr><td>7</td><td>客戶 Gate：SOW / 報價 / 交期</td><td>客戶確認</td><td>範圍簽核、報價確認、交期確認。</td></tr>
-        <tr><td>8</td><td>PM 人工：排程與里程碑</td><td>人工</td><td>任務指派、里程碑、交付節點、溝通節奏。</td></tr>
-        <tr><td>9</td><td>工程師 Claude Code：初始化專案 CLAUDE.md</td><td>AI 輔助 + 工程師確認</td><td>專案脈絡、技術規範、架構決策記錄、Coding Style、常用指令。</td></tr>
-        <tr><td>10</td><td>工程師人工：技術確認</td><td>人工</td><td>架構確認、風險確認、依賴確認、估算校正。若估算差異太大，回到 SOW / 報價修正。</td></tr>
+        <tr><td>4</td><td>QA 人工：測試策略確認</td><td>人工</td><td>高風險判定、測試範圍確認、測試規劃定案。</td></tr>
+        <tr><td>5</td><td>工程師人工：技術評估</td><td>人工為主</td><td>技術可行性、API / DB 影響、工時估算初稿。</td></tr>
+        <tr><td>6</td><td>工程師 Claude Code：任務拆分與技術草稿</td><td>AI 輔助 + 工程師確認</td><td>技術任務清單、OpenAPI 草稿、DB Schema 草稿。</td></tr>
+        <tr><td>7</td><td>PM Cowork：SOW / 報價初稿</td><td>AI 初稿 + PM 確認</td><td>工作說明、報價項目、風險 / 依賴、交付假設。必須在 QA 與工程師評估後產出。</td></tr>
+        <tr><td>8</td><td>PM 人工：內部確認與優先序</td><td>人工</td><td>範圍切分、功能優先序、風險判斷、驗收方向。</td></tr>
+        <tr><td>9</td><td>工程師：投標前技術探勘</td><td>人工</td><td>技術可行性最終確認、估算校正、技術風險識別。<strong>估算差異在此處理，不得在客戶簽核後回改 SOW。</strong></td></tr>
+        <tr><td>10</td><td>客戶 Gate：SOW / 報價 / 交期</td><td>客戶確認</td><td>範圍簽核、報價確認、交期確認。進入此 Gate 前技術估算已鎖定。</td></tr>
+        <tr><td>11</td><td>PM 人工：排程與里程碑</td><td>人工</td><td>Sprint 計畫、任務分派、里程碑設定、溝通節奏。</td></tr>
+        <tr><td>12</td><td>工程師：交付期技術規劃（CR 評估）</td><td>人工</td><td>架構鎖定、依賴確認、分支與環境準備。若有範疇偏差，走 midDev CR Gate 流程，不回改 SOW。</td></tr>
+        <tr><td>13</td><td>PM 人工：Kickoff / Sprint 起跑</td><td>人工</td><td>開發分支建立、任務分派、溝通節奏確認，正式進入開發中階段。</td></tr>
       </tbody>
     </table>
-    <p class="section-desc">註：開發前小圖為了可讀性壓縮成 9 個節點；全架構圖與本表仍保留第 10 點「工程師人工：技術確認」，作為正式開發前最後確認。</p>
-    <details open><summary>開發前回饋流程</summary><div class="details-content"><p style="font-size:var(--text-sm);color:var(--text-muted)">若工程師估算差異過大、QA 發現測試範圍比預期大、需求範圍需要調整，或 API / DB 影響比預期複雜，流程應回到「修正 SOW / 報價 → 客戶重新確認」。</p></div></details>
+    <details open><summary>開發前流程說明</summary><div class="details-content"><p style="font-size:var(--text-sm);color:var(--text-muted)">技術估算（步驟 9）必須在客戶 Gate 前完成，不得在合約簽核後才發現估算差異。若 Gate 後發生範疇偏差，應走 midDev 的 Change Request Gate，而非回改已簽 SOW / 報價。</p></div></details>
     <div class="fc-container" id="fc-preDev"></div>
   </section>`);
 
@@ -242,7 +244,7 @@ DashboardInteractions.buildContent = function() {
         <ol style="padding-left:var(--sp-6);font-size:var(--text-sm);display:flex;flex-direction:column;gap:var(--sp-2)">
           <li>全架構圖資訊量大，適合總覽，不適合投影時逐字講全部內容。</li>
           <li>目前節點已經很多，不建議再增加資安審查、付款節點、合約條款或政府案文件等細節。</li>
-          <li>開發前「工程師人工：技術確認」可保留作為正式開發前最後確認點。</li>
+          <li>開發前「工程師：投標前技術探勘」（客戶 Gate 前）確保估算差異在簽核前處理；「交付期技術規劃」（Gate 後）負責架構鎖定與 CR 評估，不回改已簽 SOW。</li>
           <li>全架構圖與小圖編號可略有差異，重點是邏輯一致。</li>
           <li>這張圖定位為總覽，不是唯一 SOP；實際執行仍應拆成表格或清單。</li>
         </ol>
