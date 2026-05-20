@@ -342,11 +342,12 @@ body {
   letter-spacing: 0.04em;
   margin: var(--sp-2) 0 var(--sp-3) 0;
 }
-.status-verified       { background: #F0FDF4; color: #16A34A; }
-.status-needs-human-gate { background: #FFF7ED; color: #D97706; }
-.status-system-candidate { background: #F5F3FF; color: #7C3AED; }
-.status-draft          { background: var(--bg-muted); color: var(--text-muted); }
-.status-deprecated     { background: #FEF2F2; color: #DC2626; text-decoration: line-through; }
+.status-draftready       { background: var(--bg-muted); color: var(--text-muted); }
+.status-internallytested { background: #EFF6FF; color: #1D4ED8; }
+.status-clienttested     { background: #F0FDF4; color: #15803D; }
+.status-needshumangate   { background: #FFF7ED; color: #D97706; }
+.status-notrecommended   { background: #FEF2F2; color: #DC2626; text-decoration: line-through; }
+.status-systemcandidate  { background: #F5F3FF; color: #7C3AED; }
 
 /* ── Verification Checklist ── */
 .verification-list {
@@ -385,6 +386,61 @@ body {
 .chip.type-human       { background: var(--role-pm-bg);          color: var(--role-pm); }
 .chip.type-system      { background: var(--role-sys-bg);         color: var(--role-sys); }
 
+/* ── Governance Link ── */
+.governance-link {
+  display: flex;
+  align-items: center;
+  padding: 8px var(--sp-4);
+  background: var(--accent-danger, #DC2626);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border-left: none;
+}
+.governance-link:hover { background: #B91C1C; color: #fff; }
+.governance-nav { padding: var(--sp-2) 0 0; flex: 0; }
+
+/* ── Acceptance Checklist Chips ── */
+.acceptance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--sp-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+.acceptance-list li {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+}
+.acceptance-chip {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: var(--r-sm);
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin-right: var(--sp-2);
+}
+.acceptance-chip.status-pending { background: #F3F4F6; color: #374151; }
+.acceptance-chip.status-pass    { background: #F0FDF4; color: #15803D; }
+.acceptance-chip.status-fail    { background: #FEF2F2; color: #B91C1C; }
+.acceptance-chip.status-n-a     { background: #FFFBEB; color: #92400E; }
+
+/* ── Minimum Input List ── */
+.minimum-input-list {
+  background: var(--bg-warn-tint, #FFFBEB);
+  border-left: 3px solid var(--accent-warn, #FB923C);
+  padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-8);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  margin: var(--sp-2) 0 var(--sp-4) 0;
+}
+
 /* ── Tier 3 Warning Block ── */
 .tier3-block {
   border-left: 4px solid var(--accent-warn, #FB923C);
@@ -395,6 +451,24 @@ body {
 }
 
 #catalog-content .tier3-block blockquote {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 var(--sp-4) 0;
+  font-size: var(--text-sm);
+  color: var(--text);
+}
+
+/* ── Tier 4 Human-only Block ── */
+.tier4-block {
+  border-left: 4px solid var(--accent-danger, #DC2626);
+  background: var(--bg-danger-tint, #FEF2F2);
+  padding: var(--sp-4);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  margin: var(--sp-4) 0;
+}
+
+#catalog-content .tier4-block blockquote {
   background: none;
   border: none;
   padding: 0;

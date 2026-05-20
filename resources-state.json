@@ -1,83 +1,127 @@
 {
   "meeting-notes": {
-    "status": "Verified",
+    "status": "DraftReady",
     "verification": [
       "逐字稿是否涵蓋會議完整時長（錄音與文字核對）",
       "決策清單是否標註負責人 + 期限",
       "敏感資訊（薪資、客戶名、報價）是否已脫敏"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "決策清單有負責人 + 期限", "status": "Pending" },
+      { "label": "敏感資訊脫敏", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "work-plan": {
-    "status": "Verified",
+    "status": "DraftReady",
     "verification": [
       "計劃書範疇是否對齊 SOW（不超不缺）",
       "工時估算是否包含 buffer（建議 20%）",
       "客戶可識別的里程碑是否清楚標出"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "in-scope / out-of-scope 明確列出", "status": "Pending" },
+      { "label": "工時估算含 buffer ≥ 10%", "status": "Pending" },
+      { "label": "報價數字由人填寫（無 AI 自填）", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "presentation": {
-    "status": "Verified",
+    "status": "DraftReady",
     "verification": [
       "HTML 在目標瀏覽器（Chrome/Edge）無 layout 破版",
       "所有圖片 / 截圖有本地 fallback（不依賴外部 URL）",
       "簡報流程是否符合 Gate preDev:9 的對客戶說明順序"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "報價數字 / 工時正確性確認", "status": "Pending" },
+      { "label": "無機密資訊外洩", "status": "Pending" },
+      { "label": "CDN 依賴已移除或有 fallback", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "wbs": {
-    "status": "Verified",
+    "status": "DraftReady",
     "verification": [
       "所有 WBS 節點可對應到 SOW 工作項目（不多不漏）",
       "工時總和是否在報價合約範圍內",
       "Level 3 任務是否均有指定責任角色"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "工時估算合理（工程師確認）", "status": "Pending" },
+      { "label": "任務依賴關係正確", "status": "Pending" },
+      { "label": "與 SOW 無超出或遺漏", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "org-chart": {
-    "status": "Needs Human Gate",
+    "status": "DraftReady",
     "verification": [
       "每個角色的人員姓名是否已確認（不可空白）",
       "職責邊界是否與 SOW 章節對應",
       "PM 是否 Gate 確認過 client 端窗口"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "每個角色有真實人員（非假設性）", "status": "Pending" },
+      { "label": "DRI 不空白", "status": "Pending" },
+      { "label": "客戶端窗口已確認並同意", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "prototype": {
-    "status": "Needs Human Gate",
+    "status": "DraftReady",
     "verification": [
       "GPT 產出圖與 Claude Code HTML 轉換後是否視覺一致（截圖比對）",
       "互動邏輯（按鈕 / 表單）是否符合 spec",
       "工程師確認 HTML 可進入 repo 不需重構"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "UX 流程符合需求", "status": "Pending" },
+      { "label": "標示「僅供 demo」", "status": "Pending" },
+      { "label": "HTML 可進入 repo（工程師確認）", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "sprint-plan": {
-    "status": "Needs Human Gate",
+    "status": "DraftReady",
     "verification": [
       "Sprint 速度（velocity）是否已由 PM 拍板",
       "優先序排列是否對齊客戶驗收順序",
       "每個 Sprint 是否有 buffer 任務（不超過 10%）"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "優先序決策完成（PM 拍板）", "status": "Pending" },
+      { "label": "人員可用性確認（假期、兼案）", "status": "Pending" },
+      { "label": "緩衝 Sprint 已排入", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "asana": {
-    "status": "System Candidate",
+    "status": "DraftReady",
     "verification": [
       "CSV 欄位格式是否符合 ASANA 匯入 template（Task Name / Assignee / Due Date）",
       "匯入後 assignee 是否正確對應到 ASANA user",
       "重複任務是否有 de-dup 機制（avoid double import）"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "assignee 格式正確（email 或顯示名稱一致）", "status": "Pending" },
+      { "label": "無重複 task（匯入前確認）", "status": "Pending" },
+      { "label": "日期格式 YYYY-MM-DD", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   },
   "milestone-reminder": {
-    "status": "System Candidate",
+    "status": "DraftReady",
     "verification": [
       "ICS 時區是否正確（Asia/Taipei）",
       "匯入 Google Calendar 後是否出現在正確日期",
       "里程碑名稱是否與工作計劃書一致"
     ],
-    "lastUpdated": "2026-05-19"
+    "acceptanceChecks": [
+      { "label": "日期與工作計劃書一致", "status": "Pending" },
+      { "label": "時區 Asia/Taipei 正確", "status": "Pending" },
+      { "label": "名稱與 ASANA 里程碑一致", "status": "Pending" }
+    ],
+    "lastUpdated": "2026-05-20"
   }
 }

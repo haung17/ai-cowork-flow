@@ -16,7 +16,7 @@ test('renderer: status badge rendered after meeting-notes H3', async ({ page }) 
     const badge = h3 && h3.nextElementSibling;
     return badge && badge.classList.contains('status-badge') ? badge.textContent.trim() : null;
   });
-  expect(text).toBe('Verified');
+  expect(text).toBe('DraftReady');
 });
 
 test('renderer: verification list rendered for meeting-notes (3 items)', async ({ page }) => {
@@ -32,7 +32,7 @@ test('renderer: verification list rendered for meeting-notes (3 items)', async (
   expect(count).toBe(3);
 });
 
-test('renderer: org-chart has Needs Human Gate badge', async ({ page }) => {
+test('renderer: org-chart has DraftReady badge', async ({ page }) => {
   await page.goto('/resources.html');
   await page.waitForSelector('h3[data-resource-id]', { timeout: 8000 });
   const text = await page.evaluate(() => {
@@ -40,7 +40,7 @@ test('renderer: org-chart has Needs Human Gate badge', async ({ page }) => {
     const badge = h3 && h3.nextElementSibling;
     return badge && badge.classList.contains('status-badge') ? badge.textContent.trim() : null;
   });
-  expect(text).toBe('Needs Human Gate');
+  expect(text).toBe('DraftReady');
 });
 
 test('renderer: type chips rendered in speed-ref table', async ({ page }) => {

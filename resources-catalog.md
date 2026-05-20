@@ -4,13 +4,14 @@
 
 ## 圖例
 
-### Tier — AI 自動化程度
+### Tier — AI 使用風險等級
 
 | Tier | 定義 |
 |------|------|
-| **1** | 丟原料 AI 直接做大部分，人僅校稿或微調數字 |
-| **2** | AI 輔助起草，需明確人工輸入與決策確認才能繼續 |
-| **3** | 需接系統或定期觸發；AI 產 CSV / ICS / JSON，由人匯入 |
+| **1: Draft-safe** | AI 產草稿，不得直接交付；人必須校閱後再對外 |
+| **2: Decision-assisted** | AI 輔助分析，關鍵決策由人完成；AI 可做資訊彙整 |
+| **3: System-output** | AI 產系統匯入格式（CSV/ICS/JSON），人工觸發或審核後匯入 |
+| **4: Human-only** | 報價、合約、UAT 驗收、Production 部署、CR 核准 — AI 不得代決策 |
 
 ### type — 沿用 `assets/data.js` 節點屬性
 
@@ -28,15 +29,15 @@
 
 | # | id | 資源 | Tier | Primary type | Support | 對應節點 | Artifact | Status |
 |---|-----|------|------|--------------|---------|----------|----------|--------|
-| 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | Verified |
-| 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | Verified |
-| 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | Verified |
-| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | Verified |
-| 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | Needs Human Gate |
-| 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | Needs Human Gate |
-| 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | Needs Human Gate |
-| 8 | asana | ASANA 任務管理 | 3 | SYSTEM | — | preDev:10 跨階段 | CSV | System Candidate |
-| 9 | milestone-reminder | 里程碑提醒 | 3 | SYSTEM | — | preDev:10 → postDev:12 | ICS | System Candidate |
+| 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | DraftReady |
+| 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | DraftReady |
+| 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | DraftReady |
+| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | DraftReady |
+| 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | DraftReady |
+| 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | DraftReady |
+| 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | DraftReady |
+| 8 | asana | ASANA 任務管理 | 3 | SYSTEM | — | preDev:10 跨階段 | CSV | DraftReady |
+| 9 | milestone-reminder | 里程碑提醒 | 3 | SYSTEM | — | preDev:10 → postDev:12 | ICS | DraftReady |
 
 ---
 
@@ -46,11 +47,15 @@
 
 ### 1. 會議記錄
 
-**Tier 1 ｜ type: COWORK**
+**Tier 1: Draft-safe ｜ type: COWORK**
 
 **Input：** 錄音檔或逐字稿、與會者名單、會議目的與議程
 **Output：** 摘要 + 決策清單 + 待辦清單（負責人 + 期限）+ 待釐清問題
 **Human Gate：** PM 在交付前確認：負責人姓名正確、期限可行、敏感資訊已脫敏
+**Minimum Input：**
+- 完整逐字稿或錄音檔（不接受模糊口述，缺此 AI 只能產佔位符）
+- 與會者名單含角色（不可只寫人名）
+- 會議目的（缺則 AI 無法判斷決策歸屬）
 **Artifact：** Markdown（.md）
 **Risk：** AI 可能漏記輕聲討論、混淆相似人名；摘要過短導致決策資訊遺失
 **Next Node：** preDev:2（需求整理 Gate）/ midDev:2（Sprint standup）/ postDev:6（UAT 記錄）
@@ -97,13 +102,18 @@
 
 ### 2. 工作計劃書
 
-**Tier 1 ｜ type: COWORK**
+**Tier 1: Draft-safe ｜ type: COWORK**
 
 **Input：** SOW 目標範疇、報價金額範圍、專案期限、客戶特殊要求
 **Output：** 完整工作計劃書草稿（背景、範疇、WBS 摘要、里程碑、溝通機制、驗收條件）
 **Human Gate：** PM Gate：範疇是否與 SOW 一致；工時估算是否含 buffer（≥10%）；客戶里程碑名稱確認
+**Minimum Input：**
+- SOW 功能範疇初稿（in-scope / out-of-scope 至少各 3 條，缺則 AI 只能產問題清單）
+- 交期（缺則 AI 無法排里程碑）
+- 預算區間（缺則工項估算無意義）
+- 客戶背景（行業、規模，缺則風險假設脫離現實）
 **Artifact：** Markdown（.md）→ 轉 PDF 交付
-**Risk：** AI 可能自行擴大範疇（scope creep）；工時估算過於樂觀；術語與 SOW 不一致
+**Risk：** AI 可能自行擴大範疇（scope creep）；工時估算過於樂觀；術語與 SOW 不一致 → [governance.md#hard-rules](governance.md#hard-rules)
 **Next Node：** preDev:7（PM Cowork SOW 初稿）→ Gate preDev:9（SOW Gate 對客戶）
 
 - **對應節點**：preDev:7（PM Cowork SOW / 報價初稿）
@@ -164,11 +174,15 @@
 
 ### 3. 簡報（HTML 取代 PPT）
 
-**Tier 1 ｜ type: COWORK**
+**Tier 1: Draft-safe ｜ type: COWORK**
 
 **Input：** 工作計劃書、WBS 摘要、客戶背景、說明重點（3-5 條）
 **Output：** 單一 HTML 簡報（含 CSS）、可在瀏覽器展示的全頁輪播
 **Human Gate：** PM 確認：流程順序對應客戶溝通邏輯；圖示 / 截圖來源合法；無機密資訊
+**Minimum Input：**
+- 工作計劃書或 SOW 摘要（至少 3 個功能點或里程碑，缺則無法架構頁面）
+- 受眾定義（客戶高層 / 技術對口 / 混合）
+- 場合目的（初次提案 / 進度報告 / 上線說明）
 **Artifact：** HTML（單一 .html 檔，內嵌 CSS）
 **Risk：** HTML 依賴外部 CDN 字型 / 圖示 → 內網展示可能壞；AI 可能產出過度複雜的 CSS 無法手動調整
 **Next Node：** Gate preDev:9（SOW Gate，對客戶說明用）
@@ -226,13 +240,18 @@
 
 ### 4. WBS（Work Breakdown Structure）
 
-**Tier 1 ｜ type: CLAUDECODE**
+**Tier 1: Draft-safe ｜ type: CLAUDECODE**
 
 **Input：** SOW 工作項目清單、技術架構草稿、角色分配表
 **Output：** 3 層 WBS（Phase → Feature → Task）+ 每個 Task 工時估算 + 負責角色
 **Human Gate：** 工程師確認工時合理；PM 確認與 SOW 對齊（無超出 / 遺漏）
+**Minimum Input：**
+- SOW Scope list（in-scope 功能清單，缺則 AI 只能產泛用模板）
+- 交付物清單（缺則文件工項無法估算）
+- 團隊角色配置（人數 + 專長，缺則負責角色欄空白）
+- 技術 stack（缺則任務粒度無法對應實作）
 **Artifact：** Markdown（樹狀結構 .md）→ 可轉 CSV 匯入 ASANA
-**Risk：** Claude Code 可能把技術子任務拆太細（超出 SOW）；工時估算忽略測試 / review 時間
+**Risk：** Claude Code 可能把技術子任務拆太細（超出 SOW）；工時估算忽略測試 / review 時間 → [governance.md#hard-rules](governance.md#hard-rules)
 **Next Node：** preDev:6（Claude Code 任務拆分）→ preDev:10（PM 排程）
 
 - **對應節點**：preDev:6（Claude Code 任務拆分與技術草稿）
@@ -289,11 +308,15 @@
 
 ### 5. 專案組織架構規劃
 
-**Tier 2 ｜ Primary type: COWORK ｜ Support: HUMAN**
+**Tier 2: Decision-assisted ｜ Primary type: COWORK ｜ Support: HUMAN**
 
 **Input：** SOW 角色定義、客戶窗口姓名、內部團隊成員名單
 **Output：** 組織架構圖草稿（角色 → 人員 → 責任範疇 → 溝通線）
 **Human Gate：** PM 確認每個角色已指定真實人員；客戶端窗口已確認並同意；DRI（直接負責人）欄位不可空白
+**Minimum Input：**
+- 我方團隊成員名單（姓名 + 角色 + 年資，缺則 AI 填入假設性人員）
+- 客戶端窗口（業務窗口 + 技術窗口 + 決策層，各至少 1 人）
+- 專案規模預估（人月，缺則工時分配無意義）
 **Artifact：** Markdown（表格格式）→ 可轉 PNG/SVG 進簡報
 **Risk：** AI 可能填入假設性人員；職責邊界不清造成後期責任推諉
 **Next Node：** preDev:5（工程師技術評估）→ preDev:8（PM 內部確認）
@@ -355,11 +378,15 @@
 
 ### 6. Prototype 設計 / UI 截圖分析
 
-**Tier 2 ｜ Primary type: CLAUDECODE ｜ Support: COWORK**
+**Tier 2: Decision-assisted ｜ Primary type: CLAUDECODE ｜ Support: COWORK**
 
 **Input：** 設計稿截圖或 Figma 連結、功能規格文字說明、技術限制（框架、尺寸）
 **Output：** GPT 產出 UI 截圖 → Claude Code 轉 static HTML prototype
 **Human Gate：** 工程師確認 HTML 可進入 repo（無需大量重構）；PM 確認 UX 流程符合需求
+**Minimum Input：**
+- 功能清單（至少 2 個頁面 / 畫面，缺則無法決定 prototype 範圍）
+- 使用者旅程（誰做什麼操作，缺則 AI 無法判斷頁面跳轉邏輯）
+- 技術限制（框架、螢幕尺寸、是否支援 RWD）
 **Artifact：** HTML（static prototype，不含後端邏輯）
 **Risk：** GPT 圖與 Claude Code HTML 有視覺落差；prototype 被誤認為正式版 → 需明確標示「僅供 demo」
 **Next Node：** preDev:6（Claude Code 任務拆分）— 與 WBS 平行執行
@@ -418,11 +445,16 @@
 
 ### 7. 開發 Sprint 規劃
 
-**Tier 2 ｜ type: COWORK**
+**Tier 2: Decision-assisted ｜ type: COWORK**
 
 **Input：** WBS Task 清單、Sprint 週期設定（1/2 週）、團隊 velocity（story points/sprint）
 **Output：** Sprint 0-N 任務分配表（含 task / owner / story points / dependencies）
 **Human Gate：** PM 拍板：Sprint N 範圍；velocity 是否合理；客戶驗收順序是否優先
+**Minimum Input：**
+- WBS 任務清單（含工時估算 + 依賴關係，缺則排程為空）
+- 團隊 velocity（每人每 Sprint 可用人天，缺則無法計算 Sprint 容量）
+- Sprint 長度（1 週 / 2 週）
+- 不可移動里程碑日期（缺則排程無法對齊交期）
 **Artifact：** Markdown（表格）→ 可轉 CSV 匯入 ASANA
 **Risk：** AI 排程忽略 team calendar（假期、待崗）；dependencies 推算錯誤導致後 Sprint 卡住
 **Next Node：** preDev:10（PM 人工排程與里程碑）→ midDev 每個 Sprint 滾動更新
@@ -483,13 +515,18 @@
 
 ### 8. ASANA 任務管理
 
-**Tier 3 ｜ type: SYSTEM**
+**Tier 3: System-output ｜ type: SYSTEM**
 
 **Input：** WBS Task 清單 / Sprint 規劃表、成員 email（ASANA account）、截止日期
 **Output：** 符合 ASANA CSV import 格式的任務清單（Task Name / Assignee / Due Date / Section）
 **Human Gate：** PM 匯入前確認：assignee email 對應正確、日期格式正確（YYYY-MM-DD）、無重複 task
+**Minimum Input：**
+- Sprint 規劃表或 WBS 任務清單（缺則無任務可轉）
+- 成員帳號格式（email 或顯示名稱，全檔格式需一致）
+- 截止日期（YYYY-MM-DD 格式，缺則 Due Date 欄空白）
+- 確認無重複 task（避免二次匯入產生重複）
 **Artifact：** CSV（.csv，ASANA import template 格式）
-**Risk：** email 欄位錯誤導致任務未指派；日期格式不合 ASANA 規格導致匯入失敗；重複匯入產生重複 task
+**Risk：** email 欄位錯誤導致任務未指派；日期格式不合 ASANA 規格導致匯入失敗；重複匯入產生重複 task → [governance.md#tier4-reference](governance.md#tier4-reference)
 **Next Node：** preDev:10 之後跨整個專案（preDev → midDev → postDev）
 
 - **對應節點**：preDev:10 排程完成後建立，跨整個專案 preDev → midDev → postDev
@@ -530,11 +567,16 @@ Name, Assignee, Due Date, Start Date, Type, Description, Priority
 
 ### 9. 里程碑提醒
 
-**Tier 3 ｜ type: SYSTEM**
+**Tier 3: System-output ｜ type: SYSTEM**
 
 **Input：** 工作計劃書里程碑清單、各里程碑日期、時區（Asia/Taipei）
 **Output：** .ics 行事曆檔（符合 RFC 5545，可匯入 Google Calendar）
 **Human Gate：** PM 匯入前確認：日期與工作計劃書一致；時區正確；里程碑名稱清楚（客戶可識別）
+**Minimum Input：**
+- 里程碑清單（名稱 + 日期，至少 2 個，缺則 ICS 無內容）
+- 日期格式統一（YYYY-MM-DD，缺則 AI 格式可能不一致）
+- 時區確認（Asia/Taipei，缺則預設 UTC 導致時間偏差 8 小時）
+- 里程碑名稱與 ASANA / 工作計劃書一致（缺則跨工具對照困難）
 **Artifact：** ICS（.ics，RFC 5545）
 **Risk：** AI 產出時區 UTC 未轉換；DTSTART / DTEND 格式錯誤導致匯入失敗；與 ASANA 里程碑名稱不一致
 **Next Node：** preDev:10（PM 排程設定）→ 持續觸發至 postDev:12（KT / 保固交接）
@@ -580,7 +622,7 @@ Name, Assignee, Due Date, Start Date, Type, Description, Priority
 > ⚠ **本區域所列項目皆不建議優先實作**
 > - 僅作為未來可能整合的路徑紀錄
 > - 每個方案都有額外帳號 / OAuth / Bot / n8n 維護成本
-> - MVP 階段請維持 Tier 1 / Tier 2 的 markdown / CSV / ICS 產出
+> - MVP 階段請維持 Tier 1: Draft-safe / Tier 2: Decision-assisted 的 markdown / CSV / ICS 產出
 > - 列入此區不等於已選型；正式採用前需獨立 RFC
 
 ```
@@ -636,3 +678,39 @@ postDev（收尾）
 ---
 
 *對應 dashboard 版本：v3.6 | 節點 id 參照 `assets/data.js`*
+
+---
+
+## Tier 4 Human-only — 禁止 AI 代決策
+
+> 以下項目 AI 可協助準備資料與草稿，但**絕對不得以 AI 產出直接作為決策依據或對外承諾**。
+> 正式核准、簽字、部署指令必須由具責任的人工完成。
+> 如違反，由具名決策者承擔完整責任。
+
+### 4-A. 報價與合約簽署
+
+**AI 可做：** 起草報價說明文字、整理 SOW 條款對照表、標記需填寫欄位（金額/單價/條款）
+**禁止 AI：** 直接填入報價金額、代表公司簽署任何合約、對客戶承諾交期或費用
+**負責人：** PM（報價草稿）+ 業務主管或授權代理人（最終發送）
+**升級條件：** 若僅需草稿整理且客戶明確知情為 AI 草稿 → 可降至 Tier 2: Decision-assisted
+
+### 4-B. UAT 驗收簽核
+
+**AI 可做：** 產出 UAT checklist 草稿、整理測試結果摘要、標記未通過項目
+**禁止 AI：** 自行判定 UAT 通過、在驗收文件上代填「通過」、通知客戶上線
+**負責人：** QA + PM 共同簽核；客戶業主最終確認
+**升級條件：** AI 只做測試輔助紀錄（不觸碰簽核流程）→ 可降至 Tier 1: Draft-safe
+
+### 4-C. Production 部署與 Hotfix
+
+**AI 可做：** 產出部署 runbook 草稿、整理回滾步驟清單、分析錯誤 log
+**禁止 AI：** 執行任何正式環境指令、觸發部署流程、刪除生產資料、修改正式環境設定
+**負責人：** 資深工程師 + DevOps（部署）；PM 確認維護視窗
+**升級條件：** 僅 PR 審查輔助或測試環境操作 → 可降至 Tier 2: Decision-assisted
+
+### 4-D. CR 變更申請核准
+
+**AI 可做：** 起草 CR 說明文件、整理 scope change 影響分析、標記受影響的 SOW 條款
+**禁止 AI：** 同意任何 scope 變更、修改已簽約範疇、承諾額外工時或費用
+**負責人：** PM 評估影響 + 業務主管或授權代理人核准
+**升級條件：** 若 CR 不涉及費用/交期變動且客戶主動確認 → PM 可自行判定
