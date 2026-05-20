@@ -2,6 +2,24 @@
 
 ---
 
+## AI 使用決策矩陣
+
+> 30 秒判斷：這件事能不能丟給 AI？
+
+| 任務 | AI 可做 | 人必審 | 禁止 AI 代做 | 主要風險 |
+|------|---------|--------|-------------|---------|
+| 會議記錄 | 摘要、待辦清單 | 負責人、期限 | 承諾客戶交期 | 漏記決策 |
+| 工作計劃書 | 草稿、架構 | 範疇、報價、條款 | 報價拍板、合約承諾 | Scope creep |
+| 簡報（HTML） | 頁面草稿、架構 | 數字正確性、流程順序 | 對外直接展示未審稿 | 機密外洩 |
+| WBS | 拆任務、估工時 | 依賴關係、工時合理性 | 最終估價、SOW 擴充 | 低估測試時間 |
+| 組織架構 | 架構草稿、RACI | 人員指派、職責邊界 | 拍板人員與職責 | 假設性人員 |
+| Prototype | UI 草稿、HTML 轉換 | UX 流程、技術可行性 | 視為正式版交付 | 視覺落差 |
+| Sprint 規劃 | 排程草稿 | 優先序、人員可用性 | 直接承諾交期 | 忽略假期 |
+| ASANA 任務 | CSV 草稿 | 匯入前檢查 | 自動建立正式任務 | 重複任務 |
+| 里程碑提醒 | ICS 草稿 | 日期、時區、名稱 | 直接推送至客戶行事曆 | 時區偏差 |
+
+---
+
 ## 圖例
 
 ### Tier — AI 使用風險等級
@@ -517,12 +535,12 @@
 
 **Tier 3: System-output ｜ type: SYSTEM**
 
-**Input：** WBS Task 清單 / Sprint 規劃表、成員 email（ASANA account）、截止日期
+**Input：** WBS Task 清單 / Sprint 規劃表、成員角色名稱（統一格式）、截止日期
 **Output：** 符合 ASANA CSV import 格式的任務清單（Task Name / Assignee / Due Date / Section）
 **Human Gate：** PM 匯入前確認：assignee email 對應正確、日期格式正確（YYYY-MM-DD）、無重複 task
 **Minimum Input：**
 - Sprint 規劃表或 WBS 任務清單（缺則無任務可轉）
-- 成員帳號格式（email 或顯示名稱，全檔格式需一致）
+- 成員角色名稱（全檔格式需一致，如「工程師A」；需匯入 ASANA 時再對應 email）
 - 截止日期（YYYY-MM-DD 格式，缺則 Due Date 欄空白）
 - 確認無重複 task（避免二次匯入產生重複）
 **Artifact：** CSV（.csv，ASANA import template 格式）
