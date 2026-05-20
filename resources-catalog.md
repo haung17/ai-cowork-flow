@@ -113,7 +113,7 @@
 - 預算區間（缺則工項估算無意義）
 - 客戶背景（行業、規模，缺則風險假設脫離現實）
 **Artifact：** Markdown（.md）→ 轉 PDF 交付
-**Risk：** AI 可能自行擴大範疇（scope creep）；工時估算過於樂觀；術語與 SOW 不一致
+**Risk：** AI 可能自行擴大範疇（scope creep）；工時估算過於樂觀；術語與 SOW 不一致 → [governance.md#hard-rules](governance.md#hard-rules)
 **Next Node：** preDev:7（PM Cowork SOW 初稿）→ Gate preDev:9（SOW Gate 對客戶）
 
 - **對應節點**：preDev:7（PM Cowork SOW / 報價初稿）
@@ -251,7 +251,7 @@
 - 團隊角色配置（人數 + 專長，缺則負責角色欄空白）
 - 技術 stack（缺則任務粒度無法對應實作）
 **Artifact：** Markdown（樹狀結構 .md）→ 可轉 CSV 匯入 ASANA
-**Risk：** Claude Code 可能把技術子任務拆太細（超出 SOW）；工時估算忽略測試 / review 時間
+**Risk：** Claude Code 可能把技術子任務拆太細（超出 SOW）；工時估算忽略測試 / review 時間 → [governance.md#hard-rules](governance.md#hard-rules)
 **Next Node：** preDev:6（Claude Code 任務拆分）→ preDev:10（PM 排程）
 
 - **對應節點**：preDev:6（Claude Code 任務拆分與技術草稿）
@@ -526,7 +526,7 @@
 - 截止日期（YYYY-MM-DD 格式，缺則 Due Date 欄空白）
 - 確認無重複 task（避免二次匯入產生重複）
 **Artifact：** CSV（.csv，ASANA import template 格式）
-**Risk：** email 欄位錯誤導致任務未指派；日期格式不合 ASANA 規格導致匯入失敗；重複匯入產生重複 task
+**Risk：** email 欄位錯誤導致任務未指派；日期格式不合 ASANA 規格導致匯入失敗；重複匯入產生重複 task → [governance.md#tier4-reference](governance.md#tier4-reference)
 **Next Node：** preDev:10 之後跨整個專案（preDev → midDev → postDev）
 
 - **對應節點**：preDev:10 排程完成後建立，跨整個專案 preDev → midDev → postDev
