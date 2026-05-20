@@ -386,6 +386,15 @@ body {
 .chip.type-human       { background: var(--role-pm-bg);          color: var(--role-pm); }
 .chip.type-system      { background: var(--role-sys-bg);         color: var(--role-sys); }
 
+/* ── Minimum Input List ── */
+.minimum-input-list {
+  background: var(--bg-warn-tint, #FFFBEB);
+  border-left: 3px solid var(--accent-warn, #FB923C);
+  padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-8);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  margin: var(--sp-2) 0 var(--sp-4) 0;
+}
+
 /* ── Tier 3 Warning Block ── */
 .tier3-block {
   border-left: 4px solid var(--accent-warn, #FB923C);

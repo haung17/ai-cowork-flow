@@ -49,6 +49,7 @@ ResourcesLoader.renderCatalog = function(md) {
   ResourcesLoader.tagTier3(content);
   ResourcesLoader.tagTier4(content);
   ResourcesLoader.enrichDom(content, ResourcesLoader._state);
+  ResourcesLoader.tagMinimumInputLists(content);
   ResourcesLoader.renderTypeChips(content);
   ResourcesLoader.buildNav();
   ResourcesLoader.initScrollSpy();
@@ -231,6 +232,14 @@ ResourcesLoader.tagTier3 = function(root) {
 
 ResourcesLoader.tagTier4 = function(root) {
   ResourcesLoader._tagTierBlock(root, 'Tier 4', 'tier4-block');
+};
+
+ResourcesLoader.tagMinimumInputLists = function(root) {
+  root.querySelectorAll('strong').forEach(function(s) {
+    if (!s.textContent.includes('Minimum Input')) return;
+    var p = s.closest('p'), next = p && p.nextElementSibling;
+    if (next && next.tagName === 'UL') next.classList.add('minimum-input-list');
+  });
 };
 
 ResourcesLoader.rewriteNodeRefs = function(root) {
