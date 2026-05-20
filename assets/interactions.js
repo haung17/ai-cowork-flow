@@ -7,6 +7,28 @@ DashboardInteractions.init = function() {
   DashboardInteractions.initScrollSpy();
   DashboardInteractions.initSearch();
   DashboardInteractions.initModal();
+  DashboardInteractions.initHashScroll();
+};
+
+DashboardInteractions.initHashScroll = function() {
+  var hash = location.hash;
+  var m = hash.match(/^#(preDev|midDev|postDev)-([0-9]+)$/);
+  if (!m) return;
+  var chapterId = m[1];
+  var nodeId = m[1] + '-' + m[2];
+  var chapterMap = { preDev: 'pre-dev', midDev: 'mid-dev', postDev: 'post-dev' };
+  var sectionId = chapterMap[chapterId];
+  requestAnimationFrame(function() {
+    var section = document.getElementById(sectionId);
+    if (section) section.scrollIntoView({ behavior: 'smooth' });
+    setTimeout(function() {
+      var node = document.getElementById(nodeId);
+      if (!node) return;
+      node.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      node.classList.add('flash');
+      setTimeout(function() { node.classList.remove('flash'); }, 3000);
+    }, 600);
+  });
 };
 
 // 1. Build sidebar nav
@@ -108,6 +130,7 @@ DashboardInteractions.buildContent = function() {
     </table>
     <p class="section-desc">註：開發前小圖為了可讀性壓縮成 9 個節點；全架構圖與本表仍保留第 10 點「工程師人工：技術確認」，作為正式開發前最後確認。</p>
     <details open><summary>開發前回饋流程</summary><div class="details-content"><p style="font-size:var(--text-sm);color:var(--text-muted)">若工程師估算差異過大、QA 發現測試範圍比預期大、需求範圍需要調整，或 API / DB 影響比預期複雜，流程應回到「修正 SOW / 報價 → 客戶重新確認」。</p></div></details>
+    <div class="fc-container" id="fc-preDev"></div>
   </section>`);
 
   append(`
@@ -138,6 +161,7 @@ DashboardInteractions.buildContent = function() {
       </tbody>
     </table>
     <p class="section-desc">建議每 1-2 週進行 Sprint Demo 或依里程碑展示成果，及早發現需求偏差，降低最後驗收時一次爆出大量問題的風險。</p>
+    <div class="fc-container" id="fc-midDev"></div>
   </section>`);
 
   append(`
@@ -161,6 +185,7 @@ DashboardInteractions.buildContent = function() {
         <tr><td>12</td><td>PM 人工：Knowledge Transfer / 保固交接</td><td>人工</td><td>維運交接、帳號 / 權限、聯絡窗口、保固範圍。</td></tr>
       </tbody>
     </table>
+    <div class="fc-container" id="fc-postDev"></div>
   </section>`);
 
   append(`
@@ -246,6 +271,12 @@ DashboardInteractions.buildContent = function() {
   </section>`);
 
   wrapper.innerHTML = sections.join('');
+
+  if (window.FlowCharts) {
+    FlowCharts.render('preDev', document.getElementById('fc-preDev'));
+    FlowCharts.render('midDev', document.getElementById('fc-midDev'));
+    FlowCharts.render('postDev', document.getElementById('fc-postDev'));
+  }
 };
 
 // 3. Scroll spy

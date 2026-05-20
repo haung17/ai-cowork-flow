@@ -39,6 +39,8 @@
   /* Accent */
   --accent:       #0A6CFF;
   --accent-dark:  #0A2540;
+  --accent-warn:  #FB923C;
+  --bg-warn-tint: #FFFBEB;
 
   /* Type scale */
   --font-sans:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

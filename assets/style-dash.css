@@ -345,3 +345,14 @@ body { transition: background-color 0.2s, color 0.2s; }
 [data-theme="dark"] #search-input { background: var(--bg-subtle); color: var(--text); }
 [data-theme="dark"] details[open] { background: var(--bg-subtle); }
 [data-theme="dark"] .nav-item a.active { background: #0D1F3C; color: var(--accent); border-left-color: var(--accent); }
+
+/* deep-link flash highlight */
+.fc-node.flash {
+  outline: 2px solid var(--accent-warn, #FB923C);
+  box-shadow: 0 0 0 6px rgba(251, 146, 60, 0.25);
+  animation: fc-flash-pulse 1s ease-in-out 3;
+}
+@keyframes fc-flash-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
