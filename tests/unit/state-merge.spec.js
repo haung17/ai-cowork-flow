@@ -18,11 +18,11 @@ test('state-merge: state.json loads and _state is populated', async ({ page }) =
   expect(Object.keys(state).length).toBe(9);
 });
 
-test('state-merge: meeting-notes has status Verified', async ({ page }) => {
+test('state-merge: meeting-notes has status DraftReady', async ({ page }) => {
   await page.goto('/resources.html');
   await waitForState(page);
   const status = await page.evaluate(() => window.ResourcesLoader._state['meeting-notes']?.status);
-  expect(status).toBe('Verified');
+  expect(status).toBe('DraftReady');
 });
 
 test('state-merge: meeting-notes verification has 3 items', async ({ page }) => {

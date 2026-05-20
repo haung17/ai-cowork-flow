@@ -29,15 +29,15 @@
 
 | # | id | 資源 | Tier | Primary type | Support | 對應節點 | Artifact | Status |
 |---|-----|------|------|--------------|---------|----------|----------|--------|
-| 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | Verified |
-| 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | Verified |
-| 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | Verified |
-| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | Verified |
-| 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | Needs Human Gate |
-| 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | Needs Human Gate |
-| 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | Needs Human Gate |
-| 8 | asana | ASANA 任務管理 | 3 | SYSTEM | — | preDev:10 跨階段 | CSV | System Candidate |
-| 9 | milestone-reminder | 里程碑提醒 | 3 | SYSTEM | — | preDev:10 → postDev:12 | ICS | System Candidate |
+| 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | DraftReady |
+| 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | DraftReady |
+| 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | DraftReady |
+| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | DraftReady |
+| 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | DraftReady |
+| 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | DraftReady |
+| 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | DraftReady |
+| 8 | asana | ASANA 任務管理 | 3 | SYSTEM | — | preDev:10 跨階段 | CSV | DraftReady |
+| 9 | milestone-reminder | 里程碑提醒 | 3 | SYSTEM | — | preDev:10 → postDev:12 | ICS | DraftReady |
 
 ---
 

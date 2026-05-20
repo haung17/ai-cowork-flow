@@ -342,11 +342,12 @@ body {
   letter-spacing: 0.04em;
   margin: var(--sp-2) 0 var(--sp-3) 0;
 }
-.status-verified       { background: #F0FDF4; color: #16A34A; }
-.status-needs-human-gate { background: #FFF7ED; color: #D97706; }
-.status-system-candidate { background: #F5F3FF; color: #7C3AED; }
-.status-draft          { background: var(--bg-muted); color: var(--text-muted); }
-.status-deprecated     { background: #FEF2F2; color: #DC2626; text-decoration: line-through; }
+.status-draftready       { background: var(--bg-muted); color: var(--text-muted); }
+.status-internallytested { background: #EFF6FF; color: #1D4ED8; }
+.status-clienttested     { background: #F0FDF4; color: #15803D; }
+.status-needshumangate   { background: #FFF7ED; color: #D97706; }
+.status-notrecommended   { background: #FEF2F2; color: #DC2626; text-decoration: line-through; }
+.status-systemcandidate  { background: #F5F3FF; color: #7C3AED; }
 
 /* ── Verification Checklist ── */
 .verification-list {
