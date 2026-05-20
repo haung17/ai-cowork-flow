@@ -49,6 +49,7 @@ ResourcesLoader.renderCatalog = function(md) {
   ResourcesLoader.tagTier3(content);
   ResourcesLoader.tagTier4(content);
   ResourcesLoader.enrichDom(content, ResourcesLoader._state);
+  ResourcesLoader.renderAcceptanceChecks(content, ResourcesLoader._state);
   ResourcesLoader.tagMinimumInputLists(content);
   ResourcesLoader.renderTypeChips(content);
   ResourcesLoader.buildNav();
@@ -232,6 +233,32 @@ ResourcesLoader.tagTier3 = function(root) {
 
 ResourcesLoader.tagTier4 = function(root) {
   ResourcesLoader._tagTierBlock(root, 'Tier 4', 'tier4-block');
+};
+
+ResourcesLoader.renderAcceptanceChecks = function(root, state) {
+  root.querySelectorAll('h3[data-resource-id]').forEach(function(h3) {
+    var id = h3.dataset.resourceId;
+    var checks = state[id] && state[id].acceptanceChecks;
+    if (!checks || !checks.length) return;
+    var anchor = h3;
+    var el = h3.nextElementSibling;
+    while (el && el.tagName !== 'H3' && el.tagName !== 'H2') {
+      if (el.classList.contains('verification-list')) anchor = el;
+      el = el.nextElementSibling;
+    }
+    var ul = document.createElement('ul');
+    ul.className = 'acceptance-list';
+    checks.forEach(function(c) {
+      var li = document.createElement('li');
+      var chip = document.createElement('span');
+      chip.className = 'acceptance-chip status-' + c.status.toLowerCase().replace('/', '-');
+      chip.textContent = c.status.toUpperCase();
+      li.appendChild(chip);
+      li.appendChild(document.createTextNode(' ' + c.label));
+      ul.appendChild(li);
+    });
+    anchor.parentNode.insertBefore(ul, anchor.nextSibling);
+  });
 };
 
 ResourcesLoader.tagMinimumInputLists = function(root) {
