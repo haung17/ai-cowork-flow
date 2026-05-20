@@ -3,58 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>接案流程資源對照表</title>
+  <title>AI 接案交付治理手冊</title>
   <link rel="stylesheet" href="assets/style-fonts.css">
   <link rel="stylesheet" href="assets/style-base.css">
   <link rel="stylesheet" href="assets/style-resources.css">
 </head>
 <body>
-  <!-- Search overlay -->
-  <div id="search-overlay" class="search-overlay hidden">
-    <div class="search-box">
-      <input id="search-input" type="text" placeholder="搜尋資源..." autocomplete="off">
-      <div id="search-results" class="search-results"></div>
-    </div>
-  </div>
-
   <div class="app-layout">
     <nav id="sidebar" class="sidebar">
       <div class="sidebar-header">
-        <span class="sidebar-logo">資源對照</span>
+        <span class="sidebar-logo">治理手冊</span>
         <div style="display:flex;gap:4px;align-items:center;">
           <button id="theme-toggle" class="theme-toggle" aria-label="切換為深色主題">Dark</button>
-          <button id="search-btn" class="search-trigger" title="Ctrl+K" aria-label="搜尋">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <circle cx="11" cy="11" r="8"/>
-              <path d="m21 21-4.35-4.35"/>
-            </svg>
-          </button>
-          <a href="dashboard.html" class="back-link" title="返回 Dashboard" aria-label="返回 Dashboard">←</a>
+          <a href="resources.html" class="back-link" title="返回資源庫" aria-label="返回資源庫">← 資源庫</a>
         </div>
       </div>
-      <ul class="nav-list governance-nav">
-        <li class="nav-item">
-          <a href="governance.html" class="governance-link" aria-label="治理原則">⚠ 治理原則</a>
-        </li>
-      </ul>
       <ul class="nav-list" id="nav-list">
-        <!-- JS 動態填入 -->
+        <li class="nav-item"><a href="#hard-rules">7 條硬規則</a></li>
+        <li class="nav-item"><a href="#tier4-reference">Tier 4 對照表</a></li>
+        <li class="nav-item"><a href="#status-promotion">Status 升等</a></li>
+        <li class="nav-item"><a href="#responsibility">責任歸屬</a></li>
+        <li class="nav-item"><a href="#violation-handling">違規處理</a></li>
+        <li class="nav-item"><a href="#audit-log">稽核紀錄</a></li>
       </ul>
     </nav>
 
     <main id="main-content" class="main-content">
       <div id="catalog-content" class="content-wrapper"></div>
       <div id="catalog-error" class="catalog-error hidden" role="alert">
-        <p>無法載入 <code>resources-catalog.md</code>。請用 HTTP server 開啟，不能直接雙擊 HTML 檔案。</p>
+        <p>無法載入 <code>governance.md</code>。請用 HTTP server 開啟。</p>
         <pre>python -m http.server 8080</pre>
-        <p>然後開啟 <code>http://localhost:8080/resources.html</code></p>
       </div>
     </main>
   </div>
 
-  <noscript><div class="noscript-banner">JS 已停用。請直接閱讀 <a href="resources-catalog.md">resources-catalog.md</a> 原始檔。</div></noscript>
   <script src="assets/vendor/marked.min.js"></script>
-  <script src="assets/resources-loader.js"></script>
+  <script src="assets/governance-loader.js"></script>
   <script>
     (function() {
       var saved = localStorage.getItem('cowork-theme') || 'light';
@@ -72,7 +56,7 @@
       this.setAttribute('aria-label', next === 'dark' ? '切換為淺色主題' : '切換為深色主題');
     });
 
-    ResourcesLoader.init();
+    GovernanceLoader.init();
   </script>
 </body>
 </html>

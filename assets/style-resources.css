@@ -386,6 +386,21 @@ body {
 .chip.type-human       { background: var(--role-pm-bg);          color: var(--role-pm); }
 .chip.type-system      { background: var(--role-sys-bg);         color: var(--role-sys); }
 
+/* ── Governance Link ── */
+.governance-link {
+  display: flex;
+  align-items: center;
+  padding: 8px var(--sp-4);
+  background: var(--accent-danger, #DC2626);
+  color: #fff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  border-left: none;
+}
+.governance-link:hover { background: #B91C1C; color: #fff; }
+.governance-nav { padding: var(--sp-2) 0 0; flex: 0; }
+
 /* ── Acceptance Checklist Chips ── */
 .acceptance-list {
   list-style: none;
