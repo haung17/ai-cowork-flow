@@ -4,13 +4,14 @@
 
 ## 圖例
 
-### Tier — AI 自動化程度
+### Tier — AI 使用風險等級
 
 | Tier | 定義 |
 |------|------|
-| **1** | 丟原料 AI 直接做大部分，人僅校稿或微調數字 |
-| **2** | AI 輔助起草，需明確人工輸入與決策確認才能繼續 |
-| **3** | 需接系統或定期觸發；AI 產 CSV / ICS / JSON，由人匯入 |
+| **1: Draft-safe** | AI 產草稿，不得直接交付；人必須校閱後再對外 |
+| **2: Decision-assisted** | AI 輔助分析，關鍵決策由人完成；AI 可做資訊彙整 |
+| **3: System-output** | AI 產系統匯入格式（CSV/ICS/JSON），人工觸發或審核後匯入 |
+| **4: Human-only** | 報價、合約、UAT 驗收、Production 部署、CR 核准 — AI 不得代決策 |
 
 ### type — 沿用 `assets/data.js` 節點屬性
 
@@ -46,7 +47,7 @@
 
 ### 1. 會議記錄
 
-**Tier 1 ｜ type: COWORK**
+**Tier 1: Draft-safe ｜ type: COWORK**
 
 **Input：** 錄音檔或逐字稿、與會者名單、會議目的與議程
 **Output：** 摘要 + 決策清單 + 待辦清單（負責人 + 期限）+ 待釐清問題
@@ -97,7 +98,7 @@
 
 ### 2. 工作計劃書
 
-**Tier 1 ｜ type: COWORK**
+**Tier 1: Draft-safe ｜ type: COWORK**
 
 **Input：** SOW 目標範疇、報價金額範圍、專案期限、客戶特殊要求
 **Output：** 完整工作計劃書草稿（背景、範疇、WBS 摘要、里程碑、溝通機制、驗收條件）
@@ -164,7 +165,7 @@
 
 ### 3. 簡報（HTML 取代 PPT）
 
-**Tier 1 ｜ type: COWORK**
+**Tier 1: Draft-safe ｜ type: COWORK**
 
 **Input：** 工作計劃書、WBS 摘要、客戶背景、說明重點（3-5 條）
 **Output：** 單一 HTML 簡報（含 CSS）、可在瀏覽器展示的全頁輪播
@@ -226,7 +227,7 @@
 
 ### 4. WBS（Work Breakdown Structure）
 
-**Tier 1 ｜ type: CLAUDECODE**
+**Tier 1: Draft-safe ｜ type: CLAUDECODE**
 
 **Input：** SOW 工作項目清單、技術架構草稿、角色分配表
 **Output：** 3 層 WBS（Phase → Feature → Task）+ 每個 Task 工時估算 + 負責角色
@@ -289,7 +290,7 @@
 
 ### 5. 專案組織架構規劃
 
-**Tier 2 ｜ Primary type: COWORK ｜ Support: HUMAN**
+**Tier 2: Decision-assisted ｜ Primary type: COWORK ｜ Support: HUMAN**
 
 **Input：** SOW 角色定義、客戶窗口姓名、內部團隊成員名單
 **Output：** 組織架構圖草稿（角色 → 人員 → 責任範疇 → 溝通線）
@@ -355,7 +356,7 @@
 
 ### 6. Prototype 設計 / UI 截圖分析
 
-**Tier 2 ｜ Primary type: CLAUDECODE ｜ Support: COWORK**
+**Tier 2: Decision-assisted ｜ Primary type: CLAUDECODE ｜ Support: COWORK**
 
 **Input：** 設計稿截圖或 Figma 連結、功能規格文字說明、技術限制（框架、尺寸）
 **Output：** GPT 產出 UI 截圖 → Claude Code 轉 static HTML prototype
@@ -418,7 +419,7 @@
 
 ### 7. 開發 Sprint 規劃
 
-**Tier 2 ｜ type: COWORK**
+**Tier 2: Decision-assisted ｜ type: COWORK**
 
 **Input：** WBS Task 清單、Sprint 週期設定（1/2 週）、團隊 velocity（story points/sprint）
 **Output：** Sprint 0-N 任務分配表（含 task / owner / story points / dependencies）
@@ -483,7 +484,7 @@
 
 ### 8. ASANA 任務管理
 
-**Tier 3 ｜ type: SYSTEM**
+**Tier 3: System-output ｜ type: SYSTEM**
 
 **Input：** WBS Task 清單 / Sprint 規劃表、成員 email（ASANA account）、截止日期
 **Output：** 符合 ASANA CSV import 格式的任務清單（Task Name / Assignee / Due Date / Section）
@@ -530,7 +531,7 @@ Name, Assignee, Due Date, Start Date, Type, Description, Priority
 
 ### 9. 里程碑提醒
 
-**Tier 3 ｜ type: SYSTEM**
+**Tier 3: System-output ｜ type: SYSTEM**
 
 **Input：** 工作計劃書里程碑清單、各里程碑日期、時區（Asia/Taipei）
 **Output：** .ics 行事曆檔（符合 RFC 5545，可匯入 Google Calendar）
@@ -580,7 +581,7 @@ Name, Assignee, Due Date, Start Date, Type, Description, Priority
 > ⚠ **本區域所列項目皆不建議優先實作**
 > - 僅作為未來可能整合的路徑紀錄
 > - 每個方案都有額外帳號 / OAuth / Bot / n8n 維護成本
-> - MVP 階段請維持 Tier 1 / Tier 2 的 markdown / CSV / ICS 產出
+> - MVP 階段請維持 Tier 1: Draft-safe / Tier 2: Decision-assisted 的 markdown / CSV / ICS 產出
 > - 列入此區不等於已選型；正式採用前需獨立 RFC
 
 ```
@@ -636,3 +637,12 @@ postDev（收尾）
 ---
 
 *對應 dashboard 版本：v3.6 | 節點 id 參照 `assets/data.js`*
+
+---
+
+## Tier 4 Human-only — 禁止 AI 代決策
+
+> 以下項目 AI 可協助準備資料與草稿，但**絕對不得以 AI 產出直接作為決策依據或對外承諾**。
+> 正式核准、簽字、部署指令必須由具責任的人工完成。
+
+<!-- step-02 補充 4 個 H3 詳述 -->
