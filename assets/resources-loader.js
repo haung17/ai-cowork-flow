@@ -274,6 +274,7 @@ ResourcesLoader.tagTier4 = function(root) {
 };
 
 ResourcesLoader.renderAcceptanceChecks = function(root, state) {
+  var pendingUpdates = [];
   root.querySelectorAll('h3[data-resource-id]').forEach(function(h3) {
     var id = h3.dataset.resourceId;
     var checks = state[id] && state[id].acceptanceChecks;
@@ -322,9 +323,14 @@ ResourcesLoader.renderAcceptanceChecks = function(root, state) {
     var progressDiv = document.createElement('div');
     progressDiv.className = 'acceptance-progress';
     progressDiv.dataset.resource = id;
+    // Batch all DOM writes first; defer reads (_updateProgress) to second pass
     anchor.parentNode.insertBefore(ul, anchor.nextSibling);
     ul.parentNode.insertBefore(progressDiv, ul.nextSibling);
-    ResourcesLoader._updateProgress(id, checks, h3);
+    pendingUpdates.push({ id: id, checks: checks, h3: h3 });
+  });
+  // Second pass: all DOM nodes inserted — now run progress reads without layout thrash
+  pendingUpdates.forEach(function(p) {
+    ResourcesLoader._updateProgress(p.id, p.checks, p.h3);
   });
 };
 
