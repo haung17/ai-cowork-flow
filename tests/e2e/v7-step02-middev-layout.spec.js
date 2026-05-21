@@ -34,7 +34,7 @@ test('v7-step02: edge 9→middev-pm-clarify has fromSide:right', async ({ page }
   expect(edge.fromSide).toBe('right');
 });
 
-test('v7-step02: midDev rendered paths have ≤ 2 geometric crossings', async ({ page }) => {
+test('v7-step02: midDev rendered paths have ≤ 3 geometric crossings', async ({ page }) => {
   await page.goto('/dashboard.html');
   await page.waitForSelector('#fc-midDev svg', { timeout: 8000 });
 
@@ -89,6 +89,21 @@ test('v7-step02: midDev rendered paths have ≤ 2 geometric crossings', async ({
   // 3 back-edges (9→1, clarify→1, 10→1) each cross at least one forward path — unavoidable.
   // Threshold raised from 2 → 3 based on actual graph topology.
   expect(crossings).toBeLessThanOrEqual(3);
+});
+
+test('v7-step02: clarify→7 has fromSide:left and clarify→1 has toSide:right', async ({ page }) => {
+  await page.goto('/dashboard.html');
+  const edges = await page.evaluate(() => {
+    const midEdges = window.AppData.flowcharts.midDev.edges;
+    const c7 = midEdges.find(e => e.from === 'middev-pm-clarify' && e.to === '7');
+    const c1 = midEdges.find(e => e.from === 'middev-pm-clarify' && e.to === '1');
+    return {
+      c7fromSide: c7 ? c7.fromSide : null,
+      c1toSide: c1 ? c1.toSide : null
+    };
+  });
+  expect(edges.c7fromSide).toBe('left');
+  expect(edges.c1toSide).toBe('right');
 });
 
 test('v7-step02: all midDev nodes have valid x/y coordinates (no NaN)', async ({ page }) => {

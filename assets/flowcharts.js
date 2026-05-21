@@ -68,7 +68,7 @@ FlowCharts.render = function(chartId, containerEl) {
 
     const dx = Math.abs(x2 - x1) * 0.5;
     const dy = Math.abs(y2 - y1) * 0.5;
-    const isHorizontal = dx > dy * 2;
+    const isHorizontal = (fromSide === 'right' || fromSide === 'left') || dx > dy * 2;
 
     let d;
     if (fromSide === 'right' || fromSide === 'left') {
