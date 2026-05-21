@@ -534,3 +534,29 @@ body {
   font-family: var(--font-mono);
   line-height: 1.4;
 }
+
+/* ── Step 11: Quick Decision Chips ── */
+.quick-decision-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 0 4px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.quick-decision-chip {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.quick-decision-chip:hover {
+  background: var(--bg-muted);
+  border-color: var(--accent);
+}

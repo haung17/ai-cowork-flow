@@ -478,6 +478,16 @@ ResourcesLoader.initSearchPanel = function() {
   });
   if (btn) btn.addEventListener('click', open);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+  // Quick decision chips: close overlay + scroll to matching H2
+  Array.from(overlay.querySelectorAll('.quick-decision-chip')).forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var target = chip.dataset.heading;
+      close();
+      var h2s = Array.from(document.querySelectorAll('#catalog-content h2'));
+      var match = h2s.find(function(h) { return h.textContent.includes(target); });
+      if (match) match.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
   // Anonymous wrapper: keeps _handleSearchInput as late-bound lookup so tests can stub the property.
   input.addEventListener('input', ResourcesLoader._debounce(function() { ResourcesLoader._handleSearchInput(input, results, close); }, 250));
   input.addEventListener('keydown', function(e) { ResourcesLoader._handleSearchKeydown(e, results); });
