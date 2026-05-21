@@ -11,13 +11,15 @@
 | `resources.html` | 加 `<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js">` before resources-loader.js |
 | `assets/resources-loader.js` | `renderCatalog` 加 DOMPurify.sanitize；`fetchAll` 加 schema section 驗證；error 文字改明確 |
 
-## resources.html — CDN 順序
+## resources.html — 載入順序（vendored）
 
 ```html
 <script src="assets/vendor/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+<script src="assets/vendor/purify.min.js"></script>  <!-- DOMPurify 3.0.6, vendored -->
 <script src="assets/resources-loader.js"></script>
 ```
+
+> 注意：CDN 版本 (`cdn.jsdelivr.net`) 會讓 no-cdn 測試失敗，改 vendor 於 `assets/vendor/purify.min.js`（20931 bytes）。
 
 ## resources-loader.js — renderCatalog 修改
 

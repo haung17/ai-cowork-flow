@@ -25,7 +25,7 @@ ResourcesLoader.fetchAll = async function() {
     ResourcesLoader._state = results[1];
     ResourcesLoader.renderCatalog(results[0]);
   } catch (err) {
-    document.getElementById('catalog-error').classList.remove('hidden');
+    ResourcesLoader._showError('無法載入 resources-catalog.md，請重新整理頁面。');
     console.error('[ResourcesLoader] fetchAll failed:', err);
   }
 };
@@ -36,20 +36,30 @@ ResourcesLoader._showError = function(msg) {
   errEl.classList.remove('hidden');
   var p = errEl.querySelector('p');
   if (p) p.textContent = msg;
+  // Hide fetch-troubleshoot hints for non-fetch errors (schema/sanitizer)
+  var isFetchError = msg.indexOf('無法載入') !== -1;
+  Array.from(errEl.children).forEach(function(c) {
+    if (c.tagName !== 'P') c.style.display = isFetchError ? '' : 'none';
+  });
 };
+
+ResourcesLoader.REQUIRED_SECTIONS = ['## AI 使用決策矩陣', '## 9 個資源詳述', '## Tier 4'];
 
 ResourcesLoader.renderCatalog = function(md) {
   if (!window.DOMPurify) {
     ResourcesLoader._showError('sanitizer load fail：DOMPurify 未載入，無法安全渲染內容。');
     return;
   }
-  var requiredSections = ['## AI 使用決策矩陣', '## 9 個資源詳述', '## Tier 4'];
-  for (var i = 0; i < requiredSections.length; i++) {
-    if (md.indexOf(requiredSections[i]) === -1) {
-      ResourcesLoader._showError('Schema mismatch：缺少必要章節「' + requiredSections[i] + '」');
+  var sections = ResourcesLoader.REQUIRED_SECTIONS;
+  for (var i = 0; i < sections.length; i++) {
+    if (md.indexOf(sections[i]) === -1) {
+      ResourcesLoader._showError('Schema mismatch：缺少必要章節「' + sections[i] + '」');
       return;
     }
   }
+  // Reset error state before successful render
+  var errEl = document.getElementById('catalog-error');
+  if (errEl) { errEl.classList.add('hidden'); var ep = errEl.querySelector('p'); if (ep) ep.textContent = ''; }
   var t0 = performance.now();
   var rawHtml = marked.parse(md);
   ResourcesLoader._parseTime = performance.now() - t0;
@@ -175,9 +185,14 @@ ResourcesLoader._handleSearchInput = function(input, results, close) {
     var div = document.createElement('div');
     div.className = 'search-result-item';
     div.dataset.idx = i;
-    div.innerHTML =
-      '<span class="search-result-label">' + item.label + '</span>' +
-      '<span class="search-result-text">' + item.text + '</span>';
+    var labelSpan = document.createElement('span');
+    labelSpan.className = 'search-result-label';
+    labelSpan.textContent = item.label;
+    var textSpan = document.createElement('span');
+    textSpan.className = 'search-result-text';
+    textSpan.textContent = item.text;
+    div.appendChild(labelSpan);
+    div.appendChild(textSpan);
     div.addEventListener('click', function() {
       if (item.anchor) item.anchor.scrollIntoView({ behavior: 'smooth' });
       close();
