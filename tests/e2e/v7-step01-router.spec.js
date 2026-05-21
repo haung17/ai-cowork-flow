@@ -61,23 +61,24 @@ test('v7-step01: fromSide:right edge start x = from.cx + NODE_W/2', async ({ pag
     testContainer.style.cssText = 'position:relative;width:900px;height:2000px;';
     document.body.appendChild(testContainer);
 
-    // Single edge with fromSide:'right'
-    window.AppData.flowcharts['_testA'] = {
-      nodes: window.AppData.flowcharts.midDev.nodes,
-      edges: [{ from: '9', to: 'middev-pm-clarify', fromSide: 'right', toSide: 'left' }]
-    };
-    window.FlowCharts.render('_testA', testContainer);
-    delete window.AppData.flowcharts['_testA'];
-
-    const paths = testContainer.querySelectorAll('svg path[fill="none"]');
     let actualStartX = null;
-    for (const p of paths) {
-      const d = p.getAttribute('d');
-      if (!d) continue;
-      const m = d.match(/^M([\d.]+),([\d.]+)/);
-      if (m) { actualStartX = parseFloat(m[1]); break; }
+    try {
+      window.AppData.flowcharts['_testA'] = {
+        nodes: window.AppData.flowcharts.midDev.nodes,
+        edges: [{ from: '9', to: 'middev-pm-clarify', fromSide: 'right', toSide: 'left' }]
+      };
+      window.FlowCharts.render('_testA', testContainer);
+      const paths = testContainer.querySelectorAll('svg path[fill="none"]');
+      for (const p of paths) {
+        const d = p.getAttribute('d');
+        if (!d) continue;
+        const m = d.match(/^M([\d.]+),([\d.]+)/);
+        if (m) { actualStartX = parseFloat(m[1]); break; }
+      }
+    } finally {
+      delete window.AppData.flowcharts['_testA'];
+      document.body.removeChild(testContainer);
     }
-    document.body.removeChild(testContainer);
     return { expectedStartX, actualStartX };
   });
 
@@ -102,25 +103,26 @@ test('v7-step01: toSide:left edge end x = to.cx - NODE_W/2', async ({ page }) =>
     testContainer.style.cssText = 'position:relative;width:900px;height:2000px;';
     document.body.appendChild(testContainer);
 
-    window.AppData.flowcharts['_testB'] = {
-      nodes: window.AppData.flowcharts.midDev.nodes,
-      edges: [{ from: '9', to: 'middev-pm-clarify', fromSide: 'right', toSide: 'left' }]
-    };
-    window.FlowCharts.render('_testB', testContainer);
-    delete window.AppData.flowcharts['_testB'];
-
-    const paths = testContainer.querySelectorAll('svg path[fill="none"]');
     let actualEndX = null;
-    for (const p of paths) {
-      const d = p.getAttribute('d');
-      if (!d) continue;
-      // Last token in path d = `x2,y2`
-      const tokens = d.trim().split(/\s+/);
-      const last = tokens[tokens.length - 1];
-      const m = last.match(/^(-?[\d.]+),(-?[\d.]+)$/);
-      if (m) { actualEndX = parseFloat(m[1]); break; }
+    try {
+      window.AppData.flowcharts['_testB'] = {
+        nodes: window.AppData.flowcharts.midDev.nodes,
+        edges: [{ from: '9', to: 'middev-pm-clarify', fromSide: 'right', toSide: 'left' }]
+      };
+      window.FlowCharts.render('_testB', testContainer);
+      const paths = testContainer.querySelectorAll('svg path[fill="none"]');
+      for (const p of paths) {
+        const d = p.getAttribute('d');
+        if (!d) continue;
+        const tokens = d.trim().split(/\s+/);
+        const last = tokens[tokens.length - 1];
+        const m = last.match(/^(-?[\d.]+),(-?[\d.]+)$/);
+        if (m) { actualEndX = parseFloat(m[1]); break; }
+      }
+    } finally {
+      delete window.AppData.flowcharts['_testB'];
+      document.body.removeChild(testContainer);
     }
-    document.body.removeChild(testContainer);
     return { expectedEndX, actualEndX };
   });
 
@@ -144,14 +146,16 @@ test('v7-step01: horizontal edge label has SVG rect background', async ({ page }
       nodes: window.AppData.flowcharts.midDev.nodes.slice(),
       edges: [{ from:'9', to:'middev-pm-clarify', label:'規格疑義', fromSide:'right', toSide:'left' }]
     };
-    window.AppData.flowcharts['midDevRect'] = testChart;
-    window.FlowCharts.render('midDevRect', testContainer);
-    window.AppData.flowcharts['midDevRect'] = undefined;
-
-    // Check if there is a <rect> element sibling near a <text>
-    const rects = testContainer.querySelectorAll('svg rect');
-    document.body.removeChild(testContainer);
-    return rects.length > 0;
+    let rectCount = 0;
+    try {
+      window.AppData.flowcharts['midDevRect'] = testChart;
+      window.FlowCharts.render('midDevRect', testContainer);
+      rectCount = testContainer.querySelectorAll('svg rect').length;
+    } finally {
+      delete window.AppData.flowcharts['midDevRect'];
+      document.body.removeChild(testContainer);
+    }
+    return rectCount > 0;
   });
 
   expect(hasRect).toBe(true);

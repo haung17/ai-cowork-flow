@@ -6,6 +6,22 @@ const NODE_H = 110;
 const DECISION_R = 50;
 const UNIT = 14;
 
+function _exitAnchor(pos, side) {
+  if (side === 'right') return { x: pos.cx + NODE_W/2, y: pos.ty + NODE_H/2 };
+  if (side === 'left')  return { x: pos.cx - NODE_W/2, y: pos.ty + NODE_H/2 };
+  if (side === 'top')   return { x: pos.cx,             y: pos.ty };
+  if (side !== 'bottom') console.warn('flowcharts: unknown fromSide \'' + side + '\'');
+  return { x: pos.cx, y: pos.ty + NODE_H - 10 };
+}
+
+function _entryAnchor(pos, side) {
+  if (side === 'left')   return { x: pos.cx - NODE_W/2, y: pos.ty + NODE_H/2 };
+  if (side === 'right')  return { x: pos.cx + NODE_W/2, y: pos.ty + NODE_H/2 };
+  if (side === 'bottom') return { x: pos.cx,             y: pos.ty + NODE_H - 10 };
+  if (side !== 'top') console.warn('flowcharts: unknown toSide \'' + side + '\'');
+  return { x: pos.cx, y: pos.ty };
+}
+
 FlowCharts.render = function(chartId, containerEl) {
   const chart = window.AppData.flowcharts[chartId];
   if (!chart) return;
@@ -45,19 +61,10 @@ FlowCharts.render = function(chartId, containerEl) {
     const fromSide = edge.fromSide || 'bottom';
     const toSide   = edge.toSide   || 'top';
 
-    // Exit anchor
-    let x1, y1;
-    if (fromSide === 'right')  { x1 = from.cx + NODE_W/2; y1 = from.ty + NODE_H/2; }
-    else if (fromSide === 'left')   { x1 = from.cx - NODE_W/2; y1 = from.ty + NODE_H/2; }
-    else if (fromSide === 'top')    { x1 = from.cx;             y1 = from.ty; }
-    else                            { x1 = from.cx;             y1 = from.ty + NODE_H - 10; } // bottom (default)
-
-    // Entry anchor
-    let x2, y2;
-    if (toSide === 'left')   { x2 = to.cx - NODE_W/2; y2 = to.ty + NODE_H/2; }
-    else if (toSide === 'right')  { x2 = to.cx + NODE_W/2; y2 = to.ty + NODE_H/2; }
-    else if (toSide === 'bottom') { x2 = to.cx;            y2 = to.ty + NODE_H - 10; }
-    else                          { x2 = to.cx;            y2 = to.ty; }  // top (default)
+    const p1 = _exitAnchor(from, fromSide);
+    const p2 = _entryAnchor(to, toSide);
+    const x1 = p1.x, y1 = p1.y;
+    const x2 = p2.x, y2 = p2.y;
 
     const dx = Math.abs(x2 - x1) * 0.5;
     const dy = Math.abs(y2 - y1) * 0.5;
@@ -65,9 +72,13 @@ FlowCharts.render = function(chartId, containerEl) {
 
     let d;
     if (fromSide === 'right' || fromSide === 'left') {
+      // Horizontal exit: first CP extends horizontally from exit anchor
       const signX = (fromSide === 'right') ? 1 : -1;
-      const toSignX = (toSide === 'left') ? -1 : (toSide === 'right' ? 1 : 0);
-      d = `M${x1},${y1} C${x1+signX*dx},${y1} ${x2+toSignX*dx},${y2} ${x2},${y2}`;
+      // Second CP: pull toward source x for top/bottom entries; away for left/right entries
+      const cpX2 = (toSide === 'left') ? x2 - dx
+                 : (toSide === 'right') ? x2 + dx
+                 : x1; // top or bottom: smooth S-curve back toward source
+      d = `M${x1},${y1} C${x1+signX*dx},${y1} ${cpX2},${y2} ${x2},${y2}`;
     } else {
       // Default vertical Bézier — identical to v3.7 formula when no side props given
       d = `M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2}`;
