@@ -490,7 +490,7 @@ body {
   padding: 1px 5px;
   font-size: 10px;
   font-weight: 600;
-  background: var(--accent-dark, #1d4ed8);
+  background: #1d4ed8;
   color: #fff;
   border-radius: 3px;
   vertical-align: middle;
