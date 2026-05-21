@@ -50,7 +50,7 @@
 | 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | DraftReady |
 | 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | DraftReady |
 | 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | DraftReady |
-| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | DraftReady |
+| 4 | wbs | WBS | 2 | CLAUDECODE | — | preDev:6 | Markdown | DraftReady |
 | 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | DraftReady |
 | 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | DraftReady |
 | 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | DraftReady |
