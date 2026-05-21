@@ -56,6 +56,7 @@ window.AppData.flowcharts = {
     title: '開發前：需求釐清、技術評估、SOW / 報價、測試規劃與排程 v3.7',
     nodes: [
       { id:'1', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：需求訪談', bullets:['專案目標','使用對象','預算 / 交期'], x:45, y:2 },
+      { id:'predev-nda-gate', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：NDA + 資安審查', bullets:['NDA 簽署確認','個資/敏感資料識別','敏感資料不進 AI prompt'], x:45, y:6 },
       { id:'2', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：會議紀錄與需求整理', bullets:['需求清單','User Story','驗收條件初稿'], x:45, y:11 },
       { id:'3', role:ROLE.QA, type:TYPE.COWORK, title:'QA Cowork：測試案例 / 測試策略初稿', bullets:['正常流程','異常情境','測試資料需求'], x:20, y:20 },
       { id:'4', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：測試策略確認', bullets:['高風險判定','測試範圍','測試規劃'], x:20, y:29 },
@@ -70,7 +71,8 @@ window.AppData.flowcharts = {
       { id:'12', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：Kickoff / Sprint 起跑', bullets:['開發分支建立','任務分派','溝通節奏'], x:45, y:83 },
     ],
     edges: [
-      {from:'1',to:'2'},{from:'2',to:'3'},{from:'3',to:'4'},
+      {from:'1',to:'predev-nda-gate'},{from:'predev-nda-gate',to:'2'},
+      {from:'2',to:'3'},{from:'3',to:'4'},
       {from:'2',to:'5'},{from:'5',to:'6'},
       {from:'4',to:'7'},{from:'6',to:'7'},{from:'7',to:'8'},
       {from:'8',to:'predev-engineer-presurvey'},
