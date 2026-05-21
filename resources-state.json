@@ -7,10 +7,10 @@
       "敏感資訊（薪資、客戶名、報價）是否已脫敏"
     ],
     "acceptanceChecks": [
-      { "label": "決策清單有負責人 + 期限", "status": "Pending" },
-      { "label": "敏感資訊脫敏", "status": "Pending" }
+      { "label": "決策清單有負責人 + 期限", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "敏感資訊脫敏", "status": "Pending", "owner": "PM", "required": true }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "work-plan": {
     "status": "DraftReady",
@@ -20,11 +20,11 @@
       "客戶可識別的里程碑是否清楚標出"
     ],
     "acceptanceChecks": [
-      { "label": "in-scope / out-of-scope 明確列出", "status": "Pending" },
-      { "label": "工時估算含 buffer ≥ 10%", "status": "Pending" },
-      { "label": "報價數字由人填寫（無 AI 自填）", "status": "Pending" }
+      { "label": "in-scope / out-of-scope 明確列出", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "工時估算含 buffer ≥ 10%", "status": "Pending", "owner": "Engineer", "required": true },
+      { "label": "報價數字由人填寫（無 AI 自填）", "status": "Pending", "owner": "PM", "required": true }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "presentation": {
     "status": "DraftReady",
@@ -34,11 +34,11 @@
       "簡報流程是否符合 Gate preDev:9 的對客戶說明順序"
     ],
     "acceptanceChecks": [
-      { "label": "報價數字 / 工時正確性確認", "status": "Pending" },
-      { "label": "無機密資訊外洩", "status": "Pending" },
-      { "label": "CDN 依賴已移除或有 fallback", "status": "Pending" }
+      { "label": "報價數字 / 工時正確性確認", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "無機密資訊外洩", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "CDN 依賴已移除或有 fallback", "status": "Pending", "owner": "Engineer", "required": false }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "wbs": {
     "status": "DraftReady",
@@ -48,11 +48,11 @@
       "Level 3 任務是否均有指定責任角色"
     ],
     "acceptanceChecks": [
-      { "label": "工時估算合理（工程師確認）", "status": "Pending" },
-      { "label": "任務依賴關係正確", "status": "Pending" },
-      { "label": "與 SOW 無超出或遺漏", "status": "Pending" }
+      { "label": "工時估算合理（工程師確認）", "status": "Pending", "owner": "Engineer", "required": true },
+      { "label": "任務依賴關係正確", "status": "Pending", "owner": "Engineer", "required": true },
+      { "label": "與 SOW 無超出或遺漏", "status": "Pending", "owner": "PM", "required": true }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "org-chart": {
     "status": "DraftReady",
@@ -62,11 +62,11 @@
       "PM 是否 Gate 確認過 client 端窗口"
     ],
     "acceptanceChecks": [
-      { "label": "每個角色有真實人員（非假設性）", "status": "Pending" },
-      { "label": "DRI 不空白", "status": "Pending" },
-      { "label": "客戶端窗口已確認並同意", "status": "Pending" }
+      { "label": "每個角色有真實人員（非假設性）", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "DRI 不空白", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "客戶端窗口已確認並同意", "status": "Pending", "owner": "PM", "required": true }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "prototype": {
     "status": "DraftReady",
@@ -76,11 +76,11 @@
       "工程師確認 HTML 可進入 repo 不需重構"
     ],
     "acceptanceChecks": [
-      { "label": "UX 流程符合需求", "status": "Pending" },
-      { "label": "標示「僅供 demo」", "status": "Pending" },
-      { "label": "HTML 可進入 repo（工程師確認）", "status": "Pending" }
+      { "label": "UX 流程符合需求", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "標示「僅供 demo」", "status": "Pending", "owner": "Engineer", "required": true },
+      { "label": "HTML 可進入 repo（工程師確認）", "status": "Pending", "owner": "Engineer", "required": false }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "sprint-plan": {
     "status": "DraftReady",
@@ -90,11 +90,11 @@
       "每個 Sprint 是否有 buffer 任務（不超過 10%）"
     ],
     "acceptanceChecks": [
-      { "label": "優先序決策完成（PM 拍板）", "status": "Pending" },
-      { "label": "人員可用性確認（假期、兼案）", "status": "Pending" },
-      { "label": "緩衝 Sprint 已排入", "status": "Pending" }
+      { "label": "優先序決策完成（PM 拍板）", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "人員可用性確認（假期、兼案）", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "緩衝 Sprint 已排入", "status": "Pending", "owner": "PM", "required": false }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "asana": {
     "status": "DraftReady",
@@ -104,11 +104,11 @@
       "重複任務是否有 de-dup 機制（avoid double import）"
     ],
     "acceptanceChecks": [
-      { "label": "assignee 格式正確（email 或顯示名稱一致）", "status": "Pending" },
-      { "label": "無重複 task（匯入前確認）", "status": "Pending" },
-      { "label": "日期格式 YYYY-MM-DD", "status": "Pending" }
+      { "label": "assignee 格式正確（email 或顯示名稱一致）", "status": "Pending", "owner": "Engineer", "required": true },
+      { "label": "無重複 task（匯入前確認）", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "日期格式 YYYY-MM-DD", "status": "Pending", "owner": "Engineer", "required": true }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   },
   "milestone-reminder": {
     "status": "DraftReady",
@@ -118,10 +118,10 @@
       "里程碑名稱是否與工作計劃書一致"
     ],
     "acceptanceChecks": [
-      { "label": "日期與工作計劃書一致", "status": "Pending" },
-      { "label": "時區 Asia/Taipei 正確", "status": "Pending" },
-      { "label": "名稱與 ASANA 里程碑一致", "status": "Pending" }
+      { "label": "日期與工作計劃書一致", "status": "Pending", "owner": "PM", "required": true },
+      { "label": "時區 Asia/Taipei 正確", "status": "Pending", "owner": "Engineer", "required": true },
+      { "label": "名稱與 ASANA 里程碑一致", "status": "Pending", "owner": "PM", "required": false }
     ],
-    "lastUpdated": "2026-05-20"
+    "lastUpdated": "2026-05-21"
   }
 }

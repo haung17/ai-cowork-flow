@@ -286,17 +286,73 @@ ResourcesLoader.renderAcceptanceChecks = function(root, state) {
     }
     var ul = document.createElement('ul');
     ul.className = 'acceptance-list';
-    checks.forEach(function(c) {
+    checks.forEach(function(c, idx) {
       var li = document.createElement('li');
-      var chip = document.createElement('span');
-      chip.className = 'acceptance-chip status-' + c.status.toLowerCase().replace('/', '-');
-      chip.textContent = c.status.toUpperCase();
-      li.appendChild(chip);
-      li.appendChild(document.createTextNode(' ' + c.label));
+      var label = document.createElement('label');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.dataset.resource = id;
+      cb.dataset.idx = String(idx);
+      var lsKey = 'cowork-check-' + id + '-' + idx;
+      try { if (localStorage.getItem(lsKey) === '1') cb.checked = true; } catch(e) {}
+      cb.addEventListener('change', function() {
+        try {
+          if (cb.checked) { localStorage.setItem(lsKey, '1'); }
+          else { localStorage.removeItem(lsKey); }
+        } catch(e) {}
+        ResourcesLoader._updateProgress(id, checks, h3);
+      });
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(' ' + c.label));
+      if (c.owner) {
+        var ownerSpan = document.createElement('span');
+        ownerSpan.className = 'owner';
+        ownerSpan.textContent = ' @' + c.owner;
+        label.appendChild(ownerSpan);
+      }
+      if (c.required !== false) {
+        var req = document.createElement('span');
+        req.className = 'required-marker';
+        req.textContent = ' ⭑';
+        label.appendChild(req);
+      }
+      li.appendChild(label);
       ul.appendChild(li);
     });
+    var progressDiv = document.createElement('div');
+    progressDiv.className = 'acceptance-progress';
+    progressDiv.dataset.resource = id;
     anchor.parentNode.insertBefore(ul, anchor.nextSibling);
+    ul.parentNode.insertBefore(progressDiv, ul.nextSibling);
+    ResourcesLoader._updateProgress(id, checks, h3);
   });
+};
+
+ResourcesLoader._updateProgress = function(id, checks, h3) {
+  var progressDiv = document.querySelector('.acceptance-progress[data-resource="' + id + '"]');
+  if (!progressDiv) return;
+  var requiredChecks = checks.filter(function(c) { return c.required !== false; });
+  var requiredTotal = requiredChecks.length;
+  var checkedCount = 0;
+  requiredChecks.forEach(function(c) {
+    var origIdx = checks.indexOf(c);
+    var cb = document.querySelector(
+      'input[type="checkbox"][data-resource="' + id + '"][data-idx="' + origIdx + '"]'
+    );
+    if (cb && cb.checked) checkedCount++;
+  });
+  progressDiv.textContent = checkedCount + ' / ' + requiredTotal + ' required';
+  if (checkedCount === requiredTotal && requiredTotal > 0) {
+    if (!h3.querySelector('.h3-complete')) {
+      var mark = document.createElement('span');
+      mark.className = 'h3-complete';
+      mark.textContent = ' ✅';
+      h3.appendChild(mark);
+    }
+  } else {
+    var existing = h3.querySelector('.h3-complete');
+    if (existing) h3.removeChild(existing);
+  }
 };
 
 ResourcesLoader.tagMinimumInputLists = function(root) {

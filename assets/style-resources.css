@@ -525,3 +525,32 @@ body {
 [data-theme="dark"] .tier4-item {
   background: #b91c1c;
 }
+
+/* ── Step 08: Checklist ── */
+.acceptance-list {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 4px 0;
+}
+.acceptance-list li { margin-bottom: 4px; }
+.acceptance-list label {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+.acceptance-list input[type="checkbox"] { cursor: pointer; flex-shrink: 0; }
+.owner {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  font-family: var(--font-mono);
+}
+.required-marker { color: #dc2626; font-size: 11px; }
+.acceptance-progress {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+.h3-complete { font-size: 0.9em; }
