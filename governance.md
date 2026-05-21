@@ -86,4 +86,15 @@
 
 ---
 
+---
+
+## 交付規範引用 {#delivery-references}
+
+以下治理規則在資源對照表中有對應的操作細則：
+
+- [Demo 水印強制規則](resources.html)（Prototype 章節）— 所有 Claude Code 產出 prototype 必須顯示「DEMO / Not Production / 僅供需求確認」水印；移除需 PM 書面簽核。
+- [External Use Gate](resources.html)（簡報章節）— 簡報對外交付前，PM 必須完成 4 項 checklist，包含範疇對齊 SOW 與敏感資訊脫敏。
+
+---
+
 *本手冊版本：v3.0（2026-05-20）| 對應 resources.html v3*
