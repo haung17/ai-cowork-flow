@@ -30,13 +30,33 @@ ResourcesLoader.fetchAll = async function() {
   }
 };
 
+ResourcesLoader._showError = function(msg) {
+  var errEl = document.getElementById('catalog-error');
+  if (!errEl) return;
+  errEl.classList.remove('hidden');
+  var p = errEl.querySelector('p');
+  if (p) p.textContent = msg;
+};
+
 ResourcesLoader.renderCatalog = function(md) {
+  if (!window.DOMPurify) {
+    ResourcesLoader._showError('sanitizer load fail：DOMPurify 未載入，無法安全渲染內容。');
+    return;
+  }
+  var requiredSections = ['## AI 使用決策矩陣', '## 9 個資源詳述', '## Tier 4'];
+  for (var i = 0; i < requiredSections.length; i++) {
+    if (md.indexOf(requiredSections[i]) === -1) {
+      ResourcesLoader._showError('Schema mismatch：缺少必要章節「' + requiredSections[i] + '」');
+      return;
+    }
+  }
   var t0 = performance.now();
-  var html = marked.parse(md);
+  var rawHtml = marked.parse(md);
   ResourcesLoader._parseTime = performance.now() - t0;
+  var cleanHtml = DOMPurify.sanitize(rawHtml);
 
   var content = document.getElementById('catalog-content');
-  content.innerHTML = html;
+  content.innerHTML = cleanHtml;
 
   content.querySelectorAll('table').forEach(function(table) {
     var wrapper = document.createElement('div');
