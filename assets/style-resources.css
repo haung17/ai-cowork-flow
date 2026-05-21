@@ -525,3 +525,12 @@ body {
   font-family: var(--font-mono);
 }
 .h3-complete { font-size: 0.9em; }
+
+/* ── Step 10: Status Meta ── */
+.status-meta {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  margin: 2px 0 6px 0;
+  font-family: var(--font-mono);
+  line-height: 1.4;
+}

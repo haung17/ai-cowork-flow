@@ -38,6 +38,11 @@ GovernanceLoader.init = function() {
       });
     }
 
+    // Add id="status-promotion" to "Status 升等規則摘要" heading (marked doesn't parse {#id})
+    content.querySelectorAll('h2').forEach(function(h) {
+      if (h.textContent.indexOf('Status 升等規則摘要') !== -1) h.id = 'status-promotion';
+    });
+
     content.querySelectorAll('table').forEach(function(table) {
       var wrapper = document.createElement('div');
       wrapper.className = 'table-wrapper';

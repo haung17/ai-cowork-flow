@@ -210,6 +210,14 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
 };
 
+ResourcesLoader._STATUS_MAP = {
+  DraftReady:       { usability: '內部草稿，勿對外交付',       nextStep: '完成假案測試後升 InternallyTested' },
+  InternallyTested: { usability: '可對內使用，不可直接送客戶', nextStep: '客戶測試通過後升 ClientTested' },
+  ClientTested:     { usability: '已通過客戶驗收，可正式使用', nextStep: '維持狀態或視需要回退' },
+  NeedsHumanGate:   { usability: '必須人工 Gate 才可使用',     nextStep: '完成 Gate checklist' },
+  NotRecommended:   { usability: '不建議使用',                 nextStep: '查看治理說明後評估' },
+};
+
 ResourcesLoader._RESOURCE_MAP = {
   '會議記錄': 'meeting-notes',
   '工作計劃書': 'work-plan',
@@ -235,7 +243,19 @@ ResourcesLoader.enrichDom = function(root, state) {
     var badge = document.createElement('span');
     badge.className = 'status-badge status-' + entry.status.toLowerCase().replace(/\s+/g, '-');
     badge.textContent = entry.status;
+    badge.style.cursor = 'pointer';
+    badge.title = '查看治理升等規則';
+    badge.addEventListener('click', function() {
+      window.open('governance.html#status-promotion', '_blank', 'noopener');
+    });
     h3.insertAdjacentElement('afterend', badge);
+    var statusMeta = ResourcesLoader._STATUS_MAP[entry.status];
+    if (statusMeta) {
+      var metaDiv = document.createElement('div');
+      metaDiv.className = 'status-meta';
+      metaDiv.textContent = '可用程度：' + statusMeta.usability + ' · 下一步：' + statusMeta.nextStep;
+      badge.insertAdjacentElement('afterend', metaDiv);
+    }
     if (entry.verification && entry.verification.length) {
       var ul = document.createElement('ul');
       ul.className = 'verification-list';
