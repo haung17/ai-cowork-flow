@@ -98,6 +98,7 @@ window.AppData.flowcharts = {
       { id:'middev-pm-clarify', role:ROLE.PM, type:TYPE.HUMAN, title:'PM：規格釋疑 + 客戶確認', bullets:['需求釐清','客戶確認','更新 User Story'], x:70, y:83 },
       { id:'10', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：Change Request', bullets:['影響分析','報價 / 排程調整','客戶 Gate'], x:70, y:92 },
       { id:'11', role:ROLE.PM, type:TYPE.HUMAN, title:'PM / QA：UAT 準備', bullets:['版本候選確認','UAT 環境申請','驗收計劃'], x:45, y:92 },
+      { id:'middev-engineer-cr-switch', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：變更管理切換', bullets:['AI 重生（重新生成）','人工修補','禁止 AI 自主判斷重構'], x:70, y:101 },
     ],
     edges: [
       {from:'1',to:'middev-engineer-ai-test-gate'},{from:'middev-engineer-ai-test-gate',to:'2',label:'覆蓋率達標'},
@@ -111,7 +112,8 @@ window.AppData.flowcharts = {
       {from:'middev-pm-clarify',to:'10',label:'需客戶 Gate'},
       {from:'middev-pm-clarify',to:'1',label:'需更新實作',toSide:'right'},
       {from:'middev-pm-clarify',to:'7',label:'無需實作變更',fromSide:'left'},
-      {from:'10',to:'1',label:'簽核後排入'},
+      {from:'10',to:'middev-engineer-cr-switch',label:'CR 核准'},
+      {from:'middev-engineer-cr-switch',to:'1',label:'AI 重生 / 人工修補',toSide:'right'},
     ]
   },
 
