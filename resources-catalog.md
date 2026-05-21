@@ -258,7 +258,9 @@
 
 ### 4. WBS（Work Breakdown Structure）
 
-**Tier 1: Draft-safe ｜ type: CLAUDECODE**
+**Tier 2: Decision-assisted ｜ type: CLAUDECODE**
+
+> ⚠ **WBS 不得作為報價依據**，必須由 PM / 工程師覆核工時後才可用於報價或 SOW。
 
 **Input：** SOW 工作項目清單、技術架構草稿、角色分配表
 **Output：** 3 層 WBS（Phase → Feature → Task）+ 每個 Task 工時估算 + 負責角色

@@ -496,3 +496,32 @@ body {
   vertical-align: middle;
   white-space: nowrap;
 }
+
+.tier4-banner {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fef2f2;
+  border-bottom: 2px solid #dc2626;
+  padding: 8px 16px;
+  font-size: var(--text-sm, 12px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .tier4-banner {
+  background: #3f1b1b;
+  border-bottom-color: #f87171;
+}
+.tier4-item {
+  background: #dc2626;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+[data-theme="dark"] .tier4-item {
+  background: #b91c1c;
+}
