@@ -42,14 +42,38 @@ FlowCharts.render = function(chartId, containerEl) {
     const to   = nodePos[edge.to];
     if (!from || !to) return;
 
-    const x1 = from.cx;
-    const y1 = from.ty + NODE_H - 10;
-    const x2 = to.cx;
-    const y2 = to.ty;
+    const fromSide = edge.fromSide || 'bottom';
+    const toSide   = edge.toSide   || 'top';
+
+    // Exit anchor
+    let x1, y1;
+    if (fromSide === 'right')  { x1 = from.cx + NODE_W/2; y1 = from.ty + NODE_H/2; }
+    else if (fromSide === 'left')   { x1 = from.cx - NODE_W/2; y1 = from.ty + NODE_H/2; }
+    else if (fromSide === 'top')    { x1 = from.cx;             y1 = from.ty; }
+    else                            { x1 = from.cx;             y1 = from.ty + NODE_H - 10; } // bottom (default)
+
+    // Entry anchor
+    let x2, y2;
+    if (toSide === 'left')   { x2 = to.cx - NODE_W/2; y2 = to.ty + NODE_H/2; }
+    else if (toSide === 'right')  { x2 = to.cx + NODE_W/2; y2 = to.ty + NODE_H/2; }
+    else if (toSide === 'bottom') { x2 = to.cx;            y2 = to.ty + NODE_H - 10; }
+    else                          { x2 = to.cx;            y2 = to.ty; }  // top (default)
+
+    const dx = Math.abs(x2 - x1) * 0.5;
+    const dy = Math.abs(y2 - y1) * 0.5;
+    const isHorizontal = dx > dy * 2;
+
+    let d;
+    if (fromSide === 'right' || fromSide === 'left') {
+      const signX = (fromSide === 'right') ? 1 : -1;
+      const toSignX = (toSide === 'left') ? -1 : (toSide === 'right' ? 1 : 0);
+      d = `M${x1},${y1} C${x1+signX*dx},${y1} ${x2+toSignX*dx},${y2} ${x2},${y2}`;
+    } else {
+      // Default vertical Bézier — identical to v3.7 formula when no side props given
+      d = `M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2}`;
+    }
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-    const dy = Math.abs(y2 - y1) * 0.5;
-    const d = `M${x1},${y1} C${x1},${y1+dy} ${x2},${y2-dy} ${x2},${y2}`;
     path.setAttribute('d', d);
     path.setAttribute('fill', 'none');
     path.setAttribute('stroke', '#9CA3AF');
@@ -60,6 +84,19 @@ FlowCharts.render = function(chartId, containerEl) {
     if (edge.label) {
       const mx = (x1 + x2) / 2;
       const my = (y1 + y2) / 2;
+
+      if (isHorizontal) {
+        const labelW = edge.label.length * 7 + 8;
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', mx - labelW/2 + 4);
+        rect.setAttribute('y', my - 12);
+        rect.setAttribute('width', labelW);
+        rect.setAttribute('height', 14);
+        rect.setAttribute('fill', 'var(--bg, #fff)');
+        rect.setAttribute('rx', '2');
+        svg.appendChild(rect);
+      }
+
       const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
       text.setAttribute('x', mx + 4);
       text.setAttribute('y', my);
