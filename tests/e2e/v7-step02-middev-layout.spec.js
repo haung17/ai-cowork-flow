@@ -1,16 +1,16 @@
 // tests/e2e/v7-step02-middev-layout.spec.js
 const { test, expect } = require('@playwright/test');
 
-test('v7-step02: middev-pm-clarify.y === 74', async ({ page }) => {
+test('v7-step02: middev-pm-clarify.y === 83 (shifted +9 by step05 ai-test-gate)', async ({ page }) => {
   await page.goto('/dashboard.html');
   const y = await page.evaluate(() => {
     const n = window.AppData.flowcharts.midDev.nodes.find(n => n.id === 'middev-pm-clarify');
     return n ? n.y : null;
   });
-  expect(y).toBe(74);
+  expect(y).toBe(83);
 });
 
-test('v7-step02: node 10 and node 11 y === 83', async ({ page }) => {
+test('v7-step02: node 10 and node 11 y === 92 (shifted +9 by step05)', async ({ page }) => {
   await page.goto('/dashboard.html');
   const coords = await page.evaluate(() => {
     const nodes = window.AppData.flowcharts.midDev.nodes;
@@ -18,8 +18,8 @@ test('v7-step02: node 10 and node 11 y === 83', async ({ page }) => {
     const n11 = nodes.find(n => n.id === '11');
     return { y10: n10 ? n10.y : null, y11: n11 ? n11.y : null };
   });
-  expect(coords.y10).toBe(83);
-  expect(coords.y11).toBe(83);
+  expect(coords.y10).toBe(92);
+  expect(coords.y11).toBe(92);
 });
 
 test('v7-step02: edge 9→middev-pm-clarify has fromSide:right', async ({ page }) => {
