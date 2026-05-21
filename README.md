@@ -1,47 +1,63 @@
-# AI Cowork Flow
+# AI Cowork Flow — v3.7
 
-This repository contains a static HTML presentation and dashboard for explaining how PM, QA, engineers, and AI cowork can collaborate in a software project workflow.
+接案軟體開發交付治理流程：PM / QA / 工程師三角色下，AI（Claude Cowork + Claude Code）如何介入整理、開發、測試、驗收與保固交接。
 
-## Files
+## Pages
 
-- `presentation.html` - slide-style presentation.
-- `dashboard.html` - interactive dashboard with sidebar, search, and flowchart modal details.
-- `assets/` - shared data, flowchart renderer, interactions, and CSS.
+| 頁面 | 說明 |
+|------|------|
+| `dashboard.html` | 互動式流程儀表板（開發前 / 開發中 / 開發後）、sidebar、全文搜尋、主題切換 |
+| `resources.html` | AI Cowork 資源對照表（9 項交付物 prompt 與驗收條件） |
+| `governance.html` | 治理規則頁（7 條硬規則、Tier 定義、Status 升等） |
+| `presentation.html` | Reveal.js 簡報（v3.7 流程圖四張） |
 
 ## How To View
 
-Open either file directly in a browser:
-
-```text
-presentation.html
-dashboard.html
+```bash
+python -m http.server 8080
+# http://localhost:8080/dashboard.html
 ```
 
-For public sharing, enable GitHub Pages from:
+GitHub Pages:
 
-```text
-Settings -> Pages -> Deploy from a branch -> main / root
 ```
-
-Then open:
-
-```text
-https://haung17.github.io/ai-cowork-flow/presentation.html
 https://haung17.github.io/ai-cowork-flow/dashboard.html
+https://haung17.github.io/ai-cowork-flow/resources.html
+```
+
+## Files
+
+```
+assets/
+  data.js          # SSOT: flowchart nodes/edges + sectionTables + chapters
+  interactions.js  # dashboard DOM renderer (renderTable / buildContent)
+  resources-loader.js  # resources.html catalog loader + search debounce
+  style-*.css      # shared CSS variables + page-specific styles
+resources-catalog.md    # 9 resources 內容（marked.js 動態渲染）
+resources-state.json    # 各資源 status / verification / acceptanceChecks
+governance.md           # 治理規則原始文件
+```
+
+## Tests
+
+```bash
+npx playwright test              # 148 tests
+npx playwright test --repeat-each=3  # flake check
 ```
 
 ## Concept
 
-The core strategy is:
-
-```text
-Put fixed-rule work into scripts.
-Put drafting, summarizing, comparing, and classifying into AI cowork.
-Keep business, quality, and release decisions with humans.
+```
+固定規則工作 → 腳本自動化
+起草、摘要、比對、分類 → AI Cowork
+商務決策、品質判斷、簽核、部署 → 人工
 ```
 
-The flow separates work into three levels:
+角色邊界：
+- **PM**: 需求訪談、範圍切分、客戶溝通；AI 不能承諾報價、範圍、交期
+- **QA**: 測試策略、缺陷記錄、驗收確認；AI 不能取代品質風險判斷
+- **工程師**: 技術評估、Code Review、部署；AI 不承擔架構決策與正式部署
 
-- Fully automated: tests, issue status collection, progress summaries, release note drafts.
-- AI draft + human review: requirements summary, user stories, QA test case drafts, UAT feedback classification.
-- Human-only decisions: scope change, pricing, priority, release approval, client sign-off.
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
