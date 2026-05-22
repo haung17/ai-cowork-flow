@@ -10,7 +10,7 @@ const TYPE = window.TYPE;
 
 window.AppData.flowcharts = {
   main: {
-    title: '接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.7',
+    title: '接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.8',
     nodes: [
       { id:'A', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'客戶需求進來', bullets:[], x:45, y:2 },
       { id:'B', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：需求訪談', bullets:['專案目標','使用對象','預算 / 交期'], x:45, y:11 },
@@ -53,7 +53,7 @@ window.AppData.flowcharts = {
   },
 
   preDev: {
-    title: '開發前：需求釐清、技術評估、SOW / 報價、測試規劃與排程 v3.7',
+    title: '開發前：需求釐清、技術評估、SOW / 報價、測試規劃與排程 v3.8',
     nodes: [
       { id:'1', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：需求訪談', bullets:['專案目標','使用對象','預算 / 交期'], x:45, y:2 },
       { id:'predev-pm-nda-gate', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：NDA + 資安審查', bullets:['NDA 簽署確認','個資/敏感資料識別','識別為敏感的資料不得進 AI prompt'], x:45, y:11 },
@@ -83,7 +83,7 @@ window.AppData.flowcharts = {
   },
 
   midDev: {
-    title: '開發中：PR、CI、Code Review、測試環境、QA、問題分類與變更控管 v3.7',
+    title: '開發中：PR、CI、Code Review、測試環境、QA、問題分類與變更控管 v3.8',
     nodes: [
       { id:'1', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：開發實作', bullets:['功能開發','單元測試','文件更新'], x:45, y:2 },
       { id:'middev-engineer-ai-test-gate', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：AI Code 測試門檻', bullets:['自動化測試覆蓋率 ≥ 80%','或靜態分析 pass','不得繞過此門檻'], x:45, y:11 },
@@ -118,7 +118,7 @@ window.AppData.flowcharts = {
   },
 
   postDev: {
-    title: '開發後：版本凍結、UAT 環境、Smoke Test、UAT、正式簽收、部署、文件 / KT / 保固 v3.7',
+    title: '開發後：版本凍結、UAT 環境、Smoke Test、UAT、正式簽收、部署、文件 / KT / 保固 v3.8',
     nodes: [
       { id:'1', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：版本凍結', bullets:['Release tag','鎖定範圍','凍結變更'], x:45, y:2 },
       { id:'2', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：部署 UAT 環境', bullets:['UAT 版本部署','環境設定','回滾點保留'], x:45, y:11 },
@@ -151,7 +151,7 @@ window.AppData.slides = [
   {
     id: 'cover',
     type: 'cover',
-    title: '接案軟體開發交付治理流程 v3.7',
+    title: '接案軟體開發交付治理流程 v3.8',
     subtitle: 'PM / QA / 工程師三角色下，AI 如何介入整理、開發、測試、驗收與保固交接',
     meta: '2026-05-12'
   },
@@ -166,10 +166,10 @@ window.AppData.slides = [
       ['開發後', '正式簽收、文件交付、KT / 保固交接', 'UAT 前 Smoke Test、上線後 Smoke Test', '版本凍結、UAT 環境、正式部署、技術文件'],
     ]
   },
-  { id: 'flow-main',    type: 'flowchart', chartId: 'main',    title: '大流程圖：整體接案流程 v3.7' },
-  { id: 'flow-predev',  type: 'flowchart', chartId: 'preDev',  title: '開發前流程圖 v3.7' },
-  { id: 'flow-middev',  type: 'flowchart', chartId: 'midDev',  title: '開發中流程圖 v3.7' },
-  { id: 'flow-postdev', type: 'flowchart', chartId: 'postDev', title: '開發後流程圖 v3.7' },
+  { id: 'flow-main',    type: 'flowchart', chartId: 'main',    title: '大流程圖：整體接案流程 v3.8' },
+  { id: 'flow-predev',  type: 'flowchart', chartId: 'preDev',  title: '開發前流程圖 v3.8' },
+  { id: 'flow-middev',  type: 'flowchart', chartId: 'midDev',  title: '開發中流程圖 v3.8' },
+  { id: 'flow-postdev', type: 'flowchart', chartId: 'postDev', title: '開發後流程圖 v3.8' },
   {
     id: 'conclusion',
     type: 'quote',
@@ -183,11 +183,11 @@ window.AppData.slides = [
   }
 ];
 
-window.AppData.contentVersion = 'v3.7';
+window.AppData.contentVersion = 'v3.8';
 
 window.AppData.chapters = [
   { id: 'summary',          title: '核心定位',             icon: '◎' },
-  { id: 'flowcharts',       title: 'v3.7 流程圖',          icon: '⊞' },
+  { id: 'flowcharts',       title: 'v3.8 流程圖',          icon: '⊞' },
   { id: 'roles',            title: '角色與 AI 邊界',       icon: '◈' },
   { id: 'pre-dev',          title: '開發前',               icon: '①' },
   { id: 'mid-dev',          title: '開發中',               icon: '②' },

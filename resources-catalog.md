@@ -1,4 +1,4 @@
-# 接案流程資源對照表 (v3.6 對應)
+# 接案流程資源對照表 (v3.8 對應)
 
 ---
 
@@ -707,7 +707,7 @@ postDev（收尾）
 
 ---
 
-*對應 dashboard 版本：v3.6 | 節點 id 參照 `assets/data.js`*
+*對應 dashboard 版本：v3.8 | 節點 id 參照 `assets/data.js`*
 
 ---
 

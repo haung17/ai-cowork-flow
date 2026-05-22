@@ -4,6 +4,38 @@ All notable changes to this project are documented here.
 
 ---
 
+## v3.8 (2026-05-21) — PR #16
+
+### Flow Logic — 4 Gate 節點
+- **preDev**: 新增「PM：NDA + 資安審查 Gate」（`predev-pm-nda-gate`）於客戶接洽後、會議記錄前
+- **midDev**: 新增「工程師：AI Code 測試門檻 Gate（覆蓋率 ≥ 80%）」（`middev-engineer-ai-test-gate`）於 Claude Code 後、PR 建立前
+- **midDev**: 新增「工程師：變更管理切換 Gate」（`middev-engineer-cr-switch`）於 Gate CR 後、回 Claude Code 前
+- **midDev**: 重排 `middev-pm-clarify` / node 10 / node 11 y 座標；9→clarify edge 改 `fromSide:'right'` 側邊錨點，消除水平線跨越垂直線交叉
+
+### 治理強化 — 3 條業務紅線
+- `governance.md` 新增規則 8（NDA / 資安審查紅線）、規則 9（AI Code 測試門檻 ≥ 80%）、規則 10（變更管理切換責任歸屬）
+- `governance.html` 渲染 10 條規則；規則 8/9/10 加 `v3.8 新增` badge
+- `governance.md` 加「交付規範引用」區塊，交叉連結 Demo 水印規則與 External Use Gate
+
+### Resources — P0 治理強化
+- **Tier 4 sticky banner**：`resources.html` 頂部固定警告列，顯示 AI 禁止執行的 7 項決策
+- **WBS 重分類**：Tier 1 → Tier 2；加紅字警語「不得作為報價依據」
+- **Human Gate Checklist**：9 個資源 `acceptanceChecks` 升級 schema（加 `owner`、`required`）；checkbox UI + localStorage 保存 + progress bar + 100% 時 H3 旁顯示 ✅
+- **DOMPurify sanitize**：`marked.parse` 後過 DOMPurify 3.0.6（vendored）；fetch 後校驗 3 個必要章節；錯誤訊息細化（sanitizer load fail / schema mismatch / fetch fail）
+- **Status badge 顯著化**：9 個資源 H3 旁顯示 status badge + 可用程度 + 下一步說明；點擊跳 `governance.html#status-promotion`
+- **Demo 水印強制規則**：prototype 章節加浮水印強制規定（移除需 PM 書面簽核）
+- **External Use Gate**：簡報章節加 4 項交付 checklist（範疇對齊 SOW + 脫敏）
+
+### Resources — P1 UX 改善
+- **Dashboard 入口改文字**：`⊟` 符號改為「📋 資源對照」＋「⚖️ 治理規則」明確文字連結（`data.js`）
+- **Decision-query chips**：`resources.html` search overlay 加 5 個快速決策問題 chips（對外承諾？改 production？草稿？CSV/ICS 匯入？拍板決策？）
+
+### Tests
+- 新增 `tests/e2e/v7-step08~12.spec.js` + `v7-step11-entry.spec.js` + `v7-full-journey.spec.js`（13 步驟端到端）
+- 208/208 tests pass；624/624 flake-free（`--repeat-each=3`）
+
+---
+
 ## v3.7 (2026-05-21) — PR #15 + hotfix
 
 ### Flow Logic Fixes
