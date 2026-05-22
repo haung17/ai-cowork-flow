@@ -6,10 +6,11 @@ test('full-journey: complete user flow through dashboard to resources', async ({
   await page.goto('/dashboard.html');
   await expect(page).toHaveTitle(/接案軟體開發交付治理流程/);
 
-  // 2. Click resources-link in header → new tab opens
+  // 2. Click resources link in nav → new tab opens
+  await page.waitForSelector('#nav-list a[href="resources.html"]');
   const [resourcesPage] = await Promise.all([
     context.waitForEvent('page', { timeout: 10000 }),
-    page.click('a.resources-link')
+    page.click('#nav-list a[href="resources.html"]')
   ]);
   await resourcesPage.waitForLoadState('domcontentloaded');
   expect(resourcesPage.url()).toContain('resources.html');

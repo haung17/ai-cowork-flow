@@ -25,18 +25,48 @@ ResourcesLoader.fetchAll = async function() {
     ResourcesLoader._state = results[1];
     ResourcesLoader.renderCatalog(results[0]);
   } catch (err) {
-    document.getElementById('catalog-error').classList.remove('hidden');
+    ResourcesLoader._showError('無法載入 resources-catalog.md，請重新整理頁面。');
     console.error('[ResourcesLoader] fetchAll failed:', err);
   }
 };
 
+ResourcesLoader._showError = function(msg) {
+  var errEl = document.getElementById('catalog-error');
+  if (!errEl) return;
+  errEl.classList.remove('hidden');
+  var p = errEl.querySelector('p');
+  if (p) p.textContent = msg;
+  // Hide fetch-troubleshoot hints for non-fetch errors (schema/sanitizer)
+  var isFetchError = msg.indexOf('無法載入') !== -1;
+  Array.from(errEl.children).forEach(function(c) {
+    if (c.tagName !== 'P') c.style.display = isFetchError ? '' : 'none';
+  });
+};
+
+ResourcesLoader.REQUIRED_SECTIONS = ['## AI 使用決策矩陣', '## 9 個資源詳述', '## Tier 4'];
+
 ResourcesLoader.renderCatalog = function(md) {
+  if (!window.DOMPurify) {
+    ResourcesLoader._showError('sanitizer load fail：DOMPurify 未載入，無法安全渲染內容。');
+    return;
+  }
+  var sections = ResourcesLoader.REQUIRED_SECTIONS;
+  for (var i = 0; i < sections.length; i++) {
+    if (md.indexOf(sections[i]) === -1) {
+      ResourcesLoader._showError('Schema mismatch：缺少必要章節「' + sections[i] + '」');
+      return;
+    }
+  }
+  // Reset error state before successful render
+  var errEl = document.getElementById('catalog-error');
+  if (errEl) { errEl.classList.add('hidden'); var ep = errEl.querySelector('p'); if (ep) ep.textContent = ''; }
   var t0 = performance.now();
-  var html = marked.parse(md);
+  var rawHtml = marked.parse(md);
   ResourcesLoader._parseTime = performance.now() - t0;
+  var cleanHtml = DOMPurify.sanitize(rawHtml);
 
   var content = document.getElementById('catalog-content');
-  content.innerHTML = html;
+  content.innerHTML = cleanHtml;
 
   content.querySelectorAll('table').forEach(function(table) {
     var wrapper = document.createElement('div');
@@ -155,9 +185,14 @@ ResourcesLoader._handleSearchInput = function(input, results, close) {
     var div = document.createElement('div');
     div.className = 'search-result-item';
     div.dataset.idx = i;
-    div.innerHTML =
-      '<span class="search-result-label">' + item.label + '</span>' +
-      '<span class="search-result-text">' + item.text + '</span>';
+    var labelSpan = document.createElement('span');
+    labelSpan.className = 'search-result-label';
+    labelSpan.textContent = item.label;
+    var textSpan = document.createElement('span');
+    textSpan.className = 'search-result-text';
+    textSpan.textContent = item.text;
+    div.appendChild(labelSpan);
+    div.appendChild(textSpan);
     div.addEventListener('click', function() {
       if (item.anchor) item.anchor.scrollIntoView({ behavior: 'smooth' });
       close();
@@ -173,6 +208,14 @@ ResourcesLoader._handleSearchKeydown = function(e, results) {
   if (e.key === 'ArrowUp')   s.selected = Math.max(s.selected - 1, 0);
   if (e.key === 'Enter' && s.selected >= 0) { var sel = items[s.selected]; if (sel) sel.click(); }
   items.forEach(function(el, i) { el.classList.toggle('selected', i === s.selected); });
+};
+
+ResourcesLoader._STATUS_MAP = {
+  DraftReady:       { usability: '內部草稿，勿對外交付',       nextStep: '完成假案測試後升 InternallyTested' },
+  InternallyTested: { usability: '可對內使用，不可直接送客戶', nextStep: '客戶測試通過後升 ClientTested' },
+  ClientTested:     { usability: '已通過客戶驗收，可正式使用', nextStep: '維持狀態或視需要回退' },
+  NeedsHumanGate:   { usability: '必須人工 Gate 才可使用',     nextStep: '完成 Gate checklist' },
+  NotRecommended:   { usability: '不建議使用',                 nextStep: '查看治理說明後評估' },
 };
 
 ResourcesLoader._RESOURCE_MAP = {
@@ -200,7 +243,19 @@ ResourcesLoader.enrichDom = function(root, state) {
     var badge = document.createElement('span');
     badge.className = 'status-badge status-' + entry.status.toLowerCase().replace(/\s+/g, '-');
     badge.textContent = entry.status;
+    badge.style.cursor = 'pointer';
+    badge.title = '查看治理升等規則';
+    badge.addEventListener('click', function() {
+      window.open('governance.html#status-promotion', '_blank', 'noopener');
+    });
     h3.insertAdjacentElement('afterend', badge);
+    var statusMeta = ResourcesLoader._STATUS_MAP[entry.status];
+    if (statusMeta) {
+      var metaDiv = document.createElement('div');
+      metaDiv.className = 'status-meta';
+      metaDiv.textContent = '可用程度：' + statusMeta.usability + ' · 下一步：' + statusMeta.nextStep;
+      badge.insertAdjacentElement('afterend', metaDiv);
+    }
     if (entry.verification && entry.verification.length) {
       var ul = document.createElement('ul');
       ul.className = 'verification-list';
@@ -274,6 +329,7 @@ ResourcesLoader.tagTier4 = function(root) {
 };
 
 ResourcesLoader.renderAcceptanceChecks = function(root, state) {
+  var pendingUpdates = [];
   root.querySelectorAll('h3[data-resource-id]').forEach(function(h3) {
     var id = h3.dataset.resourceId;
     var checks = state[id] && state[id].acceptanceChecks;
@@ -286,17 +342,78 @@ ResourcesLoader.renderAcceptanceChecks = function(root, state) {
     }
     var ul = document.createElement('ul');
     ul.className = 'acceptance-list';
-    checks.forEach(function(c) {
+    checks.forEach(function(c, idx) {
       var li = document.createElement('li');
-      var chip = document.createElement('span');
-      chip.className = 'acceptance-chip status-' + c.status.toLowerCase().replace('/', '-');
-      chip.textContent = c.status.toUpperCase();
-      li.appendChild(chip);
-      li.appendChild(document.createTextNode(' ' + c.label));
+      var label = document.createElement('label');
+      var cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.dataset.resource = id;
+      cb.dataset.idx = String(idx);
+      var lsKey = 'cowork-check-' + id + '-' + idx;
+      try { if (localStorage.getItem(lsKey) === '1') cb.checked = true; } catch(e) {}
+      cb.addEventListener('change', function() {
+        try {
+          if (cb.checked) { localStorage.setItem(lsKey, '1'); }
+          else { localStorage.removeItem(lsKey); }
+        } catch(e) {}
+        ResourcesLoader._updateProgress(id, checks, h3);
+      });
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(' ' + c.label));
+      if (c.owner) {
+        var ownerSpan = document.createElement('span');
+        ownerSpan.className = 'owner';
+        ownerSpan.textContent = ' @' + c.owner;
+        label.appendChild(ownerSpan);
+      }
+      if (c.required !== false) {
+        var req = document.createElement('span');
+        req.className = 'required-marker';
+        req.textContent = ' ⭑';
+        label.appendChild(req);
+      }
+      li.appendChild(label);
       ul.appendChild(li);
     });
+    var progressDiv = document.createElement('div');
+    progressDiv.className = 'acceptance-progress';
+    progressDiv.dataset.resource = id;
+    // Batch all DOM writes first; defer reads (_updateProgress) to second pass
     anchor.parentNode.insertBefore(ul, anchor.nextSibling);
+    ul.parentNode.insertBefore(progressDiv, ul.nextSibling);
+    pendingUpdates.push({ id: id, checks: checks, h3: h3 });
   });
+  // Second pass: all DOM nodes inserted — now run progress reads without layout thrash
+  pendingUpdates.forEach(function(p) {
+    ResourcesLoader._updateProgress(p.id, p.checks, p.h3);
+  });
+};
+
+ResourcesLoader._updateProgress = function(id, checks, h3) {
+  var progressDiv = document.querySelector('.acceptance-progress[data-resource="' + id + '"]');
+  if (!progressDiv) return;
+  var requiredChecks = checks.filter(function(c) { return c.required !== false; });
+  var requiredTotal = requiredChecks.length;
+  var checkedCount = 0;
+  requiredChecks.forEach(function(c) {
+    var origIdx = checks.indexOf(c);
+    var cb = document.querySelector(
+      'input[type="checkbox"][data-resource="' + id + '"][data-idx="' + origIdx + '"]'
+    );
+    if (cb && cb.checked) checkedCount++;
+  });
+  progressDiv.textContent = checkedCount + ' / ' + requiredTotal + ' required';
+  if (checkedCount === requiredTotal && requiredTotal > 0) {
+    if (!h3.querySelector('.h3-complete')) {
+      var mark = document.createElement('span');
+      mark.className = 'h3-complete';
+      mark.textContent = ' ✅';
+      h3.appendChild(mark);
+    }
+  } else {
+    var existing = h3.querySelector('.h3-complete');
+    if (existing) h3.removeChild(existing);
+  }
 };
 
 ResourcesLoader.tagMinimumInputLists = function(root) {
@@ -361,6 +478,16 @@ ResourcesLoader.initSearchPanel = function() {
   });
   if (btn) btn.addEventListener('click', open);
   overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+  // Quick decision chips: close overlay + scroll to matching H2
+  Array.from(overlay.querySelectorAll('.quick-decision-chip')).forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      var target = chip.dataset.heading;
+      close();
+      var h2s = Array.from(document.querySelectorAll('#catalog-content h2'));
+      var match = h2s.find(function(h) { return h.textContent.includes(target); });
+      if (match) match.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
   // Anonymous wrapper: keeps _handleSearchInput as late-bound lookup so tests can stub the property.
   input.addEventListener('input', ResourcesLoader._debounce(function() { ResourcesLoader._handleSearchInput(input, results, close); }, 250));
   input.addEventListener('keydown', function(e) { ResourcesLoader._handleSearchKeydown(e, results); });

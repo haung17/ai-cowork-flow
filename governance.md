@@ -5,7 +5,7 @@
 
 ---
 
-## 7 條硬規則 {#hard-rules}
+## 10 條硬規則 {#hard-rules}
 
 以下規則為**不可妥協的底線**，任何情境下均適用：
 
@@ -18,6 +18,9 @@
 | 5 | AI **不得自行判定 UAT 通過** | 驗收需客戶代表 + PM 雙方書面確認，AI 只可協助產出 UAT checklist |
 | 6 | AI **不得自行批准 CR** | 變更申請需正式審核流程，AI 只可輔助分析影響範圍 |
 | 7 | AI **不得自行執行 Production 部署 / Hotfix** | 需工程師 + PM 確認，並記錄操作日誌；緊急 Hotfix 需即時通報 |
+| 8 | **NDA / 資安審查紅線**（規則 8） | 客戶接洽確認後，進入任何實作前，必須完成 NDA 簽署 + 個資/敏感資料識別；識別為敏感的資料不得進入任何 AI prompt |
+| 9 | **AI Code 測試門檻**（規則 9） | Claude Code 產出代碼，工程師 Code Review 前必須通過自動化單元測試覆蓋率 ≥ 80%（或靜態分析 pass）；不得繞過此門檻 |
+| 10 | **變更管理切換**（規則 10） | CR 進來時，由工程師決定「AI 重生（重新生成）」vs「人工修補」；禁止 AI 自主判斷重構策略或範疇 |
 
 違反任何一條視為**嚴重治理違規**，需立即記錄並上報。
 → 詳細違規處理流程見 [references/violation-handling.md](.agents/skills/resources-governance/references/violation-handling.md)
@@ -80,6 +83,17 @@
 所有治理違規事件、Status 升等決定、Tier 4 操作需記錄於稽核日誌。
 
 → 稽核紀錄模板見 [references/audit-log.md](.agents/skills/resources-governance/references/audit-log.md)
+
+---
+
+---
+
+## 交付規範引用 {#delivery-references}
+
+以下治理規則在資源對照表中有對應的操作細則：
+
+- [Demo 水印強制規則](resources.html)（Prototype 章節）— 所有 Claude Code 產出 prototype 必須顯示「DEMO / Not Production / 僅供需求確認」水印；移除需 PM 書面簽核。
+- [External Use Gate](resources.html)（簡報章節）— 簡報對外交付前，PM 必須完成 4 項 checklist，包含範疇對齊 SOW 與敏感資訊脫敏。
 
 ---
 

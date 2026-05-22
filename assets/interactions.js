@@ -93,7 +93,7 @@ DashboardInteractions.buildContent = function() {
 
   append(`
   <section id="summary">
-    <h1 class="section-title">接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.7</h1>
+    <h1 class="section-title">接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.8</h1>
     <p class="section-desc">這份內容的定位不是一般開發流程圖，而是「AI 輔助下的接案軟體開發交付治理流程」。適用於政府教育部案、企業內部系統案、客製化系統案、網站或後台系統案。</p>
     ${DashboardInteractions._buildTable(
       ['核心定位', '說明'],
@@ -103,12 +103,12 @@ DashboardInteractions.buildContent = function() {
         ['治理重點', '先完成 QA / 工程師評估，再對外確認 SOW / 報價；開發中分流 Bug、規格疑義與 Change Request；UAT 前先完成版本凍結、UAT 環境部署與內部 Smoke Test。'],
       ]
     )}
-    <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint);margin-bottom:0">版本：v3.7 ／ 整理日期：2026-05-12</p>
+    <p class="section-desc" style="font-family:var(--font-mono);font-size:0.875rem;color:var(--text-faint);margin-bottom:0">版本：v3.8 ／ 整理日期：2026-05-12</p>
   </section>`);
 
   append(`
   <section id="flowcharts">
-    <h2 class="section-title">v3.7 流程圖</h2>
+    <h2 class="section-title">v3.8 流程圖</h2>
     <p class="section-desc">全架構圖適合當總覽；三張小圖適合分頁講解開發前、開發中、開發後的細節。</p>
     <figure class="flowchart-fig">
       <figcaption>全架構總覽：接案軟體開發交付治理流程與 AI 介入點</figcaption>

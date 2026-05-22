@@ -10,7 +10,7 @@ const TYPE = window.TYPE;
 
 window.AppData.flowcharts = {
   main: {
-    title: '接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.7',
+    title: '接案軟體開發完整流程與 AI Cowork / Claude Code 介入點 v3.8',
     nodes: [
       { id:'A', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'客戶需求進來', bullets:[], x:45, y:2 },
       { id:'B', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：需求訪談', bullets:['專案目標','使用對象','預算 / 交期'], x:45, y:11 },
@@ -53,24 +53,26 @@ window.AppData.flowcharts = {
   },
 
   preDev: {
-    title: '開發前：需求釐清、技術評估、SOW / 報價、測試規劃與排程 v3.7',
+    title: '開發前：需求釐清、技術評估、SOW / 報價、測試規劃與排程 v3.8',
     nodes: [
       { id:'1', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：需求訪談', bullets:['專案目標','使用對象','預算 / 交期'], x:45, y:2 },
-      { id:'2', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：會議紀錄與需求整理', bullets:['需求清單','User Story','驗收條件初稿'], x:45, y:11 },
-      { id:'3', role:ROLE.QA, type:TYPE.COWORK, title:'QA Cowork：測試案例 / 測試策略初稿', bullets:['正常流程','異常情境','測試資料需求'], x:20, y:20 },
-      { id:'4', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：測試策略確認', bullets:['高風險判定','測試範圍','測試規劃'], x:20, y:29 },
-      { id:'5', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：技術評估', bullets:['技術可行性','API / DB 影響','工時估算'], x:70, y:20 },
-      { id:'6', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：任務拆分與技術草稿', bullets:['技術任務','OpenAPI 草稿','DB Schema'], x:70, y:29 },
-      { id:'7', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：SOW / 報價初稿', bullets:['Scope list','報價項目','交付假設'], x:45, y:38 },
-      { id:'8', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：內部確認與優先序', bullets:['範圍切分','風險判斷','驗收方向'], x:45, y:47 },
-      { id:'predev-engineer-presurvey', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：投標前技術探勘', bullets:['技術可行性確認','估算校正','技術風險識別'], x:70, y:47 },
-      { id:'9', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：SOW / 報價 / 交期', bullets:['範圍簽核','報價確認','交期確認'], x:45, y:56 },
-      { id:'10', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：排程與里程碑', bullets:['Sprint plan','任務分派','里程碑'], x:45, y:65 },
-      { id:'11', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：交付期技術規劃（CR 評估）', bullets:['架構確認','依賴確認','CR 影響評估'], x:45, y:74 },
-      { id:'12', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：Kickoff / Sprint 起跑', bullets:['開發分支建立','任務分派','溝通節奏'], x:45, y:83 },
+      { id:'predev-pm-nda-gate', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：NDA + 資安審查', bullets:['NDA 簽署確認','個資/敏感資料識別','識別為敏感的資料不得進 AI prompt'], x:45, y:11 },
+      { id:'2', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：會議紀錄與需求整理', bullets:['需求清單','User Story','驗收條件初稿'], x:45, y:20 },
+      { id:'3', role:ROLE.QA, type:TYPE.COWORK, title:'QA Cowork：測試案例 / 測試策略初稿', bullets:['正常流程','異常情境','測試資料需求'], x:20, y:29 },
+      { id:'4', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：測試策略確認', bullets:['高風險判定','測試範圍','測試規劃'], x:20, y:38 },
+      { id:'5', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：技術評估', bullets:['技術可行性','API / DB 影響','工時估算'], x:70, y:29 },
+      { id:'6', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：任務拆分與技術草稿', bullets:['技術任務','OpenAPI 草稿','DB Schema'], x:70, y:38 },
+      { id:'7', role:ROLE.PM, type:TYPE.COWORK, title:'PM Cowork：SOW / 報價初稿', bullets:['Scope list','報價項目','交付假設'], x:45, y:47 },
+      { id:'8', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：內部確認與優先序', bullets:['範圍切分','風險判斷','驗收方向'], x:45, y:56 },
+      { id:'predev-engineer-presurvey', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：投標前技術探勘', bullets:['技術可行性確認','估算校正','技術風險識別'], x:70, y:56 },
+      { id:'9', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：SOW / 報價 / 交期', bullets:['範圍簽核','報價確認','交期確認'], x:45, y:65 },
+      { id:'10', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：排程與里程碑', bullets:['Sprint plan','任務分派','里程碑'], x:45, y:74 },
+      { id:'11', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：交付期技術規劃（CR 評估）', bullets:['架構確認','依賴確認','CR 影響評估'], x:45, y:83 },
+      { id:'12', role:ROLE.PM, type:TYPE.HUMAN, title:'PM 人工：Kickoff / Sprint 起跑', bullets:['開發分支建立','任務分派','溝通節奏'], x:45, y:92 },
     ],
     edges: [
-      {from:'1',to:'2'},{from:'2',to:'3'},{from:'3',to:'4'},
+      {from:'1',to:'predev-pm-nda-gate'},{from:'predev-pm-nda-gate',to:'2',label:'NDA 確認'},
+      {from:'2',to:'3'},{from:'3',to:'4'},
       {from:'2',to:'5'},{from:'5',to:'6'},
       {from:'4',to:'7'},{from:'6',to:'7'},{from:'7',to:'8'},
       {from:'8',to:'predev-engineer-presurvey'},
@@ -81,38 +83,42 @@ window.AppData.flowcharts = {
   },
 
   midDev: {
-    title: '開發中：PR、CI、Code Review、測試環境、QA、問題分類與變更控管 v3.7',
+    title: '開發中：PR、CI、Code Review、測試環境、QA、問題分類與變更控管 v3.8',
     nodes: [
       { id:'1', role:ROLE.ENG, type:TYPE.CLAUDECODE, title:'Claude Code：開發實作', bullets:['功能開發','單元測試','文件更新'], x:45, y:2 },
-      { id:'2', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：建立 PR', bullets:['PR 說明','指定 reviewer','差異檢查'], x:45, y:11 },
-      { id:'3', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'CI 自動驗證', bullets:['Build / Compile','Lint','Unit Test'], x:45, y:20 },
-      { id:'4', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'CI 是否通過？', bullets:['未通過回修','通過後 Review'], x:45, y:29 },
-      { id:'5', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：Code Review / Merge', bullets:['Review','回應意見','合併分支'], x:45, y:38 },
-      { id:'6', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'部署測試環境', bullets:['測試版部署','版號管理','待測清單'], x:45, y:47 },
-      { id:'7', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：QA 驗證', bullets:['功能測試','探索測試','回歸驗證'], x:20, y:56 },
-      { id:'8', role:ROLE.PM, type:TYPE.COWORK, title:'PM / QA Cowork：問題彙整', bullets:['缺陷彙整','優先級建議','影響分析'], x:70, y:56 },
-      { id:'9', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'問題類型？', bullets:['Bug','規格疑義','新增需求','通過'], x:45, y:65 },
-      { id:'middev-pm-clarify', role:ROLE.PM, type:TYPE.HUMAN, title:'PM：規格釋疑 + 客戶確認', bullets:['需求釐清','客戶確認','更新 User Story'], x:70, y:65 },
-      { id:'10', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：Change Request', bullets:['影響分析','報價 / 排程調整','客戶 Gate'], x:70, y:74 },
-      { id:'11', role:ROLE.PM, type:TYPE.HUMAN, title:'PM / QA：UAT 準備', bullets:['版本候選確認','UAT 環境申請','驗收計劃'], x:45, y:74 },
+      { id:'middev-engineer-ai-test-gate', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：AI Code 測試門檻', bullets:['自動化測試覆蓋率 ≥ 80%','或靜態分析 pass','不得繞過此門檻'], x:45, y:11 },
+      { id:'2', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：建立 PR', bullets:['PR 說明','指定 reviewer','差異檢查'], x:45, y:20 },
+      { id:'3', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'CI 自動驗證', bullets:['Build / Compile','Lint','Unit Test'], x:45, y:29 },
+      { id:'4', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'CI 是否通過？', bullets:['未通過回修','通過後 Review'], x:45, y:38 },
+      { id:'5', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：Code Review / Merge', bullets:['Review','回應意見','合併分支'], x:45, y:47 },
+      { id:'6', role:ROLE.SYSTEM, type:TYPE.SYSTEM, title:'部署測試環境', bullets:['測試版部署','版號管理','待測清單'], x:45, y:56 },
+      { id:'7', role:ROLE.QA, type:TYPE.HUMAN, title:'QA 人工：QA 驗證', bullets:['功能測試','探索測試','回歸驗證'], x:20, y:65 },
+      { id:'8', role:ROLE.PM, type:TYPE.COWORK, title:'PM / QA Cowork：問題彙整', bullets:['缺陷彙整','優先級建議','影響分析'], x:70, y:65 },
+      { id:'9', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'問題類型？', bullets:['Bug','規格疑義','新增需求','通過'], x:45, y:74 },
+      { id:'middev-pm-clarify', role:ROLE.PM, type:TYPE.HUMAN, title:'PM：規格釋疑 + 客戶確認', bullets:['需求釐清','客戶確認','更新 User Story'], x:70, y:83 },
+      { id:'10', role:ROLE.SYSTEM, type:TYPE.DECISION, title:'🟥 Gate：Change Request', bullets:['影響分析','報價 / 排程調整','客戶 Gate'], x:70, y:92 },
+      { id:'11', role:ROLE.PM, type:TYPE.HUMAN, title:'PM / QA：UAT 準備', bullets:['版本候選確認','UAT 環境申請','驗收計劃'], x:45, y:92 },
+      { id:'middev-engineer-cr-switch', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師：變更管理切換', bullets:['AI 重生（重新生成）','人工修補','禁止 AI 自主判斷重構'], x:70, y:101 },
     ],
     edges: [
-      {from:'1',to:'2'},{from:'2',to:'3'},{from:'3',to:'4'},
+      {from:'1',to:'middev-engineer-ai-test-gate'},{from:'middev-engineer-ai-test-gate',to:'2',label:'覆蓋率達標'},
+      {from:'2',to:'3'},{from:'3',to:'4'},
       {from:'4',to:'1',label:'未通過'},{from:'4',to:'5',label:'通過'},
       {from:'5',to:'6'},{from:'6',to:'7'},{from:'7',to:'8'},{from:'8',to:'9'},
       {from:'9',to:'1',label:'Bug / 未達驗收條件'},
-      {from:'9',to:'middev-pm-clarify',label:'規格疑義'},
+      {from:'9',to:'middev-pm-clarify',label:'規格疑義',fromSide:'right',toSide:'left'},
       {from:'9',to:'10',label:'新增需求 / 範疇變更'},
       {from:'9',to:'11',label:'通過'},
       {from:'middev-pm-clarify',to:'10',label:'需客戶 Gate'},
-      {from:'middev-pm-clarify',to:'1',label:'需更新實作'},
-      {from:'middev-pm-clarify',to:'7',label:'無需實作變更'},
-      {from:'10',to:'1',label:'簽核後排入'},
+      {from:'middev-pm-clarify',to:'1',label:'需更新實作',toSide:'right'},
+      {from:'middev-pm-clarify',to:'7',label:'無需實作變更',fromSide:'left'},
+      {from:'10',to:'middev-engineer-cr-switch',label:'CR 核准'},
+      {from:'middev-engineer-cr-switch',to:'1',label:'AI 重生 / 人工修補',toSide:'right'},
     ]
   },
 
   postDev: {
-    title: '開發後：版本凍結、UAT 環境、Smoke Test、UAT、正式簽收、部署、文件 / KT / 保固 v3.7',
+    title: '開發後：版本凍結、UAT 環境、Smoke Test、UAT、正式簽收、部署、文件 / KT / 保固 v3.8',
     nodes: [
       { id:'1', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：版本凍結', bullets:['Release tag','鎖定範圍','凍結變更'], x:45, y:2 },
       { id:'2', role:ROLE.ENG, type:TYPE.HUMAN, title:'工程師人工：部署 UAT 環境', bullets:['UAT 版本部署','環境設定','回滾點保留'], x:45, y:11 },
@@ -145,7 +151,7 @@ window.AppData.slides = [
   {
     id: 'cover',
     type: 'cover',
-    title: '接案軟體開發交付治理流程 v3.7',
+    title: '接案軟體開發交付治理流程 v3.8',
     subtitle: 'PM / QA / 工程師三角色下，AI 如何介入整理、開發、測試、驗收與保固交接',
     meta: '2026-05-12'
   },
@@ -160,10 +166,10 @@ window.AppData.slides = [
       ['開發後', '正式簽收、文件交付、KT / 保固交接', 'UAT 前 Smoke Test、上線後 Smoke Test', '版本凍結、UAT 環境、正式部署、技術文件'],
     ]
   },
-  { id: 'flow-main',    type: 'flowchart', chartId: 'main',    title: '大流程圖：整體接案流程 v3.7' },
-  { id: 'flow-predev',  type: 'flowchart', chartId: 'preDev',  title: '開發前流程圖 v3.7' },
-  { id: 'flow-middev',  type: 'flowchart', chartId: 'midDev',  title: '開發中流程圖 v3.7' },
-  { id: 'flow-postdev', type: 'flowchart', chartId: 'postDev', title: '開發後流程圖 v3.7' },
+  { id: 'flow-main',    type: 'flowchart', chartId: 'main',    title: '大流程圖：整體接案流程 v3.8' },
+  { id: 'flow-predev',  type: 'flowchart', chartId: 'preDev',  title: '開發前流程圖 v3.8' },
+  { id: 'flow-middev',  type: 'flowchart', chartId: 'midDev',  title: '開發中流程圖 v3.8' },
+  { id: 'flow-postdev', type: 'flowchart', chartId: 'postDev', title: '開發後流程圖 v3.8' },
   {
     id: 'conclusion',
     type: 'quote',
@@ -177,11 +183,11 @@ window.AppData.slides = [
   }
 ];
 
-window.AppData.contentVersion = 'v3.7';
+window.AppData.contentVersion = 'v3.8';
 
 window.AppData.chapters = [
   { id: 'summary',          title: '核心定位',             icon: '◎' },
-  { id: 'flowcharts',       title: 'v3.7 流程圖',          icon: '⊞' },
+  { id: 'flowcharts',       title: 'v3.8 流程圖',          icon: '⊞' },
   { id: 'roles',            title: '角色與 AI 邊界',       icon: '◈' },
   { id: 'pre-dev',          title: '開發前',               icon: '①' },
   { id: 'mid-dev',          title: '開發中',               icon: '②' },
@@ -191,7 +197,8 @@ window.AppData.chapters = [
   { id: 'observations',     title: '優點與注意事項',       icon: '◐' },
   { id: 'presentation-use', title: '簡報使用方式',         icon: '▣' },
   { id: 'conclusion',       title: '一句話總結',           icon: '→'  },
-  { id: 'resources',        title: '資源對照',             icon: '⊟', external: true, href: 'resources.html' },
+  { id: 'resources',        title: '資源對照',             icon: '▤', external: true, href: 'resources.html' },
+  { id: 'governance',       title: '治理規則',             icon: '⚖', external: true, href: 'governance.html' },
 ];
 
 window.AppData.sectionTables = {

@@ -12,6 +12,13 @@
   <!-- Search overlay -->
   <div id="search-overlay" class="search-overlay hidden">
     <div class="search-box">
+      <div class="quick-decision-chips">
+        <button class="quick-decision-chip" data-heading="Tier 4">對外承諾？</button>
+        <button class="quick-decision-chip" data-heading="Tier 4">改 production？</button>
+        <button class="quick-decision-chip" data-heading="AI 使用決策矩陣">草稿？</button>
+        <button class="quick-decision-chip" data-heading="Tier 3">CSV/ICS 匯入？</button>
+        <button class="quick-decision-chip" data-heading="Tier 4">拍板決策？</button>
+      </div>
       <input id="search-input" type="text" placeholder="搜尋資源..." autocomplete="off">
       <div id="search-results" class="search-results"></div>
     </div>
@@ -43,6 +50,16 @@
     </nav>
 
     <main id="main-content" class="main-content">
+      <aside class="tier4-banner" role="alert">
+        <strong>⚠ AI 禁止執行的 7 項決策（Tier 4 Human-only）：</strong>
+        <span class="tier4-item">報價拍板</span>
+        <span class="tier4-item">合約簽署</span>
+        <span class="tier4-item">SOW 範疇確認</span>
+        <span class="tier4-item">CR 批准</span>
+        <span class="tier4-item">UAT 驗收判定</span>
+        <span class="tier4-item">Production 部署</span>
+        <span class="tier4-item">Hotfix 執行</span>
+      </aside>
       <div id="catalog-content" class="content-wrapper"></div>
       <div id="catalog-error" class="catalog-error hidden" role="alert">
         <p>無法載入 <code>resources-catalog.md</code>。可能原因：</p>
@@ -58,6 +75,7 @@
 
   <noscript><div class="noscript-banner">JS 已停用。請直接閱讀 <a href="resources-catalog.md">resources-catalog.md</a> 原始檔。</div></noscript>
   <script src="assets/vendor/marked.min.js"></script>
+  <script src="assets/vendor/purify.min.js"></script>
   <script src="assets/resources-loader.js"></script>
   <script>
     (function() {

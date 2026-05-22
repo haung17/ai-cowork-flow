@@ -19,29 +19,22 @@ test('acceptance-chips: meeting-notes has acceptance-list rendered', async ({ pa
   expect(count).toBeGreaterThanOrEqual(2);
 });
 
-test('acceptance-chips: all 4 chip colors exist on page', async ({ page }) => {
+test('acceptance-chips: all acceptance checkboxes have data-resource attribute', async ({ page }) => {
   await page.goto('/resources.html');
-  await page.waitForSelector('h3[data-resource-id]', { timeout: 8000 });
-  const statuses = await page.evaluate(() => {
-    return {
-      pending: document.querySelectorAll('.acceptance-chip.status-pending').length,
-      pass:    document.querySelectorAll('.acceptance-chip.status-pass').length,
-      fail:    document.querySelectorAll('.acceptance-chip.status-fail').length,
-      na:      document.querySelectorAll('.acceptance-chip.status-n-a').length,
-    };
-  });
-  // At least pending chips exist (all Pending initially); others may be 0 until manually set
-  expect(statuses.pending).toBeGreaterThan(0);
+  await page.waitForSelector('.acceptance-list input[type="checkbox"]', { timeout: 8000 });
+  const count = await page.evaluate(() =>
+    document.querySelectorAll('.acceptance-list input[type="checkbox"][data-resource]').length
+  );
+  expect(count).toBeGreaterThan(0);
 });
 
-test('acceptance-chips: status-pending chip has correct background', async ({ page }) => {
+test('acceptance-chips: owner spans exist in acceptance list', async ({ page }) => {
   await page.goto('/resources.html');
-  await page.waitForSelector('.acceptance-chip.status-pending', { timeout: 8000 });
-  const bg = await page.evaluate(() => {
-    const chip = document.querySelector('.acceptance-chip.status-pending');
-    return chip ? window.getComputedStyle(chip).backgroundColor : null;
-  });
-  expect(bg).toBe('rgb(243, 244, 246)');
+  await page.waitForSelector('.acceptance-list .owner', { timeout: 8000 });
+  const count = await page.evaluate(() =>
+    document.querySelectorAll('.acceptance-list .owner').length
+  );
+  expect(count).toBeGreaterThan(0);
 });
 
 test('acceptance-chips: total acceptance-list items ≥ 9 across all resources', async ({ page }) => {

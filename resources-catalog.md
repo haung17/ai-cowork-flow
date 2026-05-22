@@ -1,4 +1,4 @@
-# 接案流程資源對照表 (v3.6 對應)
+# 接案流程資源對照表 (v3.8 對應)
 
 ---
 
@@ -50,7 +50,7 @@
 | 1 | meeting-notes | 會議記錄 | 1 | COWORK | — | preDev:2 / midDev standup / postDev UAT | Markdown | DraftReady |
 | 2 | work-plan | 工作計劃書 | 1 | COWORK | — | preDev:7 | Markdown | DraftReady |
 | 3 | presentation | 簡報（HTML） | 1 | COWORK | — | preDev:7 後 → Gate preDev:9 | HTML | DraftReady |
-| 4 | wbs | WBS | 1 | CLAUDECODE | — | preDev:6 | Markdown | DraftReady |
+| 4 | wbs | WBS | 2 | CLAUDECODE | — | preDev:6 | Markdown | DraftReady |
 | 5 | org-chart | 專案組織架構規劃 | 2 | COWORK | HUMAN | preDev:5 → preDev:8 | Markdown | DraftReady |
 | 6 | prototype | Prototype / UI 截圖分析 | 2 | CLAUDECODE | COWORK | preDev:6 | HTML | DraftReady |
 | 7 | sprint-plan | 開發 Sprint 規劃 | 2 | COWORK | — | preDev:10 → midDev | Markdown | DraftReady |
@@ -222,6 +222,14 @@
   - 品牌色與 Logo
   - 敏感資訊是否移除
 
+> **External Use Gate**：簡報送客戶或對外展示前，PM 必須完成以下 checklist，全部通過才可交付：
+> 1. 範疇對齊 SOW（無超出範圍的功能承諾）
+> 2. 所有數字（報價、工時、日期）皆人工填入並確認
+> 3. 無 AI 幻覺承諾（未承諾 AI 自動完成的功能）
+> 4. 客戶具名、個資、敏感業務資訊已脫敏
+>
+> ⚠ 未完成 Gate 不得對外發送，違者由 PM 負責。
+
 **完整 prompt 範例**
 
 ```
@@ -258,7 +266,9 @@
 
 ### 4. WBS（Work Breakdown Structure）
 
-**Tier 1: Draft-safe ｜ type: CLAUDECODE**
+**Tier 2: Decision-assisted ｜ type: CLAUDECODE**
+
+> ⚠ **WBS 不得作為報價依據**，必須由 PM / 工程師覆核工時後才可用於報價或 SOW。
 
 **Input：** SOW 工作項目清單、技術架構草稿、角色分配表
 **Output：** 3 層 WBS（Phase → Feature → Task）+ 每個 Task 工時估算 + 負責角色
@@ -426,6 +436,8 @@
   - 流程邏輯（按鈕觸發什麼、頁面跳轉）
   - UX 合理性（使用者會不會迷失）
   - 客戶視覺偏好（顏色、密度）
+
+> **Demo 水印強制規則**：所有 Claude Code 產出的 prototype 必須在 viewport 右上角預設顯示浮水印，標示「DEMO / Not Production / 僅供需求確認」。移除浮水印需 PM 書面簽核，且僅在客戶明確同意後方可交付無水印版本。違反此規則，由工程師與 PM 共同承擔客戶誤認風險。
 
 > **UI 截圖分析**：把客戶丟來的競品截圖或現有系統截圖，直接貼給 Claude / GPT chat，問「這個 UI 的資訊層級是什麼、有哪些互動模式、有什麼問題」。是最輕量的用法，不需要 prompt 模板。
 
@@ -695,7 +707,7 @@ postDev（收尾）
 
 ---
 
-*對應 dashboard 版本：v3.6 | 節點 id 參照 `assets/data.js`*
+*對應 dashboard 版本：v3.8 | 節點 id 參照 `assets/data.js`*
 
 ---
 

@@ -401,36 +401,7 @@ body {
 .governance-link:hover { background: #B91C1C; color: #fff; }
 .governance-nav { padding: var(--sp-2) 0 0; flex: 0; }
 
-/* ── Acceptance Checklist Chips ── */
-.acceptance-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 var(--sp-4) 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-1);
-}
-.acceptance-list li {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-1);
-}
-.acceptance-chip {
-  display: inline-block;
-  padding: 1px 6px;
-  border-radius: var(--r-sm);
-  font-size: var(--text-xs);
-  font-family: var(--font-mono);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  margin-right: var(--sp-2);
-}
-.acceptance-chip.status-pending { background: #F3F4F6; color: #374151; }
-.acceptance-chip.status-pass    { background: #F0FDF4; color: #15803D; }
-.acceptance-chip.status-fail    { background: #FEF2F2; color: #B91C1C; }
-.acceptance-chip.status-n-a     { background: #FFFBEB; color: #92400E; }
+/* ── Acceptance Checklist (chips removed in step08 → interactive checkboxes) ── */
 
 /* ── Minimum Input List ── */
 .minimum-input-list {
@@ -482,4 +453,110 @@ body {
   .sidebar, .search-overlay { display: none; }
   .main-content { padding: 0; }
   #catalog-content pre { white-space: pre-wrap; word-break: break-all; }
+}
+
+.rule-new {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  font-size: 10px;
+  font-weight: 600;
+  background: #1d4ed8;
+  color: #fff;
+  border-radius: 3px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tier4-banner {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: #fef2f2;
+  border-bottom: 2px solid #dc2626;
+  padding: 8px 16px;
+  font-size: var(--text-sm, 12px);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+[data-theme="dark"] .tier4-banner {
+  background: #3f1b1b;
+  border-bottom-color: #f87171;
+}
+.tier4-item {
+  background: #dc2626;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 11px;
+  white-space: nowrap;
+}
+[data-theme="dark"] .tier4-item {
+  background: #b91c1c;
+}
+
+/* ── Step 08: Checklist ── */
+.acceptance-list {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 4px 0;
+}
+.acceptance-list li { margin-bottom: 4px; }
+.acceptance-list label {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  cursor: pointer;
+  font-size: var(--text-sm);
+}
+.acceptance-list input[type="checkbox"] { cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+.owner {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  font-family: var(--font-mono);
+}
+.required-marker { color: #dc2626; font-size: 11px; }
+.acceptance-progress {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+.h3-complete { font-size: 0.9em; }
+
+/* ── Step 10: Status Meta ── */
+.status-meta {
+  font-size: 11px;
+  color: var(--text-muted, #888);
+  margin: 2px 0 6px 0;
+  font-family: var(--font-mono);
+  line-height: 1.4;
+}
+
+/* ── Step 11: Quick Decision Chips ── */
+.quick-decision-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 0 4px 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.quick-decision-chip {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.quick-decision-chip:hover {
+  background: var(--bg-muted);
+  border-color: var(--accent);
 }

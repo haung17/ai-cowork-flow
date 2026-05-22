@@ -1,16 +1,18 @@
 // tests/e2e/dashboard-link.spec.js
 const { test, expect } = require('@playwright/test');
 
-test('dashboard-link: resources-link in sidebar header', async ({ page }) => {
+test('dashboard-link: resources-link in sidebar nav', async ({ page }) => {
   await page.goto('/dashboard.html');
-  await expect(page.locator('a.resources-link')).toBeVisible();
+  await page.waitForSelector('#nav-list .nav-item');
+  await expect(page.locator('#nav-list a[href="resources.html"]')).toBeVisible();
 });
 
 test('dashboard-link: resources-link opens new tab to resources.html', async ({ page, context }) => {
   await page.goto('/dashboard.html');
+  await page.waitForSelector('#nav-list .nav-item');
   const [newPage] = await Promise.all([
     context.waitForEvent('page', { timeout: 10000 }),
-    page.click('a.resources-link')
+    page.click('#nav-list a[href="resources.html"]')
   ]);
   await newPage.waitForLoadState();
   expect(newPage.url()).toContain('resources.html');

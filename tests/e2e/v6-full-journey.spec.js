@@ -36,10 +36,11 @@ test('v6-full-journey: complete governance flow from dashboard through resources
   });
   expect(postDevOk).toBe(true);
 
-  // Step 5: click resources link → opens new tab
+  // Step 5: click resources link in nav → opens new tab
+  await pageA.waitForSelector('#nav-list a[href="resources.html"]');
   const [pageB] = await Promise.all([
     context.waitForEvent('page'),
-    pageA.click('a.resources-link[target="_blank"]')
+    pageA.click('#nav-list a[href="resources.html"]')
   ]);
   await pageB.waitForSelector('#catalog-content h3[data-resource-id]', { timeout: 10000 });
   expect(pageB.url()).toContain('resources.html');
